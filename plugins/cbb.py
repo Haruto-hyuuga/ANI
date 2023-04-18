@@ -1,24 +1,31 @@
-#(©)Codexbotz
-
 from pyrogram import __version__
 from bot import Bot
-from config import OWNER_ID
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from pyrogram.types import Message, CallbackQuery
+from database.inline import*
+from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT
 
 @Bot.on_callback_query()
 async def cb_handler(client: Bot, query: CallbackQuery):
     data = query.data
-    if data == "about":
+    if data == "BACK_HOME":
         await query.message.edit_text(
-            text = f"<b>○ Creator : <a href='tg://user?id={OWNER_ID}'>This Person</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram asyncio {__version__}</a>\n○ Source Code : <a href='https://github.com/CodeXBotz/File-Sharing-Bot'>Click here</a>\n○ Channel : @CodeXBotz\n○ Support Group : @CodeXBotzSupport</b>",
-            disable_web_page_preview = True,
-            reply_markup = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton("🔒 Close", callback_data = "close")
-                    ]
-                ]
-            )
+            text = START_MSG.format(query.from_user.mention),
+            reply_markup = START_B
+        )
+    elif data == "About_Bot":
+        await query.message.edit_text(
+            text = ABOUT_TEXT,
+            reply_markup = ABOUT_BUTTONS
+        )
+    elif data == "DL_Channels":
+        await query.message.edit_text(
+            text = ALL_CHANNEL_TEXT,
+            reply_markup = CHANNELS_BUTTON
+        )
+    elif data == "A_requests":
+        await query.message.edit_text(
+            text = REQUEST_TEXT,
+            reply_markup = REQUEST_BUTTONS
         )
     elif data == "close":
         await query.message.delete()
