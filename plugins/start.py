@@ -1,18 +1,20 @@
 import os
 import asyncio
+import random 
 from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, GROUP_url
-from helper_func import subscribed, encode, decode, get_messages
+from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, MC_gif, BC_gif, GC_gif
+from config import FS_BOT_TEXT, FORCE_MSG, START_MSG, FS_PUBLIC_TEXT, FS_GROUP_text, PUBLIC_C_url, BOT_C_url, GROUP_url
+from helper_func import encode, decode, get_messages, sub_PUB_c, sub_BOT_c, sub_GC
 from database.database import add_user, del_user, full_userbase, present_user
+from database.inline import START_B
 
 
-
-@Bot.on_message(filters.command('start') & filters.private & subscribed)
+@Bot.on_message(filters.command('start') & filters.private & sub_PUB_c & sub_GC & sub_BOT_c)
 async def start_command(client: Client, message: Message):
     id = message.from_user.id
     if not await present_user(id):
