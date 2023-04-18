@@ -29,6 +29,10 @@ async def del_sub_anime(anime_id: int):
     sub_anime.delete_one({'_id': anime_id})
     return
 
+async def get_sub_anime(anime_id : int):
+    found = sub_anime.find_one({'_id': anime_id})
+    dblink = found['_link']
+    return dblink
 ###################################################################################
 
 async def present_dub_anime(anime_id : int):
