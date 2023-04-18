@@ -1,5 +1,3 @@
-#(©)Codexbotz
-
 import base64
 import re
 import asyncio
@@ -8,22 +6,64 @@ from pyrogram.enums import ChatMemberStatus
 from config import FORCE_SUB_CHANNEL, ADMINS
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait
+from config import MC_gif, BC_gif, GC_gif
 
-async def is_subscribed(filter, client, update):
-    if not FORCE_SUB_CHANNEL:
-        return True
+async def is_subscribed_PC(filter, client, update):
     user_id = update.from_user.id
-    if user_id in ADMINS:
-        return True
     try:
-        member = await client.get_chat_member(chat_id = FORCE_SUB_CHANNEL, user_id = user_id)
+        member = await client.get_chat_member(chat_id = FS_PUBLIC_CHANNEL, user_id = user_id)
     except UserNotParticipant:
         return False
-
+    
     if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
         return False
     else:
         return True
+
+async def F_AC_Gif(MC):
+    if MC == False:
+        C1T = "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB"
+    else:
+        C1T = "✅: <code>@ANIME_DOWNLOADS_SUB</code>"
+    return C1T
+
+async def is_subscribed_BOT(filter, client, update):
+    user_id = update.from_user.id
+    try:
+        member = await client.get_chat_member(chat_id = FS_BOT_CHANNEL, user_id = user_id)
+    except UserNotParticipant:
+        return False
+    
+    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+        return False
+    else:
+        return True
+
+async def F_BC_Gif(BC):
+    if BC == False:
+        C2T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeRobots"
+    else:
+        C2T = "✅: <code>@AnimeRobots</code>"
+    return C2T
+
+async def is_subscribed_GROUP(filter, client, update):
+    user_id = update.from_user.id
+    try:
+        member = await client.get_chat_member(chat_id = FS_GROUP, user_id = user_id)
+    except UserNotParticipant:
+        return False
+    
+    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+        return False
+    else:
+        return True
+
+async def F_GC_Gif(GC):
+    if GC == False:
+        C3T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeCommunityChat"
+    else:
+        C3T = "✅: <code>@AnimeCommunityChat</code>"
+    return C3T
 
 async def encode(string):
     string_bytes = string.encode("ascii")
@@ -106,5 +146,6 @@ def get_readable_time(seconds: int) -> str:
     up_time += ":".join(time_list)
     return up_time
 
-
-subscribed = filters.create(is_subscribed)
+sub_PUB_c = filters.create(is_subscribed_PC)
+sub_BOT_c = filters.create(is_subscribed_BOT)
+sub_GC = filters.create(is_subscribed_GROUP)
