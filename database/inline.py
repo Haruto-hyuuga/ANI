@@ -75,3 +75,11 @@ AllFSCB = InlineKeyboardMarkup(
         ]
     ]
 )
+ANIME_RESULT_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("DOWNLOAD", callback_data="anime_download_popup"),
+            InlineKeyboardButton("NOT FOUND", callback_data="anime_notfound_popup")
+        ]
+    ]
+)
