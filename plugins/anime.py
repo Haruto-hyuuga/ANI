@@ -4,7 +4,7 @@ import requests
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 
 
-@Bot.on_message(filters.command(["search", "anime"]))
+@Bot.on_message(filters.command(["search", "find"]))
 async def search_anime(client, message):
     args = message.text.split()
     if len(args) < 2:
@@ -54,7 +54,7 @@ async def search_anime(client, message):
 
 
 
-@Bot.on_message(filters.command(["download", "find"]))
+@Bot.on_message(filters.command(["download", "anime"]))
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
