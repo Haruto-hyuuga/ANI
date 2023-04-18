@@ -27,6 +27,10 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             text = REQUEST_TEXT,
             reply_markup = REQUEST_BUTTONS
         )
+    elif data == "anime_download_popup":
+        await query.answer("To Download The Anime You Want Tap On The (/download 12345) And Send or You Can Use /find Command Followed By Anime Id From Anilist", show_alert=True)
+    elif data == "anime_notfound_popup":
+        await query.answer("If The Anime You're Looking For Is Not In List, Try Searching More Accurate Title or Get Anime Id From Anilist", show_alert=True)
     elif data == "close":
         await query.message.delete()
         try:
