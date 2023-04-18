@@ -2,6 +2,7 @@ from bot import Bot
 from pyrogram import Client, filters
 import requests
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
+from database.anime_db import*
 
 @Bot.on_message(filters.command(["search", "anime"]))
 async def search_anime(client, message):
@@ -58,10 +59,13 @@ async def search_anime(client, message):
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id Use Command: /anime or /search")
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
         return
+    if not anime_id = int(args[1]):
+        await message.reply_text(f"No anime found with the ID '{anime_id}'.\n Did you fuck up with number after command?? *_*")
+        return
+    
     anime_id = int(args[1])
-
     # Build the AniList API query URL
     query = '''
     query ($id: Int) {
@@ -148,6 +152,7 @@ async def anime_info(client, message):
     message_text += f"<b>Season:</b> {season}\n"
     message_text += f"<b>Started:</b> {start_date}\n"
     message_text += f"<b>Ended:</b> {end_date}\n"
+    
     await message.reply_photo(cover_url, caption=message_text)
 
 
