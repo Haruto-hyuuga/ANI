@@ -41,7 +41,7 @@ CHANNELS_BUTTON = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
-            InlineKeyboardButton("CONTRIBUTORS", url=memes_channel)
+            InlineKeyboardButton("ANIMEMES", url=memes_channel)
         ]
     ]
 )
@@ -50,6 +50,15 @@ REQUEST_BUTTONS = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
+            InlineKeyboardButton("REPORT ISSUE", url = "https://t.me/Maid_Robot")
+        ]
+    ]
+)
+
+ERROR_BUTTON = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("CLOSE", callback_data="close"),
             InlineKeyboardButton("REPORT ISSUE", url = "https://t.me/Maid_Robot")
         ]
     ]
