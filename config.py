@@ -19,7 +19,7 @@ CHANNEL_ID = -1001859794315
 CREATOR_GC = -1001671956585
 
 DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
-SUB_ANIME_DB = ""
+SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongodb.net/?retryWrites=true&w=majority"
 DUB_ANIME_DB = ""
 
 
