@@ -1,6 +1,7 @@
 from bot import Bot
 from database.anime_db import*
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from config import ADMINS, PUBLIC_C_url, The_Other_Channel 
 
 
