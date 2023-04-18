@@ -105,7 +105,59 @@ WAIT_MSG = """⏳"""
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
+from helper_func import is_subscribed_PC, is_subscribed_BOT, is_subscribed_GROUP, F_AC_Gif, F_BC_Gif, F_GC_Gif
+from database.inline import AllFSCB
 
+@Bot.on_message(filters.command('start') & filters.private)
+async def not_joined(client: Client, message: Message):
+    update = message
+    MC = await is_subscribed_PC(filter, client, update)
+    BC = await is_subscribed_BOT(filter, client, update)
+    GC = await is_subscribed_GROUP(filter, client, update)
+    buttons = []
+    FSGIF = random.choice([BC_gif, GC_gif])
+    if MC == False:
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton("Anime Download Channel", url = PUBLIC_C_url),
+                ]
+            )
+        except IndexError:
+            pass
+    if BC == False:
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton("Bot Updates Channel", url = BOT_C_url)
+                ]
+            )
+        except IndexError:
+            pass
+    if GC == False:
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton("Anime Group Chat", url = GROUP_url)
+                ]
+            )
+        except IndexError:
+            pass
+    try:
+        buttons.append(
+            [
+                InlineKeyboardButton(text = 'CLICK TO RE-OPEN SAME ANIME LINK', url = f"https://t.me/{client.username}?start={message.command[1]}")
+            ]
+        )
+    except IndexError:
+        pass
+    C1T = await F_AC_Gif(MC)
+    C2T = await F_BC_Gif(BC)
+    C3T = await F_GC_Gif(GC)
+    try:
+        await message.reply_animation(animation=FSGIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
+    except:
+        await message.reply_animation(animation=MC_gif, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
     
    
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
