@@ -143,12 +143,11 @@ async def anime_info(client, message):
     message_text += f"<b>Genres:</b> <i>{genres}</i>\n"
     message_text += f"<b>Episodes:</b> {episodes}   <b>Duration:</b> {duration}\n"
     message_text += f"<b>Average Score:</b> {average_score}\n"
-    message_text += f"<b>Format:</b> {fformat}\n"
-    message_text += f"<b>Studio:</b> {studio}\n"
+    message_text += f"<b>Studio:</b> {studio}  <b>Format:</b> {fformat}\n\n"
     message_text += f"<b>Status:</b> {status}\n"
     message_text += f"<b>Season:</b> {season}\n"
-    message_text += f"<b>Started:</b> {start_date}  </b>Ended:</b> {end_date} \n\n"
-    
+    message_text += f"<b>Started:</b> {start_date}\n"
+    message_text += f"<b>Ended:</b> {end_date}\n"
     await message.reply_photo(cover_url, caption=message_text)
 
 
