@@ -45,6 +45,7 @@ The_Other_Channel = "https://t.me/ANIME_DOWNLOADS_DUB"
 FORCE_MSG = """
 <b><u>Hey There fellow Anime Lover!</u></b>
 <b>To Use This Bot You Must Join My Channels and Group, Since This Is A Free Service But It Takes Heck Lot Of Work~</b>
+
 |• <i>Join Anime Channel To Get Links Of Series You'll Download.</i>
 |• <i>Join Bot Owner Channel To Get Updates On Bot Status.</i>
 |• <i>Join Group To Recommend Anime or Report Malfunction.</i>
@@ -73,6 +74,8 @@ ABOUT_TEXT = """
 REQUEST_TEXT = """
 <b>To Request Anime Series/Movies Simply Message in This Bot, We'll Only Respond If It Necessary</i>
 <i>The Suggest Way Of requesting Anime Is Send Link of anime From:</i> anilist.co/search/anime
+
+
 <b>You can Check If anime already Exists or not By Command:  /find 145139 </b>
 |• <i>Number after Command is Anilist Anime Unique Number You'll Find it In Searched Anime Link~</i>
 |• <code>https://anilist.co/anime/145139/Demon-Slayer</code>
@@ -84,6 +87,8 @@ ALL_CHANNEL_TEXT = """
 <b>GIVEN BELOW ARE TWO DIFFERENT CHANNELS:</b>
 🌸 <u>FIRST, (Anime in SUB)</u> ⛩️
 <i>In this channel you'll find all series in Japanese audio with English Subtitles, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
+
+
 🖥️ <u>SECOND, (Anime In DUB)</u> ⭐
 <i>In this channel You'll Find all series With Dual Audio Track English & Japanese With Subtitles inclued, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
 <i>Therefore The Size Of the Files Will be Large. </i>
