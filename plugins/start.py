@@ -81,19 +81,10 @@ async def start_command(client: Client, message: Message):
                 pass
         return
     else:
-        reply_markup = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("😊 About Me", callback_data = "about"),
-                    InlineKeyboardButton("🔒 Close", callback_data = "close")
-                ]
-            ]
-        )
-        await message.reply_text(
-            text = START_MSG,
-            reply_markup = reply_markup,
-            disable_web_page_preview = True,
-            quote = True
+        await message.reply_animation(
+            animation = MC_gif,
+            caption = START_MSG.format(message.from_user.mention),
+           reply_markup = START_B,
         )
         return
 
