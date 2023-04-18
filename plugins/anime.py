@@ -1,7 +1,9 @@
 from bot import Bot
 from pyrogram import Client, filters
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import requests
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
+from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
 
 
 @Bot.on_message(filters.command(["search", "find"]))
@@ -155,13 +157,24 @@ async def anime_info(client, message):
     message_text += f"<b>Season:</b> {season}\n"
     message_text += f"<b>Started:</b> {start_date}\n"
     message_text += f"<b>Ended:</b> {end_date}\n"
+    buttons = []
     
-    await message.reply_photo(cover_url, caption=message_text)
-
-
-
-
+    if await present_sub_anime(anime_id):
+        try:
+            dblink = await get_sub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("Anime in SUB", url = dblink)])
+        except Exception as e:
+            await message.reply_text(e)
             
+    if await present_dub_anime(anime_id):
+        try:
+            sblink = await get_dub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("Anime in DUB", url = sblink)])
+        except Exception as e:
+            await message.reply_text(e)
+    await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                                      
+
 
 
 
