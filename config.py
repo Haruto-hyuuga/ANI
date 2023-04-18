@@ -54,41 +54,41 @@ FORCE_MSG = """
 
 START_MSG = """
 Welcome {}!
+
 ♡ Click On About To Get Info About Bot.
 ♡ Click on Request To Suggest Anime Which We Yet Haven't Added To Bot or Channels.
 ⁠♡ Click On Channels, Go Through Link Search For Anine You're intrested In Then Start The Bot vai that link.
-⚠️ Working in Group isn't made yet
 """
 
 ABOUT_TEXT = """
-<b>A Bot To Download Get Anime Series/Movies As Telegram Files To Download.</b>
+A Bot To Download Anime Series/Movies As Telegram Files
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-👤Users:
-📡Groups:
+/find or /search  'ANIME TITLE'
+<i>Use this command to get list of anime series that matches your search query and get download id</i>
+
+/anime or /download 'ANIME ID'
+<i>Use this command to get anime info and download link from channels</i>
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-/anime  -  Search Anime Series 
-/find  -  Check if Anime Is In Bot
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-<i>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</i>
+<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
 """
 
 REQUEST_TEXT = """
-<b>To Request Anime Series/Movies Simply Message in This Bot, We'll Only Respond If It Necessary</i>
-<i>The Suggest Way Of requesting Anime Is Send Link of anime From:</i> anilist.co/search/anime
+<b>To Request Anime Series/Movies:</b>
+|- <i>Use Command:</i> <code>/download id</code>
+|- <i>Read ABOUT to get more info on this command.</i>
+|- <i>Then Reply To That Anime Series By Command:</i> /request or #request
 
-
-<b>You can Check If anime already Exists or not By Command:  /find 145139 </b>
-|• <i>Number after Command is Anilist Anime Unique Number You'll Find it In Searched Anime Link~</i>
-|• <code>https://anilist.co/anime/145139/Demon-Slayer</code>
+<b>Another Method Of requesting Anime Is: Send Link of anime From</b> anilist.co/search/anime <b>directy here to bot.</b>
+<b>Or You Can Simply Message Bot About Requesting Anime, Chances Are Less That we'll Respond In This Method</b>
 """
 
 
 
 ALL_CHANNEL_TEXT = """
 <b>GIVEN BELOW ARE TWO DIFFERENT CHANNELS:</b>
+
 🌸 <u>FIRST, (Anime in SUB)</u> ⛩️
 <i>In this channel you'll find all series in Japanese audio with English Subtitles, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
-
 
 🖥️ <u>SECOND, (Anime In DUB)</u> ⭐
 <i>In this channel You'll Find all series With Dual Audio Track English & Japanese With Subtitles inclued, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
