@@ -54,3 +54,8 @@ async def full_dub_Animebase():
 async def del_dub_anime(anime_id: int):
     dub_anime.delete_one({'_id': anime_id})
     return
+
+async def get_dub_anime(anime_id : int):
+    found = sub_anime.find_one({'_id': anime_id})
+    dblink = found['_link']
+    return dblink
