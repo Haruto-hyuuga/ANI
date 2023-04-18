@@ -32,14 +32,14 @@ async def add_sub(client, message):
     if len(message.command) != 1:
         text = message.text.split(None, 1)[1]
         anime_id = int(text) 
-            if await present_sub_anime(anime_id):
-                try:
-                    dblink = await get_sub_anime(anime_id)
-                    await del_sub_anime(anime_id)
-                    await message.reply_text(f"<b>DELETED!</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
-                except Exception as e:
-                    await message.reply_text(f"An Error Occured//-\n\n{e}")
-            else:
-                await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
+        if await present_sub_anime(anime_id):
+            try:
+                dblink = await get_sub_anime(anime_id)
+                await del_sub_anime(anime_id)
+                await message.reply_text(f"<b>DELETED!</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
+            except Exception as e:
+                await message.reply_text(f"An Error Occured//-\n\n{e}")
+        else:
+            await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
     else:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
