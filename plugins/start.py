@@ -11,7 +11,7 @@ from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTT
 from config import FS_BOT_TEXT, FORCE_MSG, START_MSG, FS_PUBLIC_TEXT, FS_GROUP_text, PUBLIC_C_url, BOT_C_url, GROUP_url
 from helper_func import encode, decode, get_messages, sub_PUB_c, sub_BOT_c, sub_GC
 from database.database import add_user, del_user, full_userbase, present_user
-from database.inline import START_B
+from database.inline import START_B, ERROR_BUTTON
 
 
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_c & sub_GC & sub_BOT_c)
@@ -51,13 +51,11 @@ async def start_command(client: Client, message: Message):
                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
             except:
                 return
-        temp_msg = await message.reply("Please wait...")
         try:
             messages = await get_messages(client, ids)
         except:
-            await message.reply_text("Something went wrong..!")
+            await message.reply_text("Something went wrong..!", reply_markup=ERROR_BUTTON)
             return
-        await temp_msg.delete()
 
         for msg in messages:
 
