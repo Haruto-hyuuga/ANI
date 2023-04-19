@@ -304,8 +304,8 @@ async def animefulinfo(client, message):
     
     try:
         await message.reply_photo(banner_url, caption=f"<b>{title}</b>\n\n{description}")
-    except Exception as e:
-        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+    except :
+        await message.reply_photo(banner_url, caption=f"<b>{title}</b>")
 
     YtRESULT_B = InlineKeyboardMarkup(
         [
