@@ -79,6 +79,7 @@ async def anime_info(client, message):
                 english
                 native
             }
+            bannerImage
             coverImage {
                 extraLarge
             }
@@ -124,6 +125,7 @@ async def anime_info(client, message):
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
     cover_url = anime["coverImage"]["extraLarge"]
+    banner_url = anime["bannerImage"]
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
@@ -137,16 +139,21 @@ async def anime_info(client, message):
     message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
     message_text += f"ꜱᴄᴏʀᴇ: <b>{average_score}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
-    message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n"
-    message_text += f"<b>𝑭𝒐𝒓 𝒅𝒆𝒕𝒂𝒊𝒍𝒆𝒅 𝑰𝒏𝒇𝒐 𝒂𝒃𝒐𝒖𝒕 𝑨𝒏𝒊𝒎𝒆 𝒕𝒚𝒑𝒆:</b> <code>/info {anime_id}</code>\n"
+    message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n\n"
+    message_text += f"<b>ꜰᴏʀ ᴍᴏʀᴇ ᴀɴɪᴍᴇ ᴅᴇᴛᴀɪʟꜱ ᴛʏᴘᴇ:</b> <code>/info {anime_id}</code>\n"
+    try:
+        await message.reply_photo(cover_url, caption=message_text)
+    except Exception as e:
+        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
     buttons = []
-    
+    dl_message_text = "<u>𝙃𝙚𝙧𝙚'𝙨 𝙔𝙤𝙪𝙧 𝘿𝙤𝙬𝙣𝙡𝙤𝙖𝙙 𝙇𝙞𝙣𝙠𝙨:</u>\n\n"
     if await present_sub_anime(anime_id):
         try:
             sblink = await get_sub_anime(anime_id)
             buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
+            dl_message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+            dl_message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
         except Exception as e:
             await message.reply_text(e)
             
@@ -154,29 +161,32 @@ async def anime_info(client, message):
         try:
             dblink = await get_dub_anime(anime_id)
             buttons.append([InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = dblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
+            dl_message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+            dl_message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
         except Exception as e:
             await message.reply_text(e)
     if not await present_sub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
+            dl_message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+            dl_message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
     if not await present_dub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_DUB<b>\n➥ NOT AVAILABLE</b>\n"
+            dl_message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+            dl_message_text += "❌ @ANIME_DOWNLOADS_DUB<b>\n➥ NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
-    message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
+    dl_message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
+
+
     try:
-        await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        await message.reply_photo(banner_url, caption=dl_message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
 
 
 
