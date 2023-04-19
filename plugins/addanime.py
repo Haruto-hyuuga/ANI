@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from comfig import ADMINS, PUBLIC_C_url, The_Other_Channel 
+from config import ADMINS, PUBLIC_C_url, The_Other_Channel 
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime, add_sub_anime, del_sub_anime
 
 
