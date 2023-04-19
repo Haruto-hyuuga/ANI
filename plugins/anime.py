@@ -223,9 +223,12 @@ async def animefulinfo(client, message):
                 month
                 day
             }
+            averageScore
             studios(isMain: true) {
-                nodes {
-                    name
+                edges {
+                    node {
+                        name
+                    }
                 }
             }
             genres
@@ -268,7 +271,10 @@ async def animefulinfo(client, message):
     average_score = anime["averageScore"]
     mean_score = anime["meanScore"]
     popularity = anime['popularity']
-    studio = anime["studios"]["edges"][0]["node"]["name"]
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
+    else:
+        studio = "Unknown Studio"
     start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
     end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
