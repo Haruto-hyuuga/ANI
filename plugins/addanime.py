@@ -95,8 +95,8 @@ async def arequest(client, message):
         try:
             pic = reply.photo.file_id
             Text = reply.caption
-            LOL = await Bot.send_photo(CREATOR_GC, photo=pic, caption=Text)
-            await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
+            LOL = await Bot.send_photo(chat_id=CREATOR_GC, photo=pic, caption=Text)
+            await Bot.send_message(chat_id=CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
         except Exception as e:
             await message.reply_text(e)
     else:
