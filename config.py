@@ -79,12 +79,13 @@ ABOUT_TEXT = """
 
 REQUEST_TEXT = """
 <b>To Request Anime Series/Movies:</b>
-|- <i>Use Command:</i> <code>/download id</code>
-|- <i>Read ABOUT to get more info on this command.</i>
-|- <i>Then Reply To That Anime Series By Command:</i> /request or #request
 
-<b>Another Method Of requesting Anime Is: Send Link of anime From</b> anilist.co/search/anime <b>directy here to bot.</b>
-<b>Or You Can Simply Message Bot About Requesting Anime, Chances Are Less That we'll Respond In This Method</b>
+|• <i>Use Command:</i> <code>/download id</code>
+|• <i>then click on Request Button on message</i>
+
+|• <i>Send Link of anime From</i> anilist.co/search/anime
+
+|• <i>You Can Also Forward Messages From Other Channels</i>XD
 """
 
 
