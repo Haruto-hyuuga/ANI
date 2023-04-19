@@ -2,6 +2,7 @@ from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import requests
+import httpx
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
 from config import GROUP_url
@@ -64,11 +65,8 @@ async def anime_info(client, message):
         return
     try:
         anime_id = int(args[1])
-    except IndexError:
+    except (IndexError, ValueError):
         await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
-        return
-    except ValueError:
-        await message.reply_text(f"Value Error!   *_* \n Did you fuck up with number after command??")
         return
     
     # Build the AniList API query URL
@@ -190,11 +188,8 @@ async def animefulinfo(client, message):
         return
     try:
         anime_id = int(args[1])
-    except IndexError:
+    except (IndexError, ValueError):
         await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
-        return
-    except ValueError:
-        await message.reply_text(f"Value Error!   *_* \n Did you fuck up with number after command??")
         return
 
     # Build the AniList API query URL
@@ -244,18 +239,22 @@ async def animefulinfo(client, message):
 
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
-    response = requests.post(url, json={"query": query, "variables": variables})
+#    response = requests.post(url, json={"query": query, "variables": variables})
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
+
+
 
     # Check if the API request was successful
     if response.status_code != 200:
-        await message.reply_text("Failed to get anime info.")
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
     # Parse the API response and format the message
     data = response.json()["data"]
     anime = data["Media"]
     if not anime:
-        await message.reply_text(f"No anime found with the ID '{anime_id}'.")
+        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
