@@ -97,6 +97,7 @@ async def arequest(client, message):
             Text = reply.caption
             LOL = await client.send_photo(chat_id=CREATOR_GC, photo=pic, caption=Text)
             await client.send_message(chat_id=CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
+            await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
         except Exception as e:
             await message.reply_text(e)
     else:
