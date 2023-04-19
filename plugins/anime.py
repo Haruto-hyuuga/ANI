@@ -50,7 +50,7 @@ async def search_anime(client, message):
     for i, anime in enumerate(anime_list[:10]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
-        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b> \nDownload : <code> /download {anime_id} </code>\n\n"
+        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b> \n  ➥<code> /download {anime_id} </code>\n\n"
 
     await message.reply_text(message_text, reply_markup=ANIME_RESULT_B)
 
@@ -164,14 +164,14 @@ async def anime_info(client, message):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>❌SUB DOWNLOAD NOT AVAILABLE</b>\n"
+            message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
     if not await present_dub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>❌DUB DOWNLOAD NOT AVAILABLE</b>\n"
+            message_text += "❌ @ANIME_DOWNLOADS_SUB<b>➥ NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
@@ -212,6 +212,7 @@ async def animefulinfo(client, message):
                 extraLarge
             }
             description
+            format
             status
             episodes
             duration
