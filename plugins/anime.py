@@ -171,7 +171,7 @@ async def anime_info(client, message):
     
     title_img = f"https://img.anili.st/media/{anime_id}"
     try:
-        await message.reply_photo(title_img, caption=dl_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
@@ -284,7 +284,8 @@ async def animefulinfo(client, message):
     site_url = anime['siteUrl']
 
 
-    message_text = f"<b>{title}</b>\n"
+#    message_text = f"<b>{title}</b>\n"
+    message_text = " "
     try:
         message_text += f"ꜱᴛᴜᴅɪᴏ: <b>{studio}</b>\n"
     except:
@@ -302,7 +303,7 @@ async def animefulinfo(client, message):
     message_text += f"ᴇɴᴅᴇᴅ: <b>{end_date}</b>\n"
     
     try:
-        await message.reply_photo(banner_url, caption=f"<b>{title}</b>\n{description}")
+        await message.reply_photo(banner_url, caption=f"<b>{title}</b>\n\n{description}")
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
