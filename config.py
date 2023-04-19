@@ -45,10 +45,12 @@ memes_channel = "https://t.me/Anime_Hub_Fz"
 
 async def Vid_Random():
     SC_vid = "https://telegra.ph/file/ca4666765cafb7663de79.mp4"
-    DC_vid = "BAACAgUAAx0CY6gIaQACGJNkP_ZpcqTGA6JRbR2ab9elr2O6eAACzggAAu50AAFW18xj58KKnu4eBA"
+    DC_vid = "https://telegra.ph/file/3552a5b596fa979b75fd6.mp4"
     GC_vid = "https://telegra.ph/file/662d9619f6db0aea49665.mp4"
     BC_vid = "https://telegra.ph/file/c5c0a57ac043c34f25b22.mp4"
-    R_V = [SC_vid, DC_vid, GC_vid, BC_vid]
+    SC2_vid = "https://telegra.ph/file/ca4666765cafb7663de79.mp4"
+    DC2_vid = "https://telegra.ph/file/3552a5b596fa979b75fd6.mp4"
+    R_V = [SC_vid, DC_vid, GC_vid, BC_vid, SC2_vid, DC2_vid]
     FINAL_VID = random.choice(R_V)
     return FINAL_VID
 
