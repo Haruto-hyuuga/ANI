@@ -64,15 +64,17 @@ Welcome {}!
 """
 
 ABOUT_TEXT = """
-A Bot To Download Anime Series/Movies As Telegram Files
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+<b>COMMANDS LIST:</b>
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+
 /find or /search  'ANIME TITLE'
 <i>Use this command to get list of anime series that matches your search query and get download id</i>
 
 /anime or /download 'ANIME ID'
-<i>Use this command to get anime info and download link from channels</i>
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
+<i>Use this command to get anime download link from channels</i>
+
+/anime_info or /info 'ANIME ID'
+<i>Use this command to get detailed anime info trailer and many more</i>
 """
 
 REQUEST_TEXT = """
@@ -102,7 +104,19 @@ ALL_CHANNEL_TEXT = """
 ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>480p | 720p | 1080p</b>
 """
 
+CREDIT_TEXT = """
+This Bot Will Make it Easy To Search anime and Get Download Links.
+Made by: @MaidShiro with 💕
 
+<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
+"""
+"""
+
+
+<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
+"""
+
+"""
 
 PORT = os.environ.get("PORT", "8080")
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
