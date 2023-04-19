@@ -150,7 +150,7 @@ async def anime_info(client, message):
     message_text += f"ꜱᴄᴏʀᴇ: <b>{average_score}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
     message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n"
-    message_text += f"<b>𝑭𝒐𝒓 𝒅𝒆𝒕𝒂𝒊𝒍𝒆𝒅 𝑰𝒏𝒇𝒐 𝒂𝒃𝒐𝒖𝒕 𝑨𝒏𝒊𝒎𝒆 𝒕𝒚𝒑𝒆:</b> <code>/info {anime_id}</code>"
+    message_text += f"<b>𝑭𝒐𝒓 𝒅𝒆𝒕𝒂𝒊𝒍𝒆𝒅 𝑰𝒏𝒇𝒐 𝒂𝒃𝒐𝒖𝒕 𝑨𝒏𝒊𝒎𝒆 𝒕𝒚𝒑𝒆:</b> <code>/info {anime_id}</code>\n"
     buttons = []
     
     if await present_sub_anime(anime_id):
@@ -172,16 +172,16 @@ async def anime_info(client, message):
             await message.reply_text(e)
     if not await present_sub_anime(anime_id):
         try:
-            buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_SA")])
+            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌📥 NOT AVAILABLE ON OUR SUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>\n"
+            message_text += "<b>❌SUB DOWNLOAD NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
     if not await present_dub_anime(anime_id):
         try:
-            buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_DA")])
+            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌📥 NOT AVAILABLE ON OUR DUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>\n"
+            message_text += "<b>❌DUB DOWNLOAD NOT AVAILABLE</b>\n"
         except Exception as e:
             await message.reply_text(e)
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
@@ -217,22 +217,16 @@ async def animefulinfo(client, message):
                 english
                 native
             }
+            bannerImage
             coverImage {
                 extraLarge
             }
             description
-            format
-            episodes
             status
-            genres
-            averageScore
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                    }
-                }
-            }
+            episodes
+            duration
+            season
+            seasonYear
             startDate {
                 year
                 month
@@ -243,17 +237,20 @@ async def animefulinfo(client, message):
                 month
                 day
             }
-            duration
-            season
-            seasonYear
-            trailer {
-                id
-                site
-                thumbnail
+            studios(isMain: true) {
+                nodes {
+                    name
+                }
             }
+            genres
+            averageScore
+            meanScore
+            popularity
+            siteUrl
         }
     }
     '''
+
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
     response = requests.post(url, json={"query": query, "variables": variables})
