@@ -44,7 +44,7 @@ memes_channel = "https://t.me/Anime_Hub_Fz"
  
 
 async def Vid_Random():
-    SC_vid = "BAACAgUAAx0CY6gIaQACGJJkP_ZpSbJERso5_fnzGHmjjnIvbgACywgAAu50AAFWM198e7II7RQeBA"
+    SC_vid = "https://telegra.ph/file/ca4666765cafb7663de79.mp4"
     DC_vid = "BAACAgUAAx0CY6gIaQACGJNkP_ZpcqTGA6JRbR2ab9elr2O6eAACzggAAu50AAFW18xj58KKnu4eBA"
     GC_vid = "https://telegra.ph/file/662d9619f6db0aea49665.mp4"
     BC_vid = "https://telegra.ph/file/c5c0a57ac043c34f25b22.mp4"
@@ -53,7 +53,7 @@ async def Vid_Random():
     return FINAL_VID
 
 async def Gif_Random():
-    SC_gif = "CgACAgQAAx0CY6gIaQACGKJkP_n06vj6LAPHcQPhXoqq_hJAuAACGBAAApBu-VH28nq2fKK65R4E"
+    SC_gif = "https://telegra.ph/file/a16b17a0684fe097c0736.mp4"
     DC_gif = "https://telegra.ph/file/0029fb4f8b8964c59eb05.mp4"
     GC_gif = "https://telegra.ph/file/1980bb177042267d7f65a.mp4"
     BC_gif = "https://telegra.ph/file/51b98e9c9d6e76dc5caf1.mp4"
