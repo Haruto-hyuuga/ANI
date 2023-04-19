@@ -94,7 +94,7 @@ WAIT_MSG = """⏳"""
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
-from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_Gif, F_BC_Gif, F_GC_Gif, F_DC_Gif
+from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
 from database.inline import AllFSCB
 
 @Bot.on_message(filters.command('start') & filters.private)
@@ -149,10 +149,10 @@ async def not_joined(client: Client, message: Message):
         )
     except IndexError:
         pass
-    C1T = await F_SC_Gif(MC)
-    C2T = await F_BC_Gif(BC)
-    C3T = await F_GC_Gif(GC)
-    C4T = await F_DC_Gif(DC)
+    C1T = await F_SC_txt(MC)
+    C2T = await F_BC_txt(BC)
+    C3T = await F_GC_txt(GC)
+    C4T = await F_DC_txt(DC)
     try:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
