@@ -33,24 +33,24 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             reply_markup = CREDIT_B
         )
     elif data == "REQUEST_SA":
-        MSGID = query.message.message_id
         message = query.message
-        caption = message.caption if message.caption else ""
+        picc = message.photo.file_id
+        Caption = message.caption if message.caption else ""
         await message.edit_text(
-            text=f"{caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+            text=f"{Caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME FOR SUB CHANNEL✅</n>"
         )
-        await Bot.copy_message(CREATOR_GC, message.chat.id, MSGID)
-        await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL")
+        LOL = await Bot.send_photo(CREATOR_GC, photo=picc, caption=Caption)
+        await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL", reply_to_message_id=LOL.id)
 
     elif data == "REQUEST_DA":
-        MSGID = query.message.message_id
         message = query.message
-        caption = message.caption if message.caption else ""
+        picc = message.photo.file_id
+        Caption = message.caption if message.caption else ""
         await message.edit_text(
-            text=f"{caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+            text=f"{Caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME FOR DUB CHANNEL✅</n>"
         )
-        await Bot.copy_message(CREATOR_GC, message.chat.id, MSGID)
-        await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL")
+        LOL = await Bot.send_photo(CREATOR_GC, photo=picc, caption=Caption)
+        await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL", reply_to_message_id=LOL.id)
 
     elif data == "anime_download_popup":
         await query.answer("To Download The Anime You Want Tap On The (/download 12345) And Send or You Can Use /find Command Followed By Anime Id From Anilist", show_alert=True)
