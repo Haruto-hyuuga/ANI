@@ -90,12 +90,16 @@ REQUEST_TEXT = """
 ALL_CHANNEL_TEXT = """
 <b>GIVEN BELOW ARE TWO DIFFERENT CHANNELS:</b>
 
-🌸 <u>FIRST, (Anime in SUB)</u> ⛩️
-<i>In this channel you'll find all series in Japanese audio with English Subtitles, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
+⛩️𝑪𝒉𝒂𝒏𝒏𝒆𝒍 𝟏: @ANIME_DOWNLOADS_SUB
+ᴀᴜᴅɪᴏ: <b>Japanese 🇯🇵</b>
+ꜱᴜʙᴛɪᴛʟᴇꜱ: <b>English</b>
+ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>480p | 720p | 1080p</b>
 
-🖥️ <u>SECOND, (Anime In DUB)</u> ⭐
-<i>In this channel You'll Find all series With Dual Audio Track English & Japanese With Subtitles inclued, Quality Of video 460p / 720p / 1080p Will Be provided In Each Post.</i>
-<i>Therefore The Size Of the Files Will be Large. </i>
+
+🗺️𝑪𝒉𝒂𝒏𝒏𝒆𝒍 𝟐: @ANIME_DOWNLOADS_DUB 
+ᴀᴜᴅɪᴏ: <b>Japanese + English</b> 🇯🇵🇬🇧
+ꜱᴜʙᴛɪᴛʟᴇꜱ: <b>English + Sign&Songs</b>
+ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>480p | 720p | 1080p</b>
 """
 
 
