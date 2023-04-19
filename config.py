@@ -26,13 +26,15 @@ SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongo
 DUB_ANIME_DB = "mongodb+srv://tasesey566:r7bEdOZnnE2lgL7H@cluster0.i17yfwi.mongodb.net/?retryWrites=true&w=majority"
 
 
-FS_PUBLIC_CHANNEL = -1001741236715
-FS_PUBLIC_TEXT = "Join Main Cahnnel"
-PUBLIC_C_url = "https://t.me/ANIME_DOWNLOADS_SUB"
+SUB_CHANNEL = -1001741236715
+Sub_C_url = "https://t.me/ANIME_DOWNLOADS_SUB"
+MC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
+
+DUB_CHANNEL = -1001916486716
+Dub_C_url = "https://t.me/ANIME_DOWNLOADS_DUB"
 MC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
 
 FS_BOT_CHANNEL = -1001867076149
-FS_BOT_TEXT = "Join  Bot Channel"
 BOT_C_url = "https://t.me/AnimeRobots"
 BC_gif = "https://telegra.ph/file/744efc86967a9291dee23.mp4"
 
@@ -43,14 +45,14 @@ GC_gif = "https://telegra.ph/file/307aecec6325f2147306e.mp4"
 
 contributor_graph = "https://t.me/AnimeCommunityChat"
 memes_channel = "https://t.me/Anime_Hub_Fz"
-The_Other_Channel = "https://t.me/ANIME_DOWNLOADS_DUB"
+ 
 
 
 FORCE_MSG = """
 <b><u>Hey There fellow Anime Lover!</u></b>
 <b>To Use This Bot You Must Join My Channels and Group, Since This Is A Free Service But It Takes Heck Lot Of Work~</b>
 
-|• <i>Join Anime Channel To Get Links Of Series You'll Download.</i>
+|• <i>Join Anime Channels To Get Links Of Series You'll Download.</i>
 |• <i>Join Bot Owner Channel To Get Updates On Bot Status.</i>
 |• <i>Join Group To Recommend Anime or Report Malfunction.</i>
 """
