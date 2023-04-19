@@ -12,9 +12,6 @@ START_B = InlineKeyboardMarkup(
         [
             InlineKeyboardButton("REQUEST ANIME", callback_data="A_requests"),
             InlineKeyboardButton("Detect Anime", url="https://t.me/NeptuneaBot"),
-        ],
-        [
-            InlineKeyboardButton("ADD BOT TO YOUR GROUP", url=f"https://t.me/{BOTUSERNAME}?startgroup=true"),
         ]
     ]
 )
