@@ -179,7 +179,7 @@ async def anime_info(client, message):
     if not await present_sub_anime(anime_id) and await present_dub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_SA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n
+            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "❌📥 NOT AVAILABLE ON OUR CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
         except Exception as e:
             await message.reply_text(e)
