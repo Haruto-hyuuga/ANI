@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import ADMINS, PUBLIC_C_url, The_Other_Channel 
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime
-from database.anime_db import present_dub_anime, get_dub_anime, add_bub_anime, del_bub_anime
+from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime
 
 
 @Bot.on_message(filters.command("adddub"))
