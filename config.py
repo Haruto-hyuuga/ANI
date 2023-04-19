@@ -32,7 +32,7 @@ MC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
 
 DUB_CHANNEL = -1001916486716
 Dub_C_url = "https://t.me/ANIME_DOWNLOADS_DUB"
-MC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
+DC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
 
 FS_BOT_CHANNEL = -1001867076149
 BOT_C_url = "https://t.me/AnimeRobots"
