@@ -146,7 +146,7 @@ async def anime_info(client, message):
             sblink = await get_sub_anime(anime_id)
             buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE SUB<b/>\n"
+            message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
         except Exception as e:
             await message.reply_text(e)
             
