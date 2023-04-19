@@ -279,13 +279,15 @@ async def animefulinfo(client, message):
     status = anime["status"]
     genres = ", ".join(anime["genres"])
     average_score = anime["averageScore"]
+    mean_score = anime["meanScore"]
+    popularity = anime['popularity']
     studio = anime["studios"]["edges"][0]["node"]["name"]
     start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
     end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
     trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else "https://t.me/AnimeRobots"
-
+    site_url = anime['siteUrl']
 
 
     message_text = f"<b>{title}</b>\n"
@@ -294,10 +296,12 @@ async def animefulinfo(client, message):
     except:
         message_text += "ꜱᴛᴜᴅɪᴏ: unable to fetch"
     message_text += f"ᴀᴠᴇʀᴀɢᴇ ꜱᴄᴏʀᴇ: <b>{average_score}</b>\n"
+    message_text += f"ᴍᴇᴀɴ ꜱᴄᴏʀᴇ: <b>{mean_score}</b>\n"
     message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n"
     message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
     message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
     message_text += f"ꜰᴏʀᴍᴀᴛ: <b>{format}</b>\n"
+    message_text += f"ᴘᴏᴘᴜʟᴀʀɪᴛʏ: <b>{popularity}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
     message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n"
     message_text += f"ꜱᴛᴀʀᴛᴇᴅ: <b>{start_date}</b>\n"
@@ -311,8 +315,11 @@ async def animefulinfo(client, message):
     YtRESULT_B = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("Disscus 💬", url=GROUP_url),
+                InlineKeyboardButton("🖥️ Anime Site", url=site_url),
                 InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
+            ],
+            [
+                InlineKeyboardButton("💬 ANIME GROUP CHAT 💬", url=GROUP_url),
             ]
         ]
     )
