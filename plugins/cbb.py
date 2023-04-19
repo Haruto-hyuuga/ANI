@@ -35,7 +35,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         await Bot.send_message(CREATOR_GC, text=f"👤{query.message.from_user.id} \n<code>{query.message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL")
     elif data == "REQUEST_DA":
         await query.message.edit_text(
-            text = f"{query.message..photo.caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+            text = f"{query.message.photo.caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
         )
         await Bot.copy_message(CREATOR_GC, query.message.chat.id, query.message.id)
         await Bot.send_message(CREATOR_GC, text=f"👤{query.message.from_user.id} \n<code>{query.message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL")
