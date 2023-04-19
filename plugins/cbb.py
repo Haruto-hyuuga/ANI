@@ -29,15 +29,15 @@ async def cb_handler(client: Bot, query: CallbackQuery):
         )
     elif data == "REQUEST_SA":
         await query.message.edit_text(
-            text = f"{query.message.text}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+            text = f"{query.message.photo.caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
         )
-        await Bot.forward_messages(CREATOR_GC, query.message.chat.id, query.message.id)
+        await Bot.copy_message(CREATOR_GC, query.message.chat.id, query.message.id)
         await Bot.send_message(CREATOR_GC, text=f"👤{query.message.from_user.id} \n<code>{query.message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL")
     elif data == "REQUEST_DA":
         await query.message.edit_text(
-            text = f"{query.message.text}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+            text = f"{query.message..photo.caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
         )
-        await Bot.forward_messages(CREATOR_GC, query.message.chat.id, query.message.id)
+        await Bot.copy_message(CREATOR_GC, query.message.chat.id, query.message.id)
         await Bot.send_message(CREATOR_GC, text=f"👤{query.message.from_user.id} \n<code>{query.message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL")
     elif data == "anime_download_popup":
         await query.answer("To Download The Anime You Want Tap On The (/download 12345) And Send or You Can Use /find Command Followed By Anime Id From Anilist", show_alert=True)
