@@ -97,16 +97,6 @@ async def anime_info(client, message):
                     }
                 }
             }
-            startDate {
-                year
-                month
-                day
-            }
-            endDate {
-                year
-                month
-                day
-            }
             duration
             season
             seasonYear
