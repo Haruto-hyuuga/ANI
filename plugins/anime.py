@@ -161,8 +161,8 @@ async def anime_info(client, message):
     
     if await present_sub_anime(anime_id):
         try:
-            dblink = await get_sub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("Anime in SUB", url = dblink)])
+            sblink = await get_sub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("Anime in SUB", url = sblink)])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "<b>✅DOWNLOAD AVAILABLE IN SUB ⛩️<b/>\n"
         except Exception as e:
@@ -170,8 +170,8 @@ async def anime_info(client, message):
             
     if await present_dub_anime(anime_id):
         try:
-            sblink = await get_dub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("Anime in DUB", url = sblink)])
+            dblink = await get_dub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("Anime in DUB", url = dblink)])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "<b>✅DOWNLOAD AVAILABLE IN DUB 🇬🇧</b>\n"
         except Exception as e:
