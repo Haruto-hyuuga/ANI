@@ -1,5 +1,5 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from config import PUBLIC_C_url, BOT_C_url, GROUP_url, contributor_graph, memes_channel, The_Other_Channel
+from config import Sub_C_url, BOT_C_url, GROUP_url, contributor_graph, memes_channel, Dub_C_url
 from config import BOTUSERNAME, OWNER
 
 
@@ -31,10 +31,10 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 CHANNELS_BUTTON = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("English-SUB | Original Audio", url = PUBLIC_C_url),
+            InlineKeyboardButton("English-SUB | Original Audio", url = Sub_C_url),
         ],
         [
-            InlineKeyboardButton("English-SUB | English-DUB + Japanese", url = The_Other_Channel),
+            InlineKeyboardButton("English-SUB | English-DUB + Japanese", url = Dub_C_url),
         ],
         [
             InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
@@ -63,10 +63,11 @@ ERROR_BUTTON = InlineKeyboardMarkup(
 AllFSCB = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("Anime Channel", url = PUBLIC_C_url),
-            InlineKeyboardButton("Bot Channel", url = BOT_C_url)
+            InlineKeyboardButton("Sub Anime Channel 🇯🇵", url = Sub_C_url),
+            InlineKeyboardButton("Dub Anime Channel 🇬🇧", url = Dub_C_url)
         ],
         [
+            InlineKeyboardButton("Bot Channel", url = BOT_C_url),
             InlineKeyboardButton("Anime Group Chat", url = GROUP_url)
         ]
     ]
