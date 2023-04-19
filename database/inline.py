@@ -46,8 +46,7 @@ CHANNELS_BUTTON = InlineKeyboardMarkup(
 REQUEST_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
-            InlineKeyboardButton("REPORT ISSUE", url = "https://t.me/Maid_Robot")
+            InlineKeyboardButton("BACK", callback_data="BACK_HOME")
         ]
     ]
 )
