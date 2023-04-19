@@ -246,6 +246,9 @@ async def animefulinfo(client, message):
             meanScore
             popularity
             siteUrl
+            trailer {
+                id
+            }
         }
     }
     '''
