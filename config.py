@@ -1,7 +1,7 @@
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-
+import random 
 
 # raiden
 #TG_BOT_TOKEN = "5844274164:AAHGFMBKEIcoUBS5uPekGAtag7BBaLi5GQI"
@@ -28,24 +28,40 @@ DUB_ANIME_DB = "mongodb+srv://tasesey566:r7bEdOZnnE2lgL7H@cluster0.i17yfwi.mongo
 
 SUB_CHANNEL = -1001741236715
 Sub_C_url = "https://t.me/ANIME_DOWNLOADS_SUB"
-MC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
 
 DUB_CHANNEL = -1001916486716
 Dub_C_url = "https://t.me/ANIME_DOWNLOADS_DUB"
-DC_gif = "https://telegra.ph/file/34b19d8ba3c07f04826f8.mp4"
 
 FS_BOT_CHANNEL = -1001867076149
 BOT_C_url = "https://t.me/AnimeRobots"
-BC_gif = "https://telegra.ph/file/744efc86967a9291dee23.mp4"
 
 FS_GROUP = -1001671956585
 FS_GROUP_text = "Join Group"
 GROUP_url = "https://t.me/AnimeCommunityChat"
-GC_gif = "https://telegra.ph/file/307aecec6325f2147306e.mp4"
 
 contributor_graph = "https://t.me/AnimeCommunityChat"
 memes_channel = "https://t.me/Anime_Hub_Fz"
  
+
+async def Vid_Random():
+    SC_vid = "BAACAgUAAx0CY6gIaQACGJJkP_ZpSbJERso5_fnzGHmjjnIvbgACywgAAu50AAFWM198e7II7RQeBA"
+    DC_vid = "BAACAgUAAx0CY6gIaQACGJNkP_ZpcqTGA6JRbR2ab9elr2O6eAACzggAAu50AAFW18xj58KKnu4eBA"
+    GC_vid = "BAACAgQAAx0CY6gIaQACGJRkP_ZpnXoTeDgHbLbmz19O1r9adgAC8Q4AAiYm6FFUm8j3Xf-AdR4E"
+    BC_vid = "BAACAgQAAx0CY6gIaQACGJVkP_ZpZBiPye8HR3bSBiCzRlAmEQACGhAAApBu-VFBOaToaJi9Jh4E"
+    R_V = [SC_vid, DC_vid, GC_vid, BC_vid]
+    FINAL_VID = random.choice(R_V)
+    return FINAL_VID
+
+async def Gif_Random():
+    SC_gif = "CgACAgQAAx0CY6gIaQACGKJkP_n06vj6LAPHcQPhXoqq_hJAuAACGBAAApBu-VH28nq2fKK65R4E"
+    DC_gif = "https://telegra.ph/file/0029fb4f8b8964c59eb05.mp4"
+    GC_gif = "https://telegra.ph/file/1980bb177042267d7f65a.mp4"
+    BC_gif = "https://telegra.ph/file/51b98e9c9d6e76dc5caf1.mp4"
+    R_G = [SC_gif, DC_gif, GC_gif, BC_gif]
+    FINAL_GIF = random.choice(R_G)
+    return FINAL_GIF
+
+
 
 
 FORCE_MSG = """
