@@ -27,6 +27,11 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             text = REQUEST_TEXT,
             reply_markup = REQUEST_BUTTONS
         )
+    elif data == "Credits_a":
+        await query.message.edit_text(
+            text = CREDIT_TEXT,
+            reply_markup = CREDIT_B
+        )
     elif data == "REQUEST_SA":
         message = query.message
         caption = message.caption if message.caption else ""
