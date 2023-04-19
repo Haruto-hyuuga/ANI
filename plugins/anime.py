@@ -4,7 +4,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import requests
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
-
+from config import GROUP_url
 
 @Bot.on_message(filters.command(["search", "find"]))
 async def search_anime(client, message):
@@ -189,6 +189,148 @@ async def anime_info(client, message):
         await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
+
+
+@Bot.on_message(filters.command(["anime_info", "info"]))
+async def animefulinfo(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except IndexError:
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
+        return
+    except ValueError:
+        await message.reply_text(f"Value Error!   *_* \n Did you fuck up with number after command??")
+        return
+
+    # Build the AniList API query URL
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            coverImage {
+                extraLarge
+            }
+            description
+            format
+            episodes
+            status
+            genres
+            averageScore
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            startDate {
+                year
+                month
+                day
+            }
+            endDate {
+                year
+                month
+                day
+            }
+            duration
+            season
+            seasonYear
+            trailer {
+                id
+                site
+                thumbnail
+            }
+        }
+    }
+    '''
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    response = requests.post(url, json={"query": query, "variables": variables})
+
+    # Check if the API request was successful
+    if response.status_code != 200:
+        await message.reply_text("Failed to get anime info.")
+        return
+
+    # Parse the API response and format the message
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"No anime found with the ID '{anime_id}'.")
+        return
+
+    title = anime["title"]["english"] or anime["title"]["romaji"]
+    cover_url = anime["coverImage"]["extraLarge"]
+    banner_url = anime["bannerImage"]
+    description = anime["description"]
+    format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    genres = ", ".join(anime["genres"])
+    average_score = anime["averageScore"]
+    studio = anime["studios"]["edges"][0]["node"]["name"]
+    start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
+    end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+    trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else "https://t.me/AnimeRobots"
+
+
+
+    message_text = f"<b>{title}</b>\n"
+    try:
+        message_text += f"ꜱᴛᴜᴅɪᴏ: <b>{studio}</b>\n"
+    except:
+        message_text += "ꜱᴛᴜᴅɪᴏ: unable to fetch"
+    message_text += f"ᴀᴠᴇʀᴀɢᴇ ꜱᴄᴏʀᴇ: <b>{average_score}</b>\n"
+    message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n"
+    message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
+    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
+    message_text += f"ꜰᴏʀᴍᴀᴛ: <b>{format}</b>\n"
+    message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
+    message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n"
+    message_text += f"ꜱᴛᴀʀᴛᴇᴅ: <b>{start_date}</b>\n"
+    message_text += f"ᴇɴᴅᴇᴅ: <b>{end_date}</b>\n"
+    
+    try:
+        await message.reply_photo(cover_url, caption=f"<b>{title}</b>\n{description}")
+    except Exception as e:
+        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
+    YtRESULT_B = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("Disscus 💬", url=GROUP_url),
+                InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
+            ]
+        ]
+    )
+    try:
+        await message.reply_photo(banner_url, caption=message_text, reply_markup=YtRESULT_B)
+    except Exception as e:
+        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
+
+
+
+
+
+
+
+
+
+
 
 
 
