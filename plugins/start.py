@@ -7,14 +7,14 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, MC_gif, BC_gif, GC_gif
-from config import FS_BOT_TEXT, FORCE_MSG, START_MSG, FS_PUBLIC_TEXT, FS_GROUP_text, PUBLIC_C_url, BOT_C_url, GROUP_url
-from helper_func import encode, decode, get_messages, sub_PUB_c, sub_BOT_c, sub_GC
+from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, MC_gif, BC_gif, GC_gif, DC_gif
+from config import FORCE_MSG, START_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
+from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON
 
 
-@Bot.on_message(filters.command('start') & filters.private & sub_PUB_c & sub_GC & sub_BOT_c)
+@Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def start_command(client: Client, message: Message):
     id = message.from_user.id
     if not await present_user(id):
@@ -94,13 +94,14 @@ WAIT_MSG = """⏳"""
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
-from helper_func import is_subscribed_PC, is_subscribed_BOT, is_subscribed_GROUP, F_AC_Gif, F_BC_Gif, F_GC_Gif
+from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_Gif, F_BC_Gif, F_GC_Gif, F_DC_Gif
 from database.inline import AllFSCB
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
     update = message
-    MC = await is_subscribed_PC(filter, client, update)
+    MC = await is_subscribed_SC(filter, client, update)
+    DC = await is_subscribed_DC(filter, client, update)
     BC = await is_subscribed_BOT(filter, client, update)
     GC = await is_subscribed_GROUP(filter, client, update)
     buttons = []
@@ -109,7 +110,16 @@ async def not_joined(client: Client, message: Message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton("Anime Download Channel", url = PUBLIC_C_url),
+                    InlineKeyboardButton("Anime Download Channel SUB", url = Sub_C_url),
+                ]
+            )
+        except IndexError:
+            pass
+    if DC == False:
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton("Anime Download Channel DUB", url = Dub_C_url),
                 ]
             )
         except IndexError:
@@ -140,13 +150,14 @@ async def not_joined(client: Client, message: Message):
         )
     except IndexError:
         pass
-    C1T = await F_AC_Gif(MC)
+    C1T = await F_SC_Gif(MC)
     C2T = await F_BC_Gif(BC)
     C3T = await F_GC_Gif(GC)
+    C4T = await F_DC_Gif(DC)
     try:
-        await message.reply_animation(animation=FSGIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
+        await message.reply_animation(animation=FSGIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
     except:
-        await message.reply_animation(animation=MC_gif, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+        await message.reply_animation(animation=MC_gif, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
     
    
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
