@@ -31,8 +31,8 @@ async def del_sub_anime(anime_id: int):
 
 async def get_sub_anime(anime_id : int):
     found = sub_anime.find_one({'_id': anime_id})
-    dblink = found['_link']
-    return dblink
+    sblink = found['_link']
+    return sblink
 ###################################################################################
 
 async def present_dub_anime(anime_id : int):
@@ -58,4 +58,4 @@ async def del_dub_anime(anime_id: int):
 async def get_dub_anime(anime_id : int):
     found = sub_anime.find_one({'_id': anime_id})
     dblink = found['_link']
-    return sblink
+    return dblink
