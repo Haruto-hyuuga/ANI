@@ -86,3 +86,17 @@ async def delsub(client, message):
             await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
     else:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
+
+REQPFX = ["/", "#"]
+@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private)
+async def arequest(client, message):
+    if message.reply_to_message:
+        try:
+
+    else:
+        await message.reply_text(f"Bish Reply To Searched Anime Using Command: /anime")
+        
+
+
+
+
