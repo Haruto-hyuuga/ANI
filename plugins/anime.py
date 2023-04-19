@@ -191,8 +191,7 @@ async def anime_info(client, message):
             except Exception as e:
                 await message.reply_text(e)
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
-    try:
-        await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
                                       
 
 
