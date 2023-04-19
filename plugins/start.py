@@ -1,13 +1,12 @@
 import os
 import asyncio
-import random 
 from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, MC_gif, BC_gif, GC_gif, DC_gif
+from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random
 from config import FORCE_MSG, START_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.database import add_user, del_user, full_userbase, present_user
@@ -79,8 +78,9 @@ async def start_command(client: Client, message: Message):
                 pass
         return
     else:
-        await message.reply_animation(
-            animation = MC_gif,
+        FINAL_VID = await Vid_Random()
+        await message.reply_video(
+            video = FINAL_VID,
             caption = START_MSG.format(message.from_user.mention),
            reply_markup = START_B,
         )
@@ -105,7 +105,6 @@ async def not_joined(client: Client, message: Message):
     BC = await is_subscribed_BOT(filter, client, update)
     GC = await is_subscribed_GROUP(filter, client, update)
     buttons = []
-    FSGIF = random.choice([BC_gif, GC_gif])
     if MC == False:
         try:
             buttons.append(
@@ -155,9 +154,11 @@ async def not_joined(client: Client, message: Message):
     C3T = await F_GC_Gif(GC)
     C4T = await F_DC_Gif(DC)
     try:
-        await message.reply_animation(animation=FSGIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
+        FINAL_GIF = await Gif_Random()
+        await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
     except:
-        await message.reply_animation(animation=MC_gif, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+        FINAL_GIF = await Gif_Random()
+        await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
     
    
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
