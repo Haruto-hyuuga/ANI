@@ -20,7 +20,7 @@ async def is_subscribed_SC(filter, client, update):
     else:
         return True
 
-async def F_SC_Gif(MC):
+async def F_SC_txt(MC):
     if MC == False:
         C1T = "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB"
     else:
@@ -39,7 +39,7 @@ async def is_subscribed_DC(filter, client, update):
     else:
         return True
 
-async def F_DC_Gif(DC):
+async def F_DC_txt(DC):
     if DC == False:
         C4T = "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_DUB"
     else:
@@ -58,7 +58,7 @@ async def is_subscribed_BOT(filter, client, update):
     else:
         return True
 
-async def F_BC_Gif(BC):
+async def F_BC_txt(BC):
     if BC == False:
         C2T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeRobots"
     else:
@@ -77,7 +77,7 @@ async def is_subscribed_GROUP(filter, client, update):
     else:
         return True
 
-async def F_GC_Gif(GC):
+async def F_GC_txt(GC):
     if GC == False:
         C3T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeCommunityChat"
     else:
