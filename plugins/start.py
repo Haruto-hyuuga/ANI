@@ -6,8 +6,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random
-from config import FORCE_MSG, START_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
+from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON
@@ -94,6 +93,7 @@ WAIT_MSG = """⏳"""
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
+from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
 from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
 from database.inline import AllFSCB
 
