@@ -136,63 +136,59 @@ async def anime_info(client, message):
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
     cover_url = anime["coverImage"]["extraLarge"]
-    fformat = anime["format"]
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
     average_score = anime["averageScore"]
-    studio = anime["studios"]["edges"][0]["node"]["name"]
-    start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
-    end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else ""
-
+    
     message_text = f"<b>{title}</b>\n\n"
-    message_text += f"<b>Genres:</b> <i>{genres}</i>\n"
-    message_text += f"<b>Episodes:</b> {episodes}   <b>Duration:</b> {duration}\n"
-    message_text += f"<b>Average Score:</b> {average_score}\n"
-    message_text += f"<b>Studio:</b> {studio}  <b>Format:</b> {fformat}\n\n"
-    message_text += f"<b>Status:</b> {status}\n"
-    message_text += f"<b>Season:</b> {season}\n"
-    message_text += f"<b>Started:</b> {start_date}\n"
-    message_text += f"<b>Ended:</b> {end_date}\n\n"
+    message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n"
+    message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
+    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
+    message_text += f"ꜱᴄᴏʀᴇ: <b>{average_score}</b>\n"
+    message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
+    message_text += f"ʀᴇʟᴇᴀꜱᴇᴅ: <b>{season}</b>\n"
+    message_text += f"<b>𝑭𝒐𝒓 𝒅𝒆𝒕𝒂𝒊𝒍𝒆𝒅 𝑰𝒏𝒇𝒐 𝒂𝒃𝒐𝒖𝒕 𝑨𝒏𝒊𝒎𝒆 𝒕𝒚𝒑𝒆:</b> <code>/info {anime_id}</code>"
     buttons = []
     
     if await present_sub_anime(anime_id):
         try:
             sblink = await get_sub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("Anime in SUB", url = sblink)])
+            buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE IN SUB ⛩️<b/>\n"
+            message_text += "<b>✅DOWNLOAD AVAILABLE SUB<b/>\n"
         except Exception as e:
             await message.reply_text(e)
             
     if await present_dub_anime(anime_id):
         try:
             dblink = await get_dub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("Anime in DUB", url = dblink)])
+            buttons.append([InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = dblink)])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE IN DUB 🇬🇧</b>\n"
+            message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
         except Exception as e:
             await message.reply_text(e)
     if not await present_sub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_SA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌📥 NOT AVAILABLE ON OUR SUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
+            message_text += "❌📥 NOT AVAILABLE ON OUR SUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>\n"
         except Exception as e:
             await message.reply_text(e)
-        if not await present_dub_anime(anime_id):
-            try:
-                buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_DA")])
-                message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-                message_text += "❌📥 NOT AVAILABLE ON OUR DUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
-            except Exception as e:
-                await message.reply_text(e)
+    if not await present_dub_anime(anime_id):
+        try:
+            buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_DA")])
+            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+            message_text += "❌📥 NOT AVAILABLE ON OUR DUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>\n"
+        except Exception as e:
+            await message.reply_text(e)
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
-    await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-                                      
+    try:
+        await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    except Exception as e:
+        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
 
 
