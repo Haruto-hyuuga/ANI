@@ -2,7 +2,7 @@ from pyrogram import __version__
 from bot import Bot
 from pyrogram.types import Message, CallbackQuery
 from database.inline import*
-from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT
+from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, CREATOR_GC
 
 @Bot.on_callback_query()
 async def cb_handler(client: Bot, query: CallbackQuery):
@@ -27,6 +27,11 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             text = REQUEST_TEXT,
             reply_markup = REQUEST_BUTTONS
         )
+    elif data == "REQUEST_SA":
+        await query.message.edit_text(
+            text = f"{query.message.text}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
+        )
+        await Bot.forward_messages(CREATOR_GC, query.message.chat.id, query.message.id)
     elif data == "anime_download_popup":
         await query.answer("To Download The Anime You Want Tap On The (/download 12345) And Send or You Can Use /find Command Followed By Anime Id From Anilist", show_alert=True)
     elif data == "anime_notfound_popup":
