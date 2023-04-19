@@ -6,7 +6,6 @@ from pyrogram.enums import ChatMemberStatus
 from config import ADMINS, SUB_CHANNEL, DUB_CHANNEL, FS_BOT_CHANNEL, FS_GROUP
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait
-from config import MC_gif, BC_gif, GC_gif
 
 async def is_subscribed_SC(filter, client, update):
     user_id = update.from_user.id
