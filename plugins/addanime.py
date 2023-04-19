@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, PUBLIC_C_url, The_Other_Channel 
+from config import ADMINS, PUBLIC_C_url, The_Other_Channel, CREATOR_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime
 
@@ -90,9 +90,15 @@ async def delsub(client, message):
 REQPFX = ["/", "#"]
 @Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private)
 async def arequest(client, message):
-    if message.reply_to_message:
+    reply = message.reply_to_message
+    if reply:
         try:
-
+            pic = reply.photo.file_id
+            Text = reply.caption
+            LOL = await Bot.send_photo(CREATOR_GC, photo=pic, caption=Text)
+            await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
+        except Exception as e:
+            await message.reply_text(e)
     else:
         await message.reply_text(f"Bish Reply To Searched Anime Using Command: /anime")
         
