@@ -183,7 +183,7 @@ async def anime_info(client, message):
             message_text += "❌📥 NOT AVAILABLE ON OUR CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
         except Exception as e:
             await message.reply_text(e)
-    message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n
+    message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
     await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
                                       
 
