@@ -6,11 +6,14 @@ from config import BOTUSERNAME
 START_B = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("ABOUT", callback_data="About_Bot"),
+            InlineKeyboardButton("COMMANDS", callback_data="About_Bot"),
             InlineKeyboardButton("CHANNELs", callback_data="DL_Channels")
         ],
         [
             InlineKeyboardButton("REQUEST ANIME", callback_data="A_requests"),
+            InlineKeyboardButton("CREDITs", callback_data="Credits_a")
+        ],
+        [
             InlineKeyboardButton("GROUP CHAT", url=GROUP_url),
         ]
     ]
