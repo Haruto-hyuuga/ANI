@@ -33,21 +33,23 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             reply_markup = CREDIT_B
         )
     elif data == "REQUEST_SA":
+        MSGID = query.message.message_id
         message = query.message
         caption = message.caption if message.caption else ""
         await message.edit_text(
             text=f"{caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
         )
-        await Bot.copy_message(CREATOR_GC, message.chat.id, message.id)
+        await Bot.copy_message(CREATOR_GC, message.chat.id, MSGID)
         await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL")
 
     elif data == "REQUEST_DA":
+        MSGID = query.message.message_id
         message = query.message
         caption = message.caption if message.caption else ""
         await message.edit_text(
             text=f"{caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME ✅</n>"
         )
-        await Bot.copy_message(CREATOR_GC, message.chat.id, message.id)
+        await Bot.copy_message(CREATOR_GC, message.chat.id, MSGID)
         await Bot.send_message(CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL")
 
     elif data == "anime_download_popup":
