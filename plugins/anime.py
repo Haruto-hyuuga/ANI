@@ -176,15 +176,23 @@ async def anime_info(client, message):
             message_text += "<b>✅DOWNLOAD AVAILABLE IN DUB 🇬🇧</b>\n"
         except Exception as e:
             await message.reply_text(e)
-    if not await present_sub_anime(anime_id) and await present_dub_anime(anime_id):
+    if not await present_sub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_SA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌📥 NOT AVAILABLE ON OUR CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
+            message_text += "❌📥 NOT AVAILABLE ON OUR SUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
         except Exception as e:
             await message.reply_text(e)
+        if not await present_dub_anime(anime_id):
+            try:
+                buttons.append([InlineKeyboardButton("REQUEST ANIME", callback_data="REQUEST_DA")])
+                message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+                message_text += "❌📥 NOT AVAILABLE ON OUR DUB CHANNEL\n<b>Click On Request Button To Notify Our Staff And We'll Add It ASAP</b>"
+            except Exception as e:
+                await message.reply_text(e)
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
-    await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    try:
+        await message.reply_photo(cover_url, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
                                       
 
 
