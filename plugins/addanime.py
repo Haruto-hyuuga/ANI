@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, PUBLIC_C_url, The_Other_Channel, CREATOR_GC
+from config import ADMINS, Sub_C_url, Dub_C_url, CREATOR_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime
 
@@ -25,7 +25,7 @@ async def adddub(client, message):
         else:
             await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
     else:
-        await message.reply_text(f"Bish Reply To Post Link From Channel:\n {The_Other_Channel}")
+        await message.reply_text(f"Bish Reply To Post Link From Channel:\n {Dub_C_url}")
         
 
 @Bot.on_message(filters.command("deldub"))
@@ -67,7 +67,7 @@ async def addsub(client, message):
         else:
             await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
     else:
-        await message.reply_text(f"Bish Reply To Post Link From Channel:\n {PUBLIC_C_url}")
+        await message.reply_text(f"Bish Reply To Post Link From Channel:\n {Sub_C_url}")
         
     
 @Bot.on_message(filters.command("delsub") & filters.user(ADMINS))
