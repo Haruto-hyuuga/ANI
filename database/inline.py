@@ -1,6 +1,6 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from config import PUBLIC_C_url, BOT_C_url, GROUP_url, contributor_graph, memes_channel, The_Other_Channel
-from config import BOTUSERNAME 
+from config import BOTUSERNAME, OWNER
 
 
 START_B = InlineKeyboardMarkup(
@@ -22,11 +22,8 @@ START_B = InlineKeyboardMarkup(
 ABOUT_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("GIVE BOT REVIEW", url=BOT_C_url)
-        ],
-        [
             InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
-            InlineKeyboardButton("CONTRIBUTORS", url=contributor_graph)
+            InlineKeyboardButton("GIVE REVIEW ⭐", url=BOT_C_url)
         ]
     ]
 )
@@ -80,6 +77,20 @@ ANIME_RESULT_B = InlineKeyboardMarkup(
         [
             InlineKeyboardButton("DOWNLOAD", callback_data="anime_download_popup"),
             InlineKeyboardButton("NOT FOUND", callback_data="anime_notfound_popup")
+        ]
+    ]
+)
+CREDIT_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("Developer", user_id=OWNER),
+            InlineKeyboardButton("More Bots", url=BOT_C_url)
+        ],
+        [
+            InlineKeyboardButton("♥️CHANNEL CONTRIBUTORS♥️", url=contributor_graph)
+        ],
+        [
+            InlineKeyboardButton("BACK", callback_data="BACK_HOME")
         ]
     ]
 )
