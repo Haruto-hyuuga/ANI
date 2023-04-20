@@ -77,7 +77,7 @@ async def search_anime(client, message):
         except:
             duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
 
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> 📺ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
     if banner_image:
         try:
@@ -441,7 +441,7 @@ async def gcanimesearch(client, message):
         except:
             duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
 
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> 📺ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
 
     RESULT_B = InlineKeyboardMarkup(
