@@ -576,12 +576,23 @@ async def gcanimedlcmd(client, message):
             message_text += f"<b>ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b> ❌\n"
         except Exception as e:
             await message.reply_text(e)
-
-    try:
-        buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
-        await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    if message.reply_to_message:
+        try:
+            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
+            await message.reply_to_message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        except Exception as e:
+            await message.reply_to_message.reply_text(e, reply_markup=ERROR_BUTTON)   
+    if not message.reply_to_message:
+        try:
+            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
+            await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
-        await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+            await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
+
+
+
+
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.private)
 async def nosearchpvtcleft(client, message):
