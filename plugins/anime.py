@@ -9,8 +9,12 @@ from config import GROUP_url, FS_GROUP
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 
 ALLCMD_FS_PIC = "https://telegra.ph/file/028f63b6ac6473ecab0a5.jpg"
-ALLCMD_FS_TXT = ""
+ALLCMD_FS_TXT = """
+𝙊𝙝 𝙔𝙤𝙪 𝘿𝙪𝙢𝙗 𝘿𝙪𝙢𝙗 𝘾𝙝𝙞𝙡𝙙, 𝙔𝙤𝙪 𝘾𝙖𝙣'𝙩 𝙐𝙨𝙚 𝘼𝙣𝙮 𝘾𝙤𝙢𝙢𝙖𝙣𝙙 𝙊𝙛 𝙏𝙝𝙞𝙨 𝘽𝙤𝙩 𝙐𝙣𝙩𝙞𝙡 𝙔𝙤𝙪 𝙅𝙤𝙞𝙣 𝘼𝙡𝙡 𝙊𝙪𝙧 𝘾𝙃𝘼𝙉𝙉𝙀𝙇𝙨 𝙖𝙣𝙙 𝙂𝙍𝙊𝙐𝙋.
 
+ᴜꜱᴇ ᴄᴏᴍᴍᴀɴᴅ: /channels ᴛᴏ ᴄʜᴇᴄᴋ ᴡʜɪᴄʜ ᴄʜᴀɴɴᴇʟ ᴏʀ ɢʀᴏᴜᴘ ʏᴏᴜʀ ɴᴏᴛ ᴊᴏɪɴᴇᴅ
+ᴏʀ ʀᴇꜱᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ ʙʏ: /start 
+"""
 
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
