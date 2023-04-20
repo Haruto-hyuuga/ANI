@@ -11,8 +11,6 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 BPIC = "https://telegra.ph/file/85c5229265237e8c42055.jpg"
 
 
-
-
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
     args = message.text.split()
@@ -21,46 +19,93 @@ async def search_anime(client, message):
         return
     anime_name = " ".join(args[1:])
 
-    # Build the AniList API query URL
+    
     query = '''
-    query ($search: String) {
-        Page {
-            media(search: $search, type: ANIME) {
-                id
-                title {
-                    romaji
-                    english
-                    native
+        query ($search: String) {
+            Page {
+                media(search: $search, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+                    episodes
+                    duration
+                    status
+                    bannerImage
                 }
             }
         }
-    }
     '''
     variables = {"search": anime_name}
     url = "https://graphql.anilist.co"
     response = httpx.post(url, json={"query": query, "variables": variables})
 
-    # Check if the API request was successful
+   
     if response.status_code != 200:
         await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
-    # Parse the API response and format the message
+    
     data = response.json()["data"]
     anime_list = data["Page"]["media"]
     if not anime_list:
         await message.reply_text(f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title")
         return
 
-    # Build the list of search results
+    banner_image = None
+    if len(anime_list) == 1:
+        banner_image = anime_list[0]["bannerImage"]
+    else:
+        banner_images = [anime["bannerImage"] for anime in anime_list if anime["bannerImage"]]
+        if banner_images:
+            banner_image = random.choice(banner_images)
+
+
     message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:10]):
+    for i, anime in enumerate(anime_list[:15]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
-        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b> \n  ➥<code> /download {anime_id} </code>\n\n"
+        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        try:
+            duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+            duration_hours = duration // 60
+            duration_minutes = duration % 60
+            duration_string = f"{duration_hours}:{duration_minutes:02}"
+        except:
+            duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
 
-    await message.reply_text(message_text, reply_markup=ANIME_RESULT_B)
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
+    if banner_image:
+        try:
+            await message.reply_photo(
+                photo=banner_image,
+                caption=message_text,
+                reply_markup=RESULT_B
+            )
+        except Exception as e:
+            await message.reply_text(
+                text=message_text,
+                reply_markup=RESULT_B
+            )
+            
+    else:
+        
+        try:
+            await message.reply_photo(
+                photo=BPIC,
+                caption=message_text,
+                reply_markup=ANIME_RESULT_B
+            )
+        except Exception as e:
+            await message.reply_text(
+                text=message_text,
+                reply_markup=ANIME_RESULT_B
+            )
+            
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
