@@ -386,11 +386,15 @@ async def search_anime(client, message):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
         episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
         status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        duration_hours = duration // 60
-        duration_minutes = duration % 60
-        duration_string = f"{duration_hours}:{duration_minutes:02}"
+        try:
+            duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+            duration_hours = duration // 60
+            duration_minutes = duration % 60
+            duration_string = f"{duration_hours}:{duration_minutes:02}"
+        except:
+            duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+
         message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b>\nᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}  ⌛: {duration_string}   ꜱᴛᴀᴛᴜꜱ: {status}\n➥<code>  /download {anime_id} </code>\n\n"
 
     if banner_image:
@@ -411,7 +415,7 @@ async def search_anime(client, message):
         )
     
 
-@Bot.on_message(filters.command(["download", "anime"]) filters.private)
+@Bot.on_message(filters.command("download") & filters.chat(FS_GROUP))
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
@@ -422,35 +426,33 @@ async def anime_info(client, message):
     except (IndexError, ValueError):
         await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
         return
-    
-    # Build the AniList API query URL
+
     query = '''
-    query ($id: Int) {
-        Media (id: $id, type: ANIME) {
+        query ($id: Int) {
+          Media(id: $id, type: ANIME) {
             id
             title {
-                romaji
-                english
-                native
+              romaji
+              english
+              native
             }
             episodes
             status
             genres
             duration
-            
+            averageScore
+          }
         }
-    }
     '''
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
     response = httpx.post(url, json={"query": query, "variables": variables})
 
-    # Check if the API request was successful
+
     if response.status_code != 200:
         await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
-    # Parse the API response and format the message
     data = response.json()["data"]
     anime = data["Media"]
     if not anime:
@@ -458,27 +460,32 @@ async def anime_info(client, message):
         return
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
-  #  cover_url = anime["coverImage"]["extraLarge"]
- #   banner_url = anime["bannerImage"]
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
-    
-    duration = f"{anime['duration']} mins" if anime['duration'] else ""
-    
-    message_text = f"<b>{title}</b>\n\n"
-    message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n"
+    title_img = f"https://img.anili.st/media/{anime_id}"
+    average_score = anime["averageScore"]
+    try:
+        duration = anime["duration"]
+        duration_hours = duration // 60
+        duration_minutes = duration % 60
+        duration_string = f"{duration_hours}:{duration_minutes:02}"
+    except:
+        duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+
+    message_text = f"<b>{title}</b>\n"
     message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
-    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
+    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration_string}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
+    message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n\n"
 
     buttons = []
+
     if await present_sub_anime(anime_id):
         try:
             sblink = await get_sub_anime(anime_id)
             buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
+            message_text += f"<b>ꜱᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ✅\n"
         except Exception as e:
             await message.reply_text(e)
             
@@ -486,40 +493,27 @@ async def anime_info(client, message):
         try:
             dblink = await get_dub_anime(anime_id)
             buttons.append([InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = dblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
-        except Exception as e:
-            await message.reply_text(e)
-    if not await present_sub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
-        except Exception as e:
-            await message.reply_text(e)
-    if not await present_dub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_DUB<b>\n➥ NOT AVAILABLE</b>\n"
+            message_text += f"<b>ᴅᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ✅\n"
         except Exception as e:
             await message.reply_text(e)
 
-    message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
-    message_text += f"<b>ꜰᴏʀ ᴍᴏʀᴇ ᴀɴɪᴍᴇ ᴅᴇᴛᴀɪʟꜱ ᴛʏᴘᴇ:</b> \n<code>/info {anime_id}</code>\n"
-    
-    title_img = f"https://img.anili.st/media/{anime_id}"
+    if not await present_sub_anime(anime_id):
+        try:
+            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
+            message_text += f"<b>ꜱᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ❌\n"
+        except Exception as e:
+            await message.reply_text(e)
+
+    if not await present_dub_anime(anime_id):
+        try:
+            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
+            message_text += f"<b>ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b> ❌\n"
+        except Exception as e:
+            await message.reply_text(e)
+
     try:
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
-
-
-
-
-
-
-
-
 
 
