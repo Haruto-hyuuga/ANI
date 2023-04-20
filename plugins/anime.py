@@ -57,11 +57,6 @@ async def search_anime(client, message):
 
     await message.reply_text(message_text, reply_markup=ANIME_RESULT_B)
 
-@Bot.on_message(filters.command(["search", "find"]) & filters.private)
-async def nosearchpvtcleft(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-    
-
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
@@ -181,11 +176,6 @@ async def anime_info(client, message):
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
-
-@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
-async def nodownloadleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-    
 
 
 @Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -335,11 +325,6 @@ async def animefulinfo(client, message):
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
 
-@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
-async def nofullanineleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-    
-
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimesearch(client, message):
@@ -395,7 +380,7 @@ async def gcanimesearch(client, message):
 
 
     message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:15]):
+    for i, anime in enumerate(anime_list[:10]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
         episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
@@ -549,6 +534,21 @@ async def gcanimedlcmd(client, message):
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
+
+@Bot.on_message(filters.command(["search", "find"]) & filters.private)
+async def nosearchpvtcleft(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+  
+@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
+async def nodownloadleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+  
+@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
+async def nofullanineleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+        
+
+
 
 
 @Bot.on_message(filters.command("request") & filters.private)
