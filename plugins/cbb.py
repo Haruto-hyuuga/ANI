@@ -53,15 +53,19 @@ async def cb_handler(client, query: CallbackQuery):
         await client.send_message(chat_id=CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL")
 
     elif data == "anime_download_popup":
-        await query.answer("To Download The Anime You Want Tap On The (/download 12345) And Send or You Can Use /find Command Followed By Anime Id From Anilist", show_alert=True)
+        await query.answer("TO DOWNLOAD THE ANIME YOU WANT TAP ON (/download 12345) And SEND, YOU'LL GET DOWNLOAD LINK or YOU CAN USE (/anime id) TOO", show_alert=True)
     elif data == "anime_notfound_popup":
-        await query.answer("If The Anime You're Looking For Is Not In List, Try Searching More Accurate Title or Get Anime Id From Anilist", show_alert=True)
+        await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎", show_alert=True)
+    elif data == "GroupAnimeInfo":
+        await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
     elif data == "close":
         await query.message.delete()
         try:
             await query.message.reply_to_message.delete()
         except:
             pass
+    else:
+        await query.message.delete()
 
 
 @Bot.on_callback_query(filters.regex("gcAresultclose"))
