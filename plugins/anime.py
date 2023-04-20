@@ -329,7 +329,7 @@ async def animefulinfo(client, message):
 
 
 
-@Bot.on_message(filters.command(["search", "anime"]) & filters.chat(FS_GROUP))
+@Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimesearch(client, message):
     user = message.from_user.id
     args = message.text.split()
@@ -415,15 +415,25 @@ async def gcanimesearch(client, message):
                 reply_markup=RESULT_B
             )
         except Exception as e:
-            await message.reply_text(e, reply_markup=ERROR_BUTTON)
+            await message.reply_text(
+                text=message_text,
+                reply_markup=RESULT_B
+            )
+            
     else:
         BPIC = "https://telegra.ph/file/85c5229265237e8c42055.jpg"
-        await message.reply_photo(
-            photo=BPIC,
-            caption=message_text, 
-            reply_markup=RESULT_B
-        )
-    
+        try:
+            await message.reply_photo(
+                photo=BPIC,
+                caption=message_text,
+                reply_markup=RESULT_B
+            )
+        except Exception as e:
+            await message.reply_text(
+                text=message_text,
+                reply_markup=RESULT_B
+            )
+            
 
 @Bot.on_message(filters.command("download") & filters.chat(FS_GROUP))
 async def gcanimedlcmd(client, message):
