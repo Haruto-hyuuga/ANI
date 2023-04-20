@@ -329,8 +329,8 @@ async def animefulinfo(client, message):
 
 
 
-@Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
-async def search_anime(client, message):
+@Bot.on_message(filters.command(["search", "anime"]) & filters.chat(FS_GROUP))
+async def gcanimesearch(client, message):
     user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
@@ -426,7 +426,7 @@ async def search_anime(client, message):
     
 
 @Bot.on_message(filters.command("download") & filters.chat(FS_GROUP))
-async def anime_info(client, message):
+async def gcanimedlcmd(client, message):
     user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
