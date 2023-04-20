@@ -97,7 +97,7 @@ from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
 from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
 from database.inline import AllFSCB
 
-@Bot.on_message(filters.command(FSCMD) & filters.private)
+@Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
     id = message.from_user.id
     if not await present_user(id):
@@ -166,6 +166,32 @@ async def not_joined(client: Client, message: Message):
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
     
+@Bot.on_message(filters.command('channels') & filters.private)
+async def mychannelstats(client: Client, message: Message):
+    id = message.from_user.id
+    if not await present_user(id):
+        try:
+            await add_user(id)
+        except:
+            pass
+    update = message
+    MC = await is_subscribed_SC(filter, client, update)
+    DC = await is_subscribed_DC(filter, client, update)
+    BC = await is_subscribed_BOT(filter, client, update)
+    GC = await is_subscribed_GROUP(filter, client, update)
+    C1T = await F_SC_txt(MC)
+    C2T = await F_BC_txt(BC)
+    C3T = await F_GC_txt(GC)
+    C4T = await F_DC_txt(DC)
+    ALLCC_MSG = "𝙃𝙚𝙧𝙚'𝙨 𝙏𝙝𝙚 𝙇𝙞𝙨𝙩 𝙊𝙛 𝘼𝙡𝙡 𝘾𝙝𝙖𝙣𝙣𝙚𝙡𝙨:"
+    try:
+        FINAL_GIF = await Gif_Random()
+        await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+    except:
+        FINAL_GIF = await Gif_Random()
+        await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+    
+
    
 @Bot.on_message(filters.private & filters.command('broadcast') & filters.user(ADMINS))
 async def send_text(client: Bot, message: Message):
