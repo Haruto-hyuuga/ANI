@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC
+from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
@@ -108,7 +108,7 @@ NON_A_S_T = """
 ╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
 ╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @AnimeRobots 💕
+╠╼ @{} 💕
 ╚══════════════════════╝
 """
 
@@ -118,9 +118,9 @@ ADMIN_S_T = """
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 ╠<b>ᴜꜱᴇʀꜱ:</b> {}
 ╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b>{} 
+╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @AnimeRobots 💕
+╠╼ @{} 💕
 ╚══════════════════════╝
 """
 
@@ -136,9 +136,9 @@ async def get_users(client: Bot, message: Message):
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
-        await msg.edit(ADMIN_S_T.format(US, SA, DA))
+        await msg.edit(ADMIN_S_T.format(US, SA, DA, BOTUSERNAME))
     else:
-        await msg.edit(ADMIN_S_T.format(SA, DA))
+        await msg.edit(ADMIN_S_T.format(SA, DA, BOTUSERNAME))
 
 
 
