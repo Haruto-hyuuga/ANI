@@ -6,15 +6,15 @@ from config import BOTUSERNAME, OWNER
 START_B = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("COMMANDS", callback_data="About_Bot"),
-            InlineKeyboardButton("CHANNELs", callback_data="DL_Channels")
+            InlineKeyboardButton("𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦", callback_data="About_Bot"),
+            InlineKeyboardButton("𝗖𝗛𝗔𝗡𝗡𝗘𝗟𝘀", callback_data="DL_Channels")
         ],
         [
-            InlineKeyboardButton("REQUEST ANIME", callback_data="A_requests"),
-            InlineKeyboardButton("CREDITs", callback_data="Credits_a")
+            InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘", callback_data="A_requests"),
+            InlineKeyboardButton("𝗖𝗥𝗘𝗗𝗜𝗧𝘀", callback_data="Credits_a")
         ],
         [
-            InlineKeyboardButton("GROUP CHAT", url=GROUP_url),
+            InlineKeyboardButton("𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧", url=GROUP_url),
         ]
     ]
 )
@@ -22,8 +22,8 @@ START_B = InlineKeyboardMarkup(
 ABOUT_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
-            InlineKeyboardButton("GIVE REVIEW ⭐", url=BOT_C_url)
+            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME"),
+            InlineKeyboardButton("𝗚𝗜𝗩𝗘 𝗥𝗘𝗩𝗜𝗘𝗪 ⭐", url=BOT_C_url)
         ]
     ]
 )
@@ -31,14 +31,14 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 CHANNELS_BUTTON = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("English-SUB | Original Audio", url = Sub_C_url),
+            InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = Sub_C_url),
         ],
         [
-            InlineKeyboardButton("English-SUB | English-DUB + Japanese", url = Dub_C_url),
+            InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = Dub_C_url),
         ],
         [
-            InlineKeyboardButton("BACK", callback_data="BACK_HOME"),
-            InlineKeyboardButton("ANIMEMES", url=memes_channel)
+            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME"),
+            InlineKeyboardButton("𝗠𝗲𝗠𝗲𝗦", url=memes_channel)
         ]
     ]
 )
@@ -46,7 +46,7 @@ CHANNELS_BUTTON = InlineKeyboardMarkup(
 REQUEST_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("BACK", callback_data="BACK_HOME")
+            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
         ]
     ]
 )
@@ -54,8 +54,8 @@ REQUEST_BUTTONS = InlineKeyboardMarkup(
 ERROR_BUTTON = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("CLOSE", callback_data="close"),
-            InlineKeyboardButton("REPORT ISSUE", url = "https://t.me/Maid_Robot")
+            InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+            InlineKeyboardButton("𝗥𝗲𝗽𝗼𝗿𝘁 𝗘𝗿𝗿𝗼𝗿 ⛑️", url = "https://t.me/Maid_Robot")
         ]
     ]
 )
@@ -63,34 +63,34 @@ ERROR_BUTTON = InlineKeyboardMarkup(
 AllFSCB = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("Sub Anime Channel 🇯🇵", url = Sub_C_url),
-            InlineKeyboardButton("Dub Anime Channel 🇬🇧", url = Dub_C_url)
+            InlineKeyboardButton("𝗔𝗻𝗶𝗺𝗲 𝗦𝗨𝗕 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🇯🇵", url = Sub_C_url),
+            InlineKeyboardButton("𝗔𝗻𝗶𝗺𝗲 𝗗𝗨𝗕 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🇬🇧", url = Dub_C_url)
         ],
         [
-            InlineKeyboardButton("Bot Channel", url = BOT_C_url),
-            InlineKeyboardButton("Anime Group Chat", url = GROUP_url)
+            InlineKeyboardButton("𝗕𝗼𝘁 𝗖𝗵𝗮𝗻𝗻𝗲𝗹", url = BOT_C_url),
+            InlineKeyboardButton("𝗖𝗛𝗔𝗧 𝗚𝗥𝗢𝗨𝗣", url = GROUP_url)
         ]
     ]
 )
 ANIME_RESULT_B = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("DOWNLOAD", callback_data="anime_download_popup"),
-            InlineKeyboardButton("NOT FOUND", callback_data="anime_notfound_popup")
+            InlineKeyboardButton("📥 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data="anime_download_popup"),
+            InlineKeyboardButton("𝗡𝗼𝘁 𝗜𝗻 𝗟𝗶𝘀𝘁 🔎", callback_data="anime_notfound_popup")
         ]
     ]
 )
 CREDIT_B = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("Developer", user_id=OWNER),
-            InlineKeyboardButton("More Bots", url=BOT_C_url)
+            InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", user_id=OWNER),
+            InlineKeyboardButton("ʙᴏᴛ ꜱᴛᴀᴛᴜꜱ", url=BOT_C_url)
         ],
         [
-            InlineKeyboardButton("♥️CHANNEL CONTRIBUTORS♥️", url=contributor_graph)
+            InlineKeyboardButton("♥️ 𝑪𝑯𝑨𝑵𝑵𝑬𝑳 𝑪𝑶𝑵𝑻𝑹𝑰𝑩𝑼𝑻𝑶𝑹𝑺 ♥️", url=contributor_graph)
         ],
         [
-            InlineKeyboardButton("BACK", callback_data="BACK_HOME")
+            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
         ]
     ]
 )
