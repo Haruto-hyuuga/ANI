@@ -586,7 +586,7 @@ async def gcanimedlcmd(client, message):
         try:
             buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
             await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-    except Exception as e:
+        except Exception as e:
             await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
 
