@@ -305,7 +305,7 @@ async def animefulinfo(client, message):
     try:
         await message.reply_photo(banner_url, caption=f"<b>{title}</b>\n\n{description}")
     except :
-        await message.reply_photo(banner_url, caption=f"<b>{title}</b>")
+        await message.reply_photo(cover_url, caption=f"<b>{title}</b>\n\n{description}")
 
     YtRESULT_B = InlineKeyboardMarkup(
         [
