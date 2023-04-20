@@ -58,31 +58,13 @@ async def cb_handler(client, query: CallbackQuery):
         await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎", show_alert=True)
     elif data == "GroupAnimeInfo":
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
+    elif data == "gcAresultclose":
+        await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
     elif data == "close":
         await query.message.delete()
         try:
             await query.message.reply_to_message.delete()
         except:
             pass
-
-
-@Bot.on_callback_query(filters.regex("gcAresultclose"))
-async def resultAclose(client, CallbackQuery):
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    query, user_id = callback_request.split("|")
-    if CallbackQuery.from_user.id != int(user_id):
-        try:
-            return await CallbackQuery.answer(
-                "You're Not Allowed To Close This, Search Your Own Anime To Close XD", show_alert=True
-            )
-        except:
-            return
-
-    await CallbackQuery.message.delete()
-    try:
-        await CallbackQuery.answer()
-    except:
-        return
 
 
