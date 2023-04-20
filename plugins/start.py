@@ -6,7 +6,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random
+from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random, ERR_TOPIC_ID, REQUEST_GC
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC, FSCMD
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON
@@ -18,8 +18,9 @@ async def start_command(client: Client, message: Message):
     if not await present_user(id):
         try:
             await add_user(id)
-        except:
-            pass
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
     text = message.text
     if len(text)>7:
         try:
@@ -74,16 +75,20 @@ async def start_command(client: Client, message: Message):
                 await asyncio.sleep(e.x)
                 await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
             except:
-                pass
+                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nWhile Sending Anime:-\nString= {base64_string} \n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
         return
     else:
-        FINAL_VID = await Vid_Random()
-        await message.reply_video(
-            video = FINAL_VID,
-            caption = START_MSG.format(message.from_user.mention),
-           reply_markup = START_B,
-        )
-        return
+        try:
+            FINAL_VID = await Vid_Random()
+            await message.reply_video(
+                video = FINAL_VID,
+                caption = START_MSG.format(message.from_user.mention),
+               reply_markup = START_B,
+            )
+            return
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 
     
 #=====================================================================================##
@@ -101,8 +106,9 @@ async def not_joined(client: Client, message: Message):
     if not await present_user(id):
         try:
             await add_user(id)
-        except:
-            pass
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+         
     update = message
     MC = await is_subscribed_SC(filter, client, update)
     DC = await is_subscribed_DC(filter, client, update)
@@ -167,11 +173,6 @@ async def not_joined(client: Client, message: Message):
 @Bot.on_message(filters.command('channels') & filters.private)
 async def mychannelstats(client: Client, message: Message):
     id = message.from_user.id
-    if not await present_user(id):
-        try:
-            await add_user(id)
-        except:
-            pass
     update = message
     MC = await is_subscribed_SC(filter, client, update)
     DC = await is_subscribed_DC(filter, client, update)
