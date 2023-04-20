@@ -90,17 +90,21 @@ REQPFX = ["/", "#"]
 async def arequest(client, message):
     reply = message.reply_to_message
     if reply:
-        try:
-            pic = reply.photo.file_id
-            Text = reply.caption
-            LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text, reply_to_message_id=REQ_TOPIC_ID)
-            await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
-            await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
-        except Exception as e:
-            await message.reply_text("Don't Faking Mess With Command, Search Anime Using /anime Then Reply To That Message!")
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+        if len(message.command) != 1:
+            try:
+                text = message.text.split(None, 1)[1]
+                pic = reply.photo.file_id
+                Text = reply.caption
+                LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text, reply_to_message_id=REQ_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} \n🆔:<code>{message.from_user.id}</code>\n💬: {text}\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
+                await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
+            except Exception as e:
+                await message.reply_text("Something Went Wrong👀\nTry Again And Reply Only to Bot Message\nSearch for anime /download Then Reply")
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+        else:
+            await message.reply_text("Mention Category after command, you want it in Dub Or Sub\n\nformat: /request DUB")
     else:
-        await message.reply_text(f"Bish Reply To Searched Anime Using Command: /anime")
+        await message.reply_text("Bish Reply To Searched Anime Using Command: /anime")
         
 
 
