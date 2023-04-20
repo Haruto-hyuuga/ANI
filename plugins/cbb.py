@@ -72,7 +72,7 @@ async def resultAclose(client, CallbackQuery):
     if CallbackQuery.from_user.id != int(user_id):
         try:
             return await CallbackQuery.answer(
-                "You're not allowed to close this.", show_alert=True
+                "You're Not Allowed To Close This, Search Your Own Anime To Close XD", show_alert=True
             )
         except:
             return
