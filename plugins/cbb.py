@@ -62,3 +62,25 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.reply_to_message.delete()
         except:
             pass
+
+
+@Bot.on_callback_query(filters.regex("callback_data=f"gcAresultclose"))
+async def resultAclose(client, CallbackQuery):
+    callback_data = CallbackQuery.data.strip()
+    callback_request = callback_data.split(None, 1)[1]
+    query, user_id = callback_request.split("|")
+    if CallbackQuery.from_user.id != int(user_id):
+        try:
+            return await CallbackQuery.answer(
+                "You're not allowed to close this.", show_alert=True
+            )
+        except:
+            return
+
+    await CallbackQuery.message.delete()
+    try:
+        await CallbackQuery.answer()
+    except:
+        return
+
+
