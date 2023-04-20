@@ -77,20 +77,17 @@ async def search_anime(client, message):
 
 
     message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:15]):
+    for i, anime in enumerate(anime_list[:10]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
         episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
         status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
         try:
-            duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-            duration_hours = duration // 60
-            duration_minutes = duration % 60
-            duration_string = f"{duration_hours}:{duration_minutes:02}"
+            duration = f"{anime['duration']} mins" if anime['duration'] else ""
         except:
-            duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+            duration = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
 
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> 📺ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>  ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
     if banner_image:
         try:
@@ -436,15 +433,9 @@ async def gcanimesearch(client, message):
         anime_id = anime["id"]
         episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
         status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        try:
-            duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-            duration_hours = duration // 60
-            duration_minutes = duration % 60
-            duration_string = f"{duration_hours}:{duration_minutes:02}"
-        except:
-            duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        duration = f"{anime['duration']} mins" if anime['duration'] else ""
 
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> 📺ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>  ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>  ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
 
     RESULT_B = InlineKeyboardMarkup(
