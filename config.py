@@ -132,7 +132,7 @@ ALL_CHANNEL_TEXT = """
 
 CREDIT_TEXT = """
 𝑻𝒉𝒊𝒔 𝑩𝒐𝒕 𝑾𝒊𝒍𝒍 𝑴𝒂𝒌𝒆 𝒊𝒕 𝑬𝒂𝒔𝒚 𝑻𝒐 𝑺𝒆𝒂𝒓𝒄𝒉 𝒂𝒏𝒊𝒎𝒆 𝒂𝒏𝒅 𝑮𝒆𝒕 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝑳𝒊𝒏𝒌𝒔.
-<b>ᴍᴀᴅᴇ ʙʏ @MaidShiro ᴡɪᴛʜ ♡</b>
+<b>ᴍᴀᴅᴇ ʙʏ @MaidShiro // @manistique
 
 <b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
 """
