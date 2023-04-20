@@ -14,8 +14,10 @@ BOTUSERNAME = "AnimeDL_Robot"
 #DATABASE CHANNEL
 CHANNEL_ID = -1001859794315
 CREATOR_GC = -1001888438236
-REQUEST_GC = -1001903277336
 
+REQUEST_GC = -1001903277336
+ERR_TOPIC_ID = 50
+REQ_TOPIC_ID = 49
 
 DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
 SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongodb.net/?retryWrites=true&w=majority"
