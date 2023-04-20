@@ -49,7 +49,7 @@ async def search_anime(client, message):
         return
 
     # Build the list of search results
-    message_text = f"<u>Top search results for '{anime_name}'</u>:\n\n"
+    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
     for i, anime in enumerate(anime_list[:10]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
@@ -372,14 +372,19 @@ async def search_anime(client, message):
         return
 
     # Build the list of search results
-    message_text = f"<u>Top search results for '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:10]):
+    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    for i, anime in enumerate(anime_list[:15]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
-        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b> \n  ➥<code> /download {anime_id} </code>\n\n"
+        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        duration = anime["duration"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        duration_hours = duration // 60
+        duration_minutes = duration % 60
+        duration_string = f"{duration_hours}:{duration_minutes:02}"
+        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b>\nᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}  ⌛: {duration_string}   ꜱᴛᴀᴛᴜꜱ: {status}\n➥<code>  /download {anime_id} </code>\n\n"
 
     await message.reply_text(message_text, reply_markup=ANIME_RESULT_B)
-
 
 
 
