@@ -164,6 +164,10 @@ def get_readable_time(seconds: int) -> str:
     up_time += ":".join(time_list)
     return up_time
 
+
+MBCMD = ["stats", "request", "search", "find", "download", "anime", "", "", "", "", "", "", "", """""""""""""""""""""""]
+
+
 sub_PUB_Sc = filters.create(is_subscribed_SC)
 sub_PUB_Dc = filters.create(is_subscribed_DC)
 sub_BOT_c = filters.create(is_subscribed_BOT)
