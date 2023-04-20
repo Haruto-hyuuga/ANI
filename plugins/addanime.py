@@ -6,7 +6,7 @@ from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, d
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 
-@Bot.on_message(filters.command("adddub"))
+@Bot.on_message(filters.command("adddub") & filters.user(ADMINS))
 async def adddub(client, message):
     if message.reply_to_message:
         link = message.reply_to_message.text
@@ -28,7 +28,7 @@ async def adddub(client, message):
         await message.reply_text(f"Bish Reply To Post Link From Channel:\n {Dub_C_url}")
         
 
-@Bot.on_message(filters.command("deldub"))
+@Bot.on_message(filters.command("deldub") & filters.user(ADMINS))
 async def deldub(client, message):
     if len(message.command) != 1:
         text = message.text.split(None, 1)[1]
