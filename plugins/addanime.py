@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME
+from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
@@ -93,14 +93,17 @@ async def arequest(client, message):
         try:
             pic = reply.photo.file_id
             Text = reply.caption
-            LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text)
+            LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
             await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
         except Exception as e:
-            await message.reply_text(e)
+            await message.reply_text("Don't Faking Mess With Command, Search Anime Using /anime Then Reply To That Message!")
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
     else:
         await message.reply_text(f"Bish Reply To Searched Anime Using Command: /anime")
         
+
+
 NON_A_S_T = """
 ╔══════════════════════╗
 ╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
