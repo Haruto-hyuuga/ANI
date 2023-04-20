@@ -198,13 +198,20 @@ async def send_text(client: Bot, message: Message):
                 pass
             total += 1
         
-        status = f"""<b><u>Broadcast Completed</u>
-
-Total Users: <code>{total}</code>
-Successful: <code>{successful}</code>
-Blocked Users: <code>{blocked}</code>
-Deleted Accounts: <code>{deleted}</code>
-Unsuccessful: <code>{unsuccessful}</code></b>"""
+        status = f"""
+╔══════════════════════╗
+║ 𝘽𝙍𝙊𝘼𝘿𝘾𝘼𝙎𝙏 𝙎𝙏𝘼𝙏𝙎 📡
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠> @AnimeDL_Robot
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠╼👤 <b>ᴛᴏᴛᴀʟ ᴜꜱᴇʀꜱ: {total} </b>
+╠✅ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟ: <b>{successful} </b>
+╠🚫ʙʟᴏᴄᴋᴇᴅ: <b>{blocked}</b>
+║
+╠💀ᴅᴇʟᴇᴛᴇᴅ: <b>{deleted}</b>   ⚠️ᴇʀʀᴏʀ: <b>{unsuccessful}</b>
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╚══════════════════════╝
+"""
         
         return await pls_wait.edit(status)
 
