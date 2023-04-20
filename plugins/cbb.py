@@ -64,7 +64,7 @@ async def cb_handler(client, query: CallbackQuery):
             pass
 
 
-@Bot.on_callback_query(filters.regex("callback_data=f"gcAresultclose"))
+@Bot.on_callback_query(filters.regex("gcAresultclose"))
 async def resultAclose(client, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
