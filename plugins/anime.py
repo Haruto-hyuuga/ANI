@@ -8,6 +8,10 @@ from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anim
 from config import GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 
+BPIC = "https://telegra.ph/file/85c5229265237e8c42055.jpg"
+
+
+
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
@@ -328,7 +332,6 @@ async def animefulinfo(client, message):
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimesearch(client, message):
-    user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -393,13 +396,13 @@ async def gcanimesearch(client, message):
         except:
             duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
 
-        message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b>\nᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}  ⌛: {duration_string}   ꜱᴛᴀᴛᴜꜱ: {status}\n➥<code>  /download {anime_id} </code>\n\n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}  ⌛: {duration_string} hr</b> ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
 
 
     RESULT_B = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose abc|{user}"),
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"),
                 InlineKeyboardButton("𝗡𝗼𝘁 𝗶𝗻 𝗟𝗶𝘀𝘁 🔎", callback_data="anime_notfound_popup")
             ]
         ]
@@ -418,7 +421,7 @@ async def gcanimesearch(client, message):
             )
             
     else:
-        BPIC = "https://telegra.ph/file/85c5229265237e8c42055.jpg"
+        
         try:
             await message.reply_photo(
                 photo=BPIC,
@@ -530,7 +533,7 @@ async def gcanimedlcmd(client, message):
             await message.reply_text(e)
 
     try:
-        buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose abc|{user}"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
+        buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
@@ -547,9 +550,6 @@ async def nodownloadleftc(client, message):
 async def nofullanineleftc(client, message):
      await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
         
-
-
-
 
 @Bot.on_message(filters.command("request") & filters.private)
 async def norequestleftc(client, message):
