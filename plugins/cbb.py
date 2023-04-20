@@ -2,7 +2,7 @@ from pyrogram import filters, __version__
 from bot import Bot
 from pyrogram.types import Message, CallbackQuery
 from database.inline import*
-from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT
+from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID
 
 @Bot.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
