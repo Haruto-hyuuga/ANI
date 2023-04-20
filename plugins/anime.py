@@ -59,7 +59,7 @@ async def search_anime(client, message):
 
 
 
-@Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
