@@ -3,14 +3,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import random 
 
-# raiden
-TG_BOT_TOKEN = "5844274164:AAHGFMBKEIcoUBS5uPekGAtag7BBaLi5GQI"
-# yae miko
-#TG_BOT_TOKEN = "5930523466:AAGPG1MSNMOZ6icw6O2y_6E_Zi3OvBDYP64"
-#
-#TG_BOT_TOKEN = "5384960204:AAF45AwUFQtTYG7OhjFpwI937KSbr6V7ofY"
-
-
+# mainbot
+TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
 BOTUSERNAME = "AnimeDL_Robot"
@@ -19,7 +13,7 @@ BOTUSERNAME = "AnimeDL_Robot"
 
 #DATABASE CHANNEL
 CHANNEL_ID = -1001859794315
-CREATOR_GC = -1001671956585
+CREATOR_GC = -1001888438236
 REQUEST_GC = -1001840582153
 
 
@@ -66,8 +60,6 @@ async def Gif_Random():
     return FINAL_GIF
 
 
-
-
 FORCE_MSG = """
 <b><u>Hey There fellow Anime Lover!</u></b>
 <b>To Use This Bot You Must Join My Channels and Group, Since This Is A Free Service But It Takes Heck Lot Of Work~</b>
@@ -97,6 +89,15 @@ ABOUT_TEXT = """
 
 /anime_info or /info 'ANIME ID'
 <i>Use this command to get detailed anime info trailer and many more</i>
+
+/request (reply to anime info msg)
+<i>Use this command to Request anime to add in Bot</i>
+
+/channels
+<i>Use this command to get all chennals links</i>
+
+/stats 
+<i>You Can Check Bot's Anime Stats</i>
 """
 
 REQUEST_TEXT = """
@@ -145,12 +146,8 @@ ALLCMD_FS_TXT = """
 
 
 
-
-
 PORT = os.environ.get("PORT", "8080")
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
-
-
 
 
 ADMINS = []
