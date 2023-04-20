@@ -103,7 +103,44 @@ async def arequest(client, message):
     else:
         await message.reply_text(f"Bish Reply To Searched Anime Using Command: /anime")
         
+NON_A_S_T = """
+╔══════════════════════╗
+╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠╼ @AnimeRobots 💕
+╚══════════════════════╝
+"""
 
+ADMIN_S_T = """
+╔══════════════════════╗
+╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ᴜꜱᴇʀꜱ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b>{} 
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠╼ @AnimeRobots 💕
+╚══════════════════════╝
+"""
+
+
+@Bot.on_message(filters.command('stats') & filters.private)
+async def get_users(client: Bot, message: Message):
+    msg = await client.send_message(chat_id=message.chat.id, text=WAIT_MSG)
+    UID = message.from_user.id
+    suba = await full_sub_Animebase()
+    SA = len(suba)
+    duba = await full_dub_Animebase()
+    DA = len(duba)
+    if UID in ADMINS:
+        user = await full_userbase()
+        US = len(user)
+        await msg.edit(ADMIN_S_T.format(US, SA, DA))
+    else:
+        await msg.edit(ADMIN_S_T.format(SA, DA))
 
 
 
