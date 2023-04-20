@@ -2,9 +2,9 @@ from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import ADMINS, Sub_C_url, Dub_C_url, CREATOR_GC
-from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime
-from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime
-
+from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
+from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
+from database.database import full_userbase
 
 @Bot.on_message(filters.command("adddub"))
 async def adddub(client, message):
