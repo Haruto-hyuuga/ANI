@@ -84,12 +84,12 @@ async def search_anime(client, message):
             await message.reply_photo(
                 photo=banner_image,
                 caption=message_text,
-                reply_markup=RESULT_B
+                reply_markup=ANIME_RESULT_B
             )
         except Exception as e:
             await message.reply_text(
                 text=message_text,
-                reply_markup=RESULT_B
+                reply_markup=ANIME_RESULT_B
             )
             
     else:
