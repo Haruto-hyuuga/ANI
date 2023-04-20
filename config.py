@@ -76,12 +76,12 @@ FORCE_MSG = """
 """
 
 START_MSG = """
-Welcome {}!
+Welcome {} ♡!
 
-♡ Click On About To Get Info About Bot.
-♡ Click on Request To Suggest Anime Which We Yet Haven't Added To Bot or Channels.
-⁠♡ Click On Channels, Go Through Link Search For Anine You're intrested In Then Start The Bot vai that link.
+<b>Use Buttons Below To Explore All My Features And Commands And  Thier Usage.</b>
 """
+
+
 
 ABOUT_TEXT = """
 <b>COMMANDS LIST:</b>
@@ -131,6 +131,19 @@ CREDIT_TEXT = """
 
 <b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
 """
+
+
+ALLCMD_FS_PIC = "https://telegra.ph/file/028f63b6ac6473ecab0a5.jpg"
+ALLCMD_FS_TXT = """
+𝙊𝙝 𝙔𝙤𝙪 𝘿𝙪𝙢𝙗 𝘿𝙪𝙢𝙗 𝘾𝙝𝙞𝙡𝙙, 𝙔𝙤𝙪 𝘾𝙖𝙣'𝙩 𝙐𝙨𝙚 𝘼𝙣𝙮 𝘾𝙤𝙢𝙢𝙖𝙣𝙙 𝙊𝙛 𝙏𝙝𝙞𝙨 𝘽𝙤𝙩 𝙐𝙣𝙩𝙞𝙡 𝙔𝙤𝙪 𝙅𝙤𝙞𝙣 𝘼𝙡𝙡 𝙊𝙪𝙧 𝘾𝙃𝘼𝙉𝙉𝙀𝙇𝙨 𝙖𝙣𝙙 𝙂𝙍𝙊𝙐𝙋.
+
+ᴜꜱᴇ ᴄᴏᴍᴍᴀɴᴅ: /channels ᴛᴏ ᴄʜᴇᴄᴋ ᴡʜɪᴄʜ ᴄʜᴀɴɴᴇʟ ᴏʀ ɢʀᴏᴜᴘ ʏᴏᴜʀ ɴᴏᴛ ᴊᴏɪɴᴇᴅ
+ᴏʀ ʀᴇꜱᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ ʙʏ: /start 
+"""
+
+
+
+
 
 PORT = os.environ.get("PORT", "8080")
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
