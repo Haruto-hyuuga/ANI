@@ -339,18 +339,21 @@ async def search_anime(client, message):
 
     # Build the AniList API query URL
     query = '''
-    query ($search: String) {
-        Page {
-            media(search: $search, type: ANIME) {
-                id
-                title {
-                    romaji
-                    english
-                    native
+        query ($search: String) {
+            Page {
+                media(search: $search, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+                    episodes
+                    duration
+                    status
                 }
             }
         }
-    }
     '''
     variables = {"search": anime_name}
     url = "https://graphql.anilist.co"
