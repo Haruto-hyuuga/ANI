@@ -427,6 +427,7 @@ async def search_anime(client, message):
 
 @Bot.on_message(filters.command("download") & filters.chat(FS_GROUP))
 async def anime_info(client, message):
+    user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
@@ -522,8 +523,8 @@ async def anime_info(client, message):
             await message.reply_text(e)
 
     try:
+        buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose abc|{user}"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
-
 
