@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, Sub_C_url, Dub_C_url, CREATOR_GC
+from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
@@ -45,9 +45,6 @@ async def deldub(client, message):
             await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
     else:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
-
-
-
 
 @Bot.on_message(filters.command("addsub") & filters.user(ADMINS))
 async def addsub(client, message):
@@ -96,8 +93,8 @@ async def arequest(client, message):
         try:
             pic = reply.photo.file_id
             Text = reply.caption
-            LOL = await client.send_photo(chat_id=CREATOR_GC, photo=pic, caption=Text)
-            await client.send_message(chat_id=CREATOR_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
+            LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text)
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} \n<code>{message.from_user.id}</code>\n\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
             await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
         except Exception as e:
             await message.reply_text(e)
@@ -130,7 +127,7 @@ ADMIN_S_T = """
 
 @Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def get_users(client: Bot, message: Message):
-    msg = await client.send_message(chat_id=message.chat.id, text=WAIT_MSG)
+    msg = await client.send_message(chat_id=message.chat.id, text="⌛")
     UID = message.from_user.id
     suba = await full_sub_Animebase()
     SA = len(suba)
