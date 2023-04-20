@@ -8,6 +8,10 @@ from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anim
 from config import GROUP_url, FS_GROUP
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 
+ALLCMD_FS_PIC = "https://telegra.ph/file/028f63b6ac6473ecab0a5.jpg"
+ALLCMD_FS_TXT = ""
+
+
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
@@ -57,6 +61,10 @@ async def search_anime(client, message):
 
     await message.reply_text(message_text, reply_markup=ANIME_RESULT_B)
 
+@Bot.on_message(filters.command(["search", "find"]) & filters.private)
+async def nosearchpvtcleft(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+    
 
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -178,6 +186,10 @@ async def anime_info(client, message):
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
 
+@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
+async def nodownloadleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+    
 
 
 @Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -327,6 +339,10 @@ async def animefulinfo(client, message):
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
 
+@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
+async def nofullanineleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+    
 
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
@@ -435,7 +451,7 @@ async def gcanimesearch(client, message):
             )
             
 
-@Bot.on_message(filters.command("download") & filters.chat(FS_GROUP))
+@Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
 async def gcanimedlcmd(client, message):
     user = message.from_user.id
     args = message.text.split()
