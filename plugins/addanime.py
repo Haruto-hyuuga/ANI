@@ -2,6 +2,7 @@ from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import ADMINS, Sub_C_url, Dub_C_url, CREATOR_GC
+from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
@@ -88,7 +89,7 @@ async def delsub(client, message):
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
 
 REQPFX = ["/", "#"]
-@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private)
+@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def arequest(client, message):
     reply = message.reply_to_message
     if reply:
@@ -127,7 +128,7 @@ ADMIN_S_T = """
 """
 
 
-@Bot.on_message(filters.command('stats') & filters.private)
+@Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(chat_id=message.chat.id, text=WAIT_MSG)
     UID = message.from_user.id
