@@ -331,6 +331,7 @@ async def animefulinfo(client, message):
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def search_anime(client, message):
+    user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -397,12 +398,21 @@ async def search_anime(client, message):
 
         message_text += f"<u>{i+1}</u>🖥️ : <b>{title}</b>\nᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}  ⌛: {duration_string}   ꜱᴛᴀᴛᴜꜱ: {status}\n➥<code>  /download {anime_id} </code>\n\n"
 
+
+    RESULT_B = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose abc|{user}"),
+                InlineKeyboardButton("𝗡𝗼𝘁 𝗶𝗻 𝗟𝗶𝘀𝘁 🔎", callback_data="anime_notfound_popup")
+            ]
+        ]
+    )
     if banner_image:
         try:
             await message.reply_photo(
                 photo=banner_image,
                 caption=message_text,
-                reply_markup=ANIME_RESULT_B
+                reply_markup=RESULT_B
             )
         except Exception as e:
             await message.reply_text(e, reply_markup=ERROR_BUTTON)
@@ -411,7 +421,7 @@ async def search_anime(client, message):
         await message.reply_photo(
             photo=BPIC,
             caption=message_text, 
-            reply_markup=ANIME_RESULT_B
+            reply_markup=RESULT_B
         )
     
 
