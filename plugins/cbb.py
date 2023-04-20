@@ -64,8 +64,6 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.reply_to_message.delete()
         except:
             pass
-    else:
-        await query.message.delete()
 
 
 @Bot.on_callback_query(filters.regex("gcAresultclose"))
