@@ -485,12 +485,12 @@ async def gcanimedlcmd(client, message):
     user = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
+ #       await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
         return
     try:
         anime_id = int(args[1])
     except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
+ #       await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
         return
 
     query = '''
