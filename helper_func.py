@@ -165,8 +165,8 @@ def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-FSCMD = ["stats", "request", "search", "find", "download", "anime", "anime_info", "info"]
-AC_CMD = ["stats", "request", "search", "find", "download", "anime", "anime_info", "info", "broadcast", "batch", "link", "adddub", "deldub", "delsub", "addsub"]
+FSCMD = ["start", "stats", "request", "search", "find", "download", "anime", "anime_info", "info"]
+AC_CMD = ["start", "stats", "request", "search", "find", "download", "anime", "anime_info", "info", "broadcast", "batch", "link", "adddub", "deldub", "delsub", "addsub"]
 
 
 sub_PUB_Sc = filters.create(is_subscribed_SC)
