@@ -4,5 +4,4 @@ pyromod==1.5
 pymongo
 dnspython
 aiohttp
-requests
 httpx
