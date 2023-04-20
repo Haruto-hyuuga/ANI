@@ -124,15 +124,14 @@ async def search_anime(client, message):
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
         return
     try:
         anime_id = int(args[1])
     except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
         return
     
-    # Build the AniList API query URL
     query = '''
     query ($id: Int) {
         Media (id: $id, type: ANIME) {
@@ -169,12 +168,10 @@ async def anime_info(client, message):
     url = "https://graphql.anilist.co"
     response = httpx.post(url, json={"query": query, "variables": variables})
 
-    # Check if the API request was successful
     if response.status_code != 200:
         await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
-    # Parse the API response and format the message
     data = response.json()["data"]
     anime = data["Media"]
     if not anime:
@@ -182,8 +179,6 @@ async def anime_info(client, message):
         return
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
-  #  cover_url = anime["coverImage"]["extraLarge"]
- #   banner_url = anime["bannerImage"]
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
@@ -244,15 +239,14 @@ async def anime_info(client, message):
 async def animefulinfo(client, message):
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
         return
     try:
         anime_id = int(args[1])
     except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
         return
 
-    # Build the AniList API query URL
     query = '''
     query ($id: Int) {
         Media (id: $id, type: ANIME) {
@@ -305,18 +299,14 @@ async def animefulinfo(client, message):
 
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
-#    response = requests.post(url, json={"query": query, "variables": variables})
     async with httpx.AsyncClient() as client:
         response = await client.post(url, json={"query": query, "variables": variables})
 
 
-
-    # Check if the API request was successful
     if response.status_code != 200:
         await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
-    # Parse the API response and format the message
     data = response.json()["data"]
     anime = data["Media"]
     if not anime:
@@ -503,7 +493,7 @@ async def gcanimedlcmd(client, message):
     try:
         anime_id = int(args[1])
     except (IndexError, ValueError):
- #       await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command?? *_*")
+ #       await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
         return
 
     query = '''
