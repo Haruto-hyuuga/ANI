@@ -115,7 +115,7 @@ async def not_joined(client: Client, message: Message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton("Anime Download Channel SUB", url = Sub_C_url),
+                    InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url = Sub_C_url),
                 ]
             )
         except IndexError:
@@ -124,7 +124,7 @@ async def not_joined(client: Client, message: Message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton("Anime Download Channel DUB", url = Dub_C_url),
+                    InlineKeyboardButton("🎐 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🗺️", url = Dub_C_url),
                 ]
             )
         except IndexError:
@@ -133,7 +133,7 @@ async def not_joined(client: Client, message: Message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton("Bot Updates Channel", url = BOT_C_url)
+                    InlineKeyboardButton("💠 𝗕𝗢𝗧 𝗨𝗣𝗗𝗔𝗧𝗘𝗦 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 💠", url = BOT_C_url)
                 ]
             )
         except IndexError:
@@ -142,7 +142,7 @@ async def not_joined(client: Client, message: Message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton("Anime Group Chat", url = GROUP_url)
+                    InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url = GROUP_url)
                 ]
             )
         except IndexError:
@@ -150,7 +150,7 @@ async def not_joined(client: Client, message: Message):
     try:
         buttons.append(
             [
-                InlineKeyboardButton(text = 'CLICK TO RE-OPEN SAME ANIME LINK', url = f"https://t.me/{client.username}?start={message.command[1]}")
+                InlineKeyboardButton(text = '♻️ 𝘾𝙇𝙄𝘾𝙆 𝙏𝙊 𝙍𝙀-𝙊𝙋𝙀𝙉 𝙎𝘼𝙈𝙀 𝘼𝙉𝙄𝙈𝙀 𝙇𝙄𝙉𝙆 ♻️', url = f"https://t.me/{client.username}?start={message.command[1]}")
             ]
         )
     except IndexError:
