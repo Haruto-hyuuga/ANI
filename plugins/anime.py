@@ -550,3 +550,8 @@ async def gcanimedlcmd(client, message):
     except Exception as e:
         await message.reply_text(e, reply_markup=ERROR_BUTTON)   
 
+
+@Bot.on_message(filters.command("request") & filters.private)
+async def norequestleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+    
