@@ -1,4 +1,4 @@
-from pyrogram import __version__
+from pyrogram import filters, __version__
 from bot import Bot
 from pyrogram.types import Message, CallbackQuery
 from database.inline import*
