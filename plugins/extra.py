@@ -14,13 +14,9 @@ Title: {}
 🚷 LEFT GROUP ✅
 """
 
+"""
 
-def is_group(_, __, message: Message):
-    return message.chat.type in ['group', 'supergroup']
-
-
-
-@Bot.on_message(is_group & filters.new_chat_members)
+@Bot.on_message(filters.group & filters.new_chat_members)
 async def leave_group(client, message: Message):
     
     added_by = [user.id for user in message.new_chat_members if user.is_bot]
@@ -45,6 +41,7 @@ async def leave_group(client, message: Message):
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️AUTO LEAVE UNAUTH GROUP\nwhile Leaving Group\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+"""
         
 
 
