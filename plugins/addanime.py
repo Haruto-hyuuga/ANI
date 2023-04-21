@@ -176,22 +176,30 @@ async def delsub(client, message):
 REQPFX = ["/", "#"]
 @Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def arequest(client, message):
+    MHERE = message.chat.id
     reply = message.reply_to_message
     if reply:
         if len(message.command) != 1:
             try:
                 text = message.text.split(None, 1)[1]
-                pic = reply.photo.file_id
-                Text = reply.caption
-                LOL = await client.send_photo(chat_id=REQUEST_GC, photo=pic, caption=Text, reply_to_message_id=REQ_TOPIC_ID)
-                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} \n🆔:<code>{message.from_user.id}</code>\n💬: {text}\n⚠️ REQUESTED ANIME", reply_to_message_id=LOL.id)
-                await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
+                
+                LOL = await reply.copy(REQUEST_GC, reply_to_message_id=REQ_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=LOL.id)
+                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
             except Exception as e:
-                await message.reply_text("Something Went Wrong👀\nTry Again And Reply Only to Bot Message\nSearch for anime /download Then Reply")
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD-REPLY Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
         else:
             await message.reply_text("Mention Category after command, you want it in Dub Or Sub\n\nformat: /request DUB")
-    else:
+    if len(message.command) != 1:
+        try:
+            text = message.text.split(None, 1)[1]
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n\n💬: {text}", reply_to_message_id=REQ_TOPIC_ID)
+        except Exception as e:
+            await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request Len-CMD-Txt Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+
+    if not len(message.command) != 1 and not reply:
         await message.reply_text("Bish Reply To Searched Anime Using Command: /anime")
         
 
