@@ -5,7 +5,7 @@ import random
 import httpx
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
-from config import ADMINS, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
+from config import R_Banner_Pic, ADMINS, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 
 
@@ -235,24 +235,6 @@ async def fchannelDuBpost(client, message):
         await message.reply_text(e)
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
 
-
-        
-
-
-async def R_Banner_Pic():
-    P1 = "https://telegra.ph/file/dd68804360b9e21ddadb3.jpg"
-    P2 = "https://telegra.ph/file/d9a39ff5a124111e2f41d.jpg"
-    P3 = "https://telegra.ph/file/4bbfb4c68f55259c071d9.jpg"
-    P4 = "https://telegra.ph/file/76a2594f28616ef562db2.jpg"
-    P5 = "https://telegra.ph/file/6e75a326ec4229e9c02d9.jpg"
-    P6 = "https://telegra.ph/file/b624ef44cb45a20d8db51.jpg"
-    P7 = "https://telegra.ph/file/7e4987fd73dda121bfccf.jpg"
-    P8 = "https://telegra.ph/file/38a10470c95a78708f008.jpg"
-    P9 = "https://telegra.ph/file/dd68804360b9e21ddadb3.jpg"
-    P10 = "https://telegra.ph/file/85c5229265237e8c42055.jpg"
-    P = [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10]
-    M_banner_Pic = random.choice(P)
-    return M_banner_Pic
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
