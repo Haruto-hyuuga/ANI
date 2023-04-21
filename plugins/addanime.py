@@ -58,7 +58,7 @@ async def adddub(client, message):
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
-                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddSUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Add-DUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
                 dblink = await get_dub_anime(anime_id)
                 await message.reply_text(f"<b>THIS ANIME ALREDY EXIST</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
@@ -108,7 +108,7 @@ async def addsub(client, message):
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
-                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddDUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Add-SUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
                 dblink = await get_sub_anime(anime_id)
                 await message.reply_text(f"<b>THIS ANIME ALREDY EXIST</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
