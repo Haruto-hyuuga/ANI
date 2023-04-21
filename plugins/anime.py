@@ -24,6 +24,44 @@ async def R_Banner_Pic():
     return M_banner_Pic
 
 
+
+async def get_Log_anime_i(anime_id: int) -> tuple[str, str]:
+    endpoint = "https://graphql.anilist.co"
+    query = '''
+        query ($id: Int) {
+          Media (id: $id, type: ANIME) {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+            bannerImage {
+              extraLarge
+            }
+            episodes
+          }
+        }
+    '''
+
+    variables = {"id": anime_id}
+    async with httpx.AsyncClient() as client:
+        response = await client.post(endpoint, json={"query": query, "variables": variables})
+
+    if response.status_code == 200 and "errors" not in response.json():
+        data = response.json()["data"]["Media"]
+        A_PIC = data["bannerImage"]
+        A_Title = data["title"]["english"] or data["title"]["romaji"]
+        Episodes = data["episodes"]
+        return A_PIC, A_Title, Episodes
+
+    else:
+        A_PIC = "https://telegra.ph/file/dd68804360b9e21ddadb3.jpg"
+        A_Title = "ERROR ⚠️"
+        Episodes = "ERROR ⚠️"
+        return A_PIC, A_Title, Episodes
+
+
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
     args = message.text.split()
