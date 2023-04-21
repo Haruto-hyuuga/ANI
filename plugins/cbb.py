@@ -70,7 +70,7 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
 
-    elif data.startswith("SUBconfirmpostS_":
+    elif data.startswith("SUBconfirmpostS_"):
         anime_id = query.data.split("_")[-1]
         try:
             message = query.message
@@ -86,7 +86,7 @@ async def cb_handler(client, query: CallbackQuery):
             await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm SUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    elif data.startswith("DUBconfirmpostD_":
+    elif data.startswith("DUBconfirmpostD_"):
         anime_id = query.data.split("_")[-1]
         try:
             message = query.message
