@@ -6,6 +6,7 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
+from database.inline import Ani_log_inline_f
 from plugins.anime import get_Log_anime_i
 
 ANI_SUB_LOG_TXT = """
@@ -45,6 +46,7 @@ async def adddub(client, message):
             anime_id = int(text) 
             if not await present_dub_anime(anime_id):
                 A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
+                ANI_LOG_BUT = await Ani_log_inline_f(UID, link)
                 try:
                     await add_dub_anime(anime_id, link)
                     await Bot.send_photo(
@@ -84,14 +86,24 @@ async def deldub(client, message):
 
 @Bot.on_message(filters.command("addsub") & filters.user(ADMINS))
 async def addsub(client, message):
+    Umention = message.from_user.mention
+    UID = message.from_user.id
     if message.reply_to_message:
         link = message.reply_to_message.text
         if len(message.command) != 1:
             text = message.text.split(None, 1)[1]
             anime_id = int(text) 
             if not await present_sub_anime(anime_id):
+                A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
+                ANI_LOG_BUT = await Ani_log_inline_f(UID, link)
                 try:
                     await add_sub_anime(anime_id, link)
+                    await Bot.send_photo(
+                        chat_id=ANI_LOG_CHANNEL,
+                        photo=A_PIC,
+                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
+                        reply_markup=ANI_LOG_BUT
+                    )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
