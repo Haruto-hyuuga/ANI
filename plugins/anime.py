@@ -45,9 +45,6 @@ async def fchannelSUBpost(client, message):
                 }
             }
             genres
-            tags {
-              name
-            }
             averageScore
             meanScore
         }
@@ -88,8 +85,6 @@ async def fchannelSUBpost(client, message):
         studio = "unknown"
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    tags = data["tags"]
-    tag_names = [f"#{tag['name'].replace(' ', '_')}" for tag in tags]
     
     title_img = f"https://img.anili.st/media/{anime_id}"
 
@@ -109,7 +104,6 @@ async def fchannelSUBpost(client, message):
 ├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> Japanese
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
 ┗━━━━━━━━━━━━━━━━━━━━━━━
-<b>Tags:</b> {tag_names}
 """
     CONFIRM_SUB_PB = InlineKeyboardMarkup(
         [
@@ -164,9 +158,6 @@ async def fchannelDuBpost(client, message):
                 }
             }
             genres
-            tags {
-              name
-            }
             averageScore
             meanScore
         }
@@ -207,14 +198,12 @@ async def fchannelDuBpost(client, message):
         studio = "unknown"
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    tags = data["tags"]
-    tag_names = [f"#{tag['name'].replace(' ', '_')}" for tag in tags]
     
     title_img = f"https://img.anili.st/media/{anime_id}"
 
     POST_CAPTION = f"""
-🇯🇵: <b>{J_title}</b>
 🇬🇧: <b>{E_title}</b>
+🇯🇵: <b>{J_title}</b>
 ┏━━━━━━━━━━━━━━━━━━━━━━━
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
@@ -228,7 +217,6 @@ async def fchannelDuBpost(client, message):
 ├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> English, Japanese 
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> Full English, Sign & Songs
 ┗━━━━━━━━━━━━━━━━━━━━━━━
-<b>Tags:</b> {tag_names}
 """
     CONFIRM_DUB_PB = InlineKeyboardMarkup(
         [
