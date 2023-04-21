@@ -537,7 +537,7 @@ async def gcanimedlcmd(client, message):
 
     message_text = f"<b>{title}</b>\n"
     message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
-    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration_string}</b>\n"
+    message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
     message_text += f"ɢᴇɴʀᴇꜱ: <i>{genres}</i>\n\n"
 
