@@ -163,7 +163,7 @@ if not 1225219091 in ADMINS:  # argha
   ADMINS.append(1225219091)
 if not 5296520170 in ADMINS:  # emi
   ADMINS.append(5296520170)
-if not 5541041517 in ADMINS:  # emi
+if not 5541041517 in ADMINS:  # note
   ADMINS.append(5541041517)
 
 
