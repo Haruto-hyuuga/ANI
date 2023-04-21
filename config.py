@@ -37,7 +37,7 @@ FS_GROUP = -1001671956585
 FS_GROUP_text = "Join Group"
 GROUP_url = "https://t.me/AnimeCommunityChat"
 
-contributor_graph = "https://t.me/AnimeCommunityChat"
+contributor_graph = "https://graph.org/ANIME-DOWNLOADER-BOT-HELPERS-04-21"
 memes_channel = "https://t.me/Anime_Hub_Fz"
  
 
