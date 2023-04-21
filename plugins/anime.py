@@ -35,6 +35,8 @@ async def fchannelSUBpost(client, message):
             status
             episodes
             duration
+            season
+            seasonYear
             studios(isMain: true) {
                 edges {
                     node {
@@ -152,6 +154,8 @@ async def fchannelDuBpost(client, message):
             status
             episodes
             duration
+            season
+            seasonYear
             studios(isMain: true) {
                 edges {
                     node {
