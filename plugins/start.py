@@ -15,6 +15,8 @@ from database.inline import START_B, ERROR_BUTTON
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def start_command(client: Client, message: Message):
     id = message.from_user.id
+    await cleint.send_message(chat_id=REQUEST_GC, text=" Test as Msg// client: Client ", reply_to_message_id=28)
+
     if not await present_user(id):
         try:
             await add_user(id)
@@ -166,11 +168,13 @@ async def not_joined(client: Client, message: Message):
     try:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
-    except:
+    except Exception as e:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
-    
-@Bot.on_message(filters.command('channels') & filters.private)
+        await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start Force SUB CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+
+@Bot.on_message(filters.command('channels'))
 async def mychannelstats(client: Client, message: Message):
     id = message.from_user.id
     update = message
@@ -186,10 +190,10 @@ async def mychannelstats(client: Client, message: Message):
     try:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
-    except:
+    except Exception as e:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
-    
+        await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
    
 @Bot.on_message(filters.command('anicast') & filters.user(ADMINS))
