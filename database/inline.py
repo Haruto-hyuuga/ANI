@@ -114,31 +114,3 @@ async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
     return ANI_LOG_BUT
 
 
-CONFIRM_SUB_PB = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data="confirm_post_sub_S")
-        ],
-        [
-            InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
-        ]
-    ]
-)
-
-CONFIRM_DUB_PB = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton("❗ CONFIRM POST TO DUB ✅", callback_data="confirm_post_dub_D"),
-        ],
-        [
-            InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
-        ]
-    ]
-)
-
-
-
-
-
-
-
