@@ -1,9 +1,10 @@
 from pyrogram import filters, __version__
 from bot import Bot
+import asyncio
 from pyrogram.types import Message, CallbackQuery
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
-from config import SUB_CHANNEL, DUB_CHANNEL
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHELP_POST_FORMAT
 
 
 @Bot.on_callback_query()
@@ -69,19 +70,37 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
 
-    elif data == "confirm_post_sub_S":
+    elif data.startswith("SUBconfirmpostS_":
+        anime_id = query.data.split("_")[-1]
         try:
             message = query.message
             picc = message.photo.file_id
             Caption = message.caption
             FUCK = client.send_photo(chat_id=SUB_CHANNEL, photo=picc, caption=Caption)
-            await message.edit_text("POSTED SUCCESSFULLY ✅")
-            
-            
-            
-            
+            await message.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>")
+            await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
+            await client.send_message(chat_id=message.chat.id, text=f"{Sub_C_url}/{FUCK.id}")
+            await asyncio.sleep(10)
+            await client.send_message(chat_id=message.chat.id, text=CHELP_POST_FORMAT)
         except Exception as e:
+            await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm SUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+    elif data.startswith("DUBconfirmpostD_":
+        anime_id = query.data.split("_")[-1]
+        try:
+            message = query.message
+            picc = message.photo.file_id
+            Caption = message.caption
+            FUCK = client.send_photo(chat_id=DUB_CHANNEL, photo=picc, caption=Caption)
+            await message.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>")
+            await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
+            await client.send_message(chat_id=message.chat.id, text=f"{Dub_C_url}/{FUCK.id}")
+            await asyncio.sleep(10)
+            await client.send_message(chat_id=message.chat.id, text=CHELP_POST_FORMAT)
+        except Exception as e:
+            await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm DUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     elif data == "close":
         await query.message.delete()
