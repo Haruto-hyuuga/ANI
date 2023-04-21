@@ -49,6 +49,7 @@ async def fchannelSUBpost(client, message):
     }
     '''
 
+
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
     async with httpx.AsyncClient() as client:
