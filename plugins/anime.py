@@ -65,8 +65,6 @@ async def get_Log_anime_i(anime_id: int) -> tuple[str, str]:
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
     
-    await Bot.send_message(chat_id=REQUEST_GC, text="M-S > As Bot", reply_to_message_id=28)
-    
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -142,7 +140,7 @@ async def search_anime(client, message):
                 text=message_text,
                 reply_markup=ANIME_RESULT_B
             )
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
     else:
         M_banner_Pic = await R_Banner_Pic()
@@ -157,13 +155,11 @@ async def search_anime(client, message):
                 text=message_text,
                 reply_markup=ANIME_RESULT_B
             )
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
-
-    await client.send_message(chat_id=REQUEST_GC, text="M-S > As Client", reply_to_message_id=28)
 
     args = message.text.split()
     if len(args) < 2:
@@ -242,7 +238,7 @@ async def anime_info(client, message):
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present sub anime\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present sub anime\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
     if await present_dub_anime(anime_id):
         try:
@@ -251,14 +247,14 @@ async def anime_info(client, message):
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     if not await present_sub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present sub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present sub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     if not await present_dub_anime(anime_id):
         try:
@@ -266,7 +262,7 @@ async def anime_info(client, message):
             message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
             message_text += "❌ @ANIME_DOWNLOADS_DUB<b>\n➥ NOT AVAILABLE</b>\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
     message_text += f"<b>ꜰᴏʀ ᴍᴏʀᴇ ᴀɴɪᴍᴇ ᴅᴇᴛᴀɪʟꜱ ᴛʏᴘᴇ:</b> \n<code>/info {anime_id}</code>\n"
@@ -276,7 +272,7 @@ async def anime_info(client, message):
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-        await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
 
 
 
@@ -403,7 +399,7 @@ async def animefulinfo(client, message):
         await message.reply_photo(banner_url, caption=f"<b>{title}</b>\n\n{description}")
     except Exception as e:
         await message.reply_photo(cover_url, caption=f"<b>{title}</b>\n\n{description}")
-        await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     YtRESULT_B = InlineKeyboardMarkup(
         [
@@ -421,7 +417,7 @@ async def animefulinfo(client, message):
         await message.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
     except Exception as e:
         await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-        await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
@@ -508,7 +504,7 @@ async def gcanimesearch(client, message):
                 text=message_text,
                 reply_markup=RESULT_B
             )
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     else:
         M_banner_Pic = await R_Banner_Pic()
         try:
@@ -522,7 +518,7 @@ async def gcanimesearch(client, message):
                 text=message_text,
                 reply_markup=RESULT_B
             )
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
@@ -598,7 +594,7 @@ async def gcanimedlcmd(client, message):
             buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
             message_text += f"<b>ꜱᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ✅\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
     if await present_dub_anime(anime_id):
         try:
@@ -606,35 +602,35 @@ async def gcanimedlcmd(client, message):
             buttons.append([InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = dblink)])
             message_text += f"<b>ᴅᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ✅\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     if not await present_sub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
             message_text += f"<b>ꜱᴜʙ ᴄʜᴀɴɴᴇʟ:</b> ❌\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     if not await present_dub_anime(anime_id):
         try:
             buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
             message_text += f"<b>ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b> ❌\n"
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     if message.reply_to_message:
         try:
             buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
             await message.reply_to_message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     if not message.reply_to_message:
         try:
             buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("ℹ️⚠️", callback_data="GroupAnimeInfo")])
-            await Bot.send_photo(chat_id=message.chat.id, photo=title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
         except Exception as e:
-            await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
