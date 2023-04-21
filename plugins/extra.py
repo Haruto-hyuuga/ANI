@@ -11,6 +11,7 @@ Title:
 
 🆔: <code>{}</code>  #id{}
 🔗: @{}
+🚷 LEFT GROUP ✅
 """
 
 @filters.group
