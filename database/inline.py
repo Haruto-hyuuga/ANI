@@ -101,3 +101,22 @@ BATCH_DBC_B = InlineKeyboardMarkup(
         ]
     ]
 )
+
+async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
+    ANI_LOG_BUT = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("USER🔗", user_id=UID),
+                InlineKeyboardButton("POST🔗", url=link)
+            ]
+        ]
+    )
+    return ANI_LOG_BUT
+
+
+
+
+
+
+
+
