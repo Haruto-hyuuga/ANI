@@ -49,7 +49,7 @@ async def adddub(client, message):
                 ANI_LOG_BUT = await Ani_log_inline_f(UID, link)
                 try:
                     await add_dub_anime(anime_id, link)
-                    await Bot.send_photo(
+                    await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
                         caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
@@ -58,7 +58,7 @@ async def adddub(client, message):
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
-                    await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddSUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddSUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
                 dblink = await get_dub_anime(anime_id)
                 await message.reply_text(f"<b>THIS ANIME ALREDY EXIST</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
@@ -99,7 +99,7 @@ async def addsub(client, message):
                 ANI_LOG_BUT = await Ani_log_inline_f(UID, link)
                 try:
                     await add_sub_anime(anime_id, link)
-                    await Bot.send_photo(
+                    await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
                         caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
@@ -108,7 +108,7 @@ async def addsub(client, message):
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
-                    await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddDUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ AddDUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
                 dblink = await get_sub_anime(anime_id)
                 await message.reply_text(f"<b>THIS ANIME ALREDY EXIST</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
@@ -150,7 +150,7 @@ async def arequest(client, message):
                 await message.reply_text("<b>REQUEST REGISTERED</b>\nThanks💕 We'll Add It To Channel Soon.")
             except Exception as e:
                 await message.reply_text("Something Went Wrong👀\nTry Again And Reply Only to Bot Message\nSearch for anime /download Then Reply")
-                await Bot.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
         else:
             await message.reply_text("Mention Category after command, you want it in Dub Or Sub\n\nformat: /request DUB")
     else:
