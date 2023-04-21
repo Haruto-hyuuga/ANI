@@ -6,11 +6,13 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
+from plugins.anime import get_Log_anime_i
 
 ANI_SUB_LOG_TXT = """
 🏷<b>TITLE:</b> {}
  
-Anime{}    <code>{}</code>   
+Anime{}    <code>{}</code>
+<b>episodes</b>: {}
 〰️〰️〰️〰️〰️〰️〰️〰️〰️
 🟥 <b>SUB</b>: {}
 〰️〰️〰️〰️〰️〰️〰️〰️〰️
@@ -21,7 +23,8 @@ Anime{}    <code>{}</code>
 ANI_DUB_LOG_TXT = """
 🏷<b>TITLE:</b> {}
  
-Anime{}    <code>{}</code>   
+Anime{}    <code>{}</code>
+<b>episodes</b>: {}
 〰️〰️〰️〰️〰️〰️〰️〰️〰️
 🟩 <b>DUB</b>: {}
 〰️〰️〰️〰️〰️〰️〰️〰️〰️
@@ -41,12 +44,13 @@ async def adddub(client, message):
             text = message.text.split(None, 1)[1]
             anime_id = int(text) 
             if not await present_dub_anime(anime_id):
+                A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
                 try:
                     await add_dub_anime(anime_id, link)
                     await Bot.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, link, Umention, UID),
+                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
