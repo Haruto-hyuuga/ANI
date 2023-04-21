@@ -197,7 +197,7 @@ async def arequest(client, message):
                 await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request Len-CMD-Txt Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
     else:
-        await message.reply_text("Baka! mention link of anime you want to request or\n write SUB or DUB after command while replying to a searched anime")
+        await message.reply_text("Baka! mention link of anime you want to request\n〰️〰️〰️〰️OR〰️〰️〰️〰️\nWrite SUB/BUB after command while replying to a searched anime message")
         
 
 
