@@ -7,7 +7,45 @@ from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, d
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 from database.inline import Ani_log_inline_f
-from plugins.anime import get_Log_anime_i
+
+import httpx
+
+async def get_Log_anime_i(anime_id: int):
+    endpoint = "https://graphql.anilist.co"
+    query = '''
+        query ($id: Int) {
+          Media (id: $id, type: ANIME) {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+            bannerImage {
+              extraLarge
+            }
+            episodes
+          }
+        }
+    '''
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(endpoint, json={"query": query, "variables": {"id": anime_id}})
+            response.raise_for_status()
+
+        data = response.json()["data"]["Media"]
+        A_PIC = data["bannerImage"]["extraLarge"]
+        A_Title = data["title"]["english"] or data["title"]["romaji"] or data["title"]["native"]
+        Episodes = data["episodes"]
+        return A_PIC, A_Title, Episodes
+
+    except (httpx.HTTPError, KeyError):
+        A_PIC = "https://te.legra.ph/file/3a603811e9275a9edd593.jpg"
+        A_Title = "ERROR ⚠️"
+        Episodes = "ERROR ⚠️"
+        return A_PIC, A_Title, Episodes
+
+
 
 ANI_SUB_LOG_TXT = """
 🏷<b>TITLE:</b> {}
