@@ -192,6 +192,7 @@ async def arequest(client, message):
             try:
                 text = message.text.split(None, 1)[1]
                 await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n\n💬: {text}", reply_to_message_id=REQ_TOPIC_ID)
+                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
             except Exception as e:
                 await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request Len-CMD-Txt Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
