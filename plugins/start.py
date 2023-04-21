@@ -13,7 +13,7 @@ from database.inline import START_B, ERROR_BUTTON
 
 
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
-async def start_command(client: Client, message: Message):
+async def start_command(client , message: Message):
     id = message.from_user.id
     await client.send_message(chat_id=REQUEST_GC, text=" Test as Msg// client: Client ", reply_to_message_id=28)
 
