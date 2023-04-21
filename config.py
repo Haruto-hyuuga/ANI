@@ -156,6 +156,11 @@ ALLCMD_FS_TXT = """
 <b>ᴏʀ ʀᴇꜱᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ ʙʏ: /start </b>
 """
 
+CHELP_POST_FORMAT = """
+
+Hm 
+
+"""
 
 
 PORT = os.environ.get("PORT", "8080")
