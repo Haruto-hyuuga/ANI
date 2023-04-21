@@ -5,8 +5,111 @@ import random
 import httpx
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
-from config import GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
+from config import ADMINS, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
+
+
+@Bot.on_message(filters.command(["subpost"]) & filters.user(ADMINS))
+async def fchannelSUBpost(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except (IndexError, ValueError):
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
+        return
+
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description
+            format
+            status
+            episodes
+            duration
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            genres
+            averageScore
+            meanScore
+        }
+    }
+    '''
+
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
+
+
+    if response.status_code != 200:
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    title = anime["title"]["english"] or anime["title"]["romaji"]
+    cover_url = anime["coverImage"]["extraLarge"]
+    banner_url = anime["bannerImage"]
+    description = anime["description"]
+    format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    genres = ", ".join(anime["genres"])
+    average_score = anime["averageScore"]
+    mean_score = anime["meanScore"]
+    popularity = anime['popularity']
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
+    else:
+        studio = "Unknown Studio"
+    start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
+    end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+    trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else "https://t.me/AnimeRobots"
+    site_url = anime['siteUrl']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 async def R_Banner_Pic():
     P1 = "https://telegra.ph/file/dd68804360b9e21ddadb3.jpg"
@@ -145,6 +248,8 @@ async def anime_info(client, message):
             coverImage {
                 extraLarge
             }
+            season
+            seasonYear
             episodes
             status
             genres
@@ -182,7 +287,7 @@ async def anime_info(client, message):
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
-    
+    title_img = f"https://img.anili.st/media/{anime_id}"
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     
     message_text = f"<b>{title}</b>\n\n"
@@ -191,44 +296,8 @@ async def anime_info(client, message):
     message_text += f"ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>\n"
     message_text += f"ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n"
 
-    buttons = []
-    if await present_sub_anime(anime_id):
-        try:
-            sblink = await get_sub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵)", url = sblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE SUB</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present sub anime\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    if await present_dub_anime(anime_id):
-        try:
-            dblink = await get_dub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 (𝟰𝟴𝟬𝗽-𝟳𝟮𝟬𝗽-𝟭𝟬𝟴𝟬𝗽 | 🔊:🇯🇵🇬🇧)", url = dblink)])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "<b>✅DOWNLOAD AVAILABLE DUB</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    if not await present_sub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗦𝗨𝗕) ⛩️", callback_data="REQUEST_SA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_SUB\n<b>➥ NOT AVAILABLE</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present sub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not await present_dub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘 (𝗗𝗨𝗕) 🗺️", callback_data="REQUEST_DA")])
-            message_text += "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
-            message_text += "❌ @ANIME_DOWNLOADS_DUB<b>\n➥ NOT AVAILABLE</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-PVT Error\nif not present dub\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    message_text += "〰️〰️〰️〰️〰️〰️✖️〰️〰️〰️〰️〰️〰️\n"
-    message_text += f"<b>ꜰᴏʀ ᴍᴏʀᴇ ᴀɴɪᴍᴇ ᴅᴇᴛᴀɪʟꜱ ᴛʏᴘᴇ:</b> \n<code>/info {anime_id}</code>\n"
     
-    title_img = f"https://img.anili.st/media/{anime_id}"
     try:
         await message.reply_photo(title_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
