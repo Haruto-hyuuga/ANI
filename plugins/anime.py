@@ -572,13 +572,7 @@ async def gcanimedlcmd(client, message):
     genres = ", ".join(anime["genres"])
     title_img = f"https://img.anili.st/media/{anime_id}"
     average_score = anime["averageScore"]
-    try:
-        duration = anime["duration"]
-        duration_hours = duration // 60
-        duration_minutes = duration % 60
-        duration_string = f"{duration_hours}:{duration_minutes:02}"
-    except:
-        duration_string = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
 
     message_text = f"<b>{title}</b>\n"
     message_text += f"ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>\n"
