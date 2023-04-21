@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 import random 
 import httpx
-from database.inline import ERROR_BUTTON, ANIME_RESULT_B, CONFIRM_SUB_PB, CONFIRM_DUB_PB
+from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
 from config import ADMINS, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
@@ -109,7 +109,16 @@ async def fchannelSUBpost(client, message):
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 <b>Tags:</b> {tag_names}
 """
-
+    CONFIRM_SUB_PB = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
+            ],
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
+            ]
+        ]
+    )
     try:
         await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_PB)
     except Exception as e:
@@ -217,6 +226,16 @@ async def fchannelDuBpost(client, message):
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 <b>Tags:</b> {tag_names}
 """
+    CONFIRM_DUB_PB = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
+            ],
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
+            ]
+        ]
+    )
 
     try:
         await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_DUB_PB)
