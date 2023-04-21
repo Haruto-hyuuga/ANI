@@ -43,12 +43,14 @@ async def fchannelSUBpost(client, message):
                 }
             }
             genres
+            tags {
+              name
+            }
             averageScore
             meanScore
         }
     }
     '''
-
 
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
@@ -66,31 +68,41 @@ async def fchannelSUBpost(client, message):
         await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
         return
 
-    title = anime["title"]["english"] or anime["title"]["romaji"]
-    cover_url = anime["coverImage"]["extraLarge"]
-    banner_url = anime["bannerImage"]
-    description = anime["description"]
+    E_title = anime["title"]["english"] or "➖"
+    J_title = anime["title"]["romaji"] or "➖"
     format = anime["format"]
     episodes = anime["episodes"]
     status = anime["status"]
     genres = ", ".join(anime["genres"])
     average_score = anime["averageScore"]
-    mean_score = anime["meanScore"]
-    popularity = anime['popularity']
     if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
         studio = anime["studios"]["edges"][0]["node"]["name"]
     else:
-        studio = "Unknown Studio"
-    start_date = f"{anime['startDate']['day']}/{anime['startDate']['month']}/{anime['startDate']['year']}"
-    end_date = f"{anime['endDate']['day']}/{anime['endDate']['month']}/{anime['endDate']['year']}" if anime['endDate'] else ""
+        studio = "unknown"
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else "https://t.me/AnimeRobots"
-    site_url = anime['siteUrl']
+    tags = data["tags"]
+    tag_names = [f"#{tag['name'].replace(' ', '_')}" for tag in tags]
 
 
-
-
+    POST_CAPTION = f"""
+🇯🇵: <b>{J_title}</b>
+🇬🇧: <b>{E_title}</b>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
+├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
+├<b>ᴛʏᴘᴇ:</b> {format}
+├<b>ɢᴇɴʀᴇꜱ:</b> <i>{genres}</i>
+├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
+├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
+├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
+├<b>ᴘʀᴇᴍɪᴇʀᴇᴅ:</b> {season}
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> Japanese
+├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━
+<b>Tags:</b> {tag_names}
+"""
 
 
 
