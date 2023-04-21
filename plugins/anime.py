@@ -73,8 +73,13 @@ async def fchannelSUBpost(client, message):
     format = anime["format"]
     episodes = anime["episodes"]
     status = anime["status"]
-    genres = ", ".join(anime["genres"])
     average_score = anime["averageScore"]
+    
+    MAX_GENRES_LEN = 30 
+    genres = ", ".join(anime["genres"])
+    if len(genres) > MAX_GENRES_LEN:
+        genres = "\n│ ".join([genres[:MAX_GENRES_LEN], genres[MAX_GENRES_LEN:]])
+    
     if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
         studio = anime["studios"]["edges"][0]["node"]["name"]
     else:
@@ -83,12 +88,13 @@ async def fchannelSUBpost(client, message):
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
     tags = data["tags"]
     tag_names = [f"#{tag['name'].replace(' ', '_')}" for tag in tags]
-
+    
+    title_img = f"https://img.anili.st/media/{anime_id}"
 
     POST_CAPTION = f"""
 🇯🇵: <b>{J_title}</b>
 🇬🇧: <b>{E_title}</b>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━
+┏━━━━━━━━━━━━━━━━━━━━━━━
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
 ├<b>ᴛʏᴘᴇ:</b> {format}
@@ -97,13 +103,16 @@ async def fchannelSUBpost(client, message):
 ├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
 ├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
 ├<b>ᴘʀᴇᴍɪᴇʀᴇᴅ:</b> {season}
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━
+┣━━━━━━━━━━━━━━━━━━━━━━━
 ├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> Japanese
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━
+┗━━━━━━━━━━━━━━━━━━━━━━━
 <b>Tags:</b> {tag_names}
 """
 
+    try:
+        await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_P)
+    except 
 
 
 
