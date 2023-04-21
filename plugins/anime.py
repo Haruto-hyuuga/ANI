@@ -116,7 +116,7 @@ async def fchannelSUBpost(client, message):
         ]
     )
     try:
-        await client.send_photo(chat_id=message.chat.id, photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_PB)
+        await message.reply_photo(photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_PB)
     except Exception as e:
         await message.reply_text(e)
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
