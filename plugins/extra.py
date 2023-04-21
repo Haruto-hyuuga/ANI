@@ -7,7 +7,7 @@ from database.inline import AllFSCB
 
 GC_LOG_TXT = """
 🔴 #New_GROUP
-Title:
+Title: {}
 
 🆔: <code>{}</code>  #id{}
 🔗: @{}
