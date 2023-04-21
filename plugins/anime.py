@@ -64,6 +64,9 @@ async def get_Log_anime_i(anime_id: int) -> tuple[str, str]:
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
+    
+    await Bot.send_message(chat_id=REQUEST_GC, text="M-S > As Bot", reply_to_message_id=28)
+    
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -159,6 +162,9 @@ async def search_anime(client, message):
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
+
+    await client.send_message(chat_id=REQUEST_GC, text="M-S > As Client", reply_to_message_id=28)
+
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
