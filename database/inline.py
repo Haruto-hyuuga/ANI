@@ -1,5 +1,5 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from config import Sub_C_url, BOT_C_url, GROUP_url, contributor_graph, memes_channel, Dub_C_url
+from config import Sub_C_url, BOT_C_url, GROUP_url, contributor_graph, memes_channel, Dub_C_url, DB_C_Pvturl
 from config import BOTUSERNAME, OWNER
 
 
@@ -91,6 +91,13 @@ CREDIT_B = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
+        ]
+    ]
+)
+BATCH_DBC_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("DB CHANNEL 📂", url=DB_C_Pvturl)
         ]
     ]
 )
