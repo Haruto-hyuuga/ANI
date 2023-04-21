@@ -113,9 +113,11 @@ REQUEST_TEXT = """
 |• <i>Use Command:</i> <code>/download id</code>
 |• <i>then click on Request Button on message</i>
 
-|• <i>Send Link of anime From</i> anilist.co/search/anime
+|• <i>Use Command:</i> <code>#request</code>
+|• <i>Replying To A message or Link After Command</i>
+|• <i>Use Link From:</i> anilist.co/search/anime
 
-|• <i>You Can Also Forward Messages From Other Channels</i>XD
+|• <i>Or Contact Me Through @Maid_Robot</i>
 """
 
 
