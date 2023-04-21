@@ -21,9 +21,11 @@ CREATOR_GC = -1001888438236
 USER_LOG_CHANNEL = -1001909557377
 ANI_LOG_CHANNEL = -1001936847806
 REQUEST_GC = -1001903277336
+Bot_Start_Topic = 28
 ERR_TOPIC_ID = 50
 REQ_TOPIC_ID = 49
 USER_TOPIC_ID = 152
+
 
 DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
 SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongodb.net/?retryWrites=true&w=majority"
