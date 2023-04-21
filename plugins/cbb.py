@@ -4,7 +4,7 @@ import asyncio
 from pyrogram.types import Message, CallbackQuery
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
-from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHELP_POST_FORMAT
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
 
 
 @Bot.on_callback_query()
@@ -81,7 +81,7 @@ async def cb_handler(client, query: CallbackQuery):
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
             await client.send_message(chat_id=message.chat.id, text=f"{Sub_C_url}/{FUCK.id}")
             await asyncio.sleep(10)
-            await client.send_message(chat_id=message.chat.id, text=CHELP_POST_FORMAT)
+            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
             await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm SUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -97,7 +97,7 @@ async def cb_handler(client, query: CallbackQuery):
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
             await client.send_message(chat_id=message.chat.id, text=f"{Dub_C_url}/{FUCK.id}")
             await asyncio.sleep(10)
-            await client.send_message(chat_id=message.chat.id, text=CHELP_POST_FORMAT)
+            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
             await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm DUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
