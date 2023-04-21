@@ -1,14 +1,40 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID
+from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID, ANI_LOG_CHANNEL
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 
+ANI_SUB_LOG_TXT = """
+🏷<b>TITLE:</b> {}
+ 
+Anime{}    <code>{}</code>   
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🟥 <b>SUB</b>: {}
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+👤<b>By:</b> {} 🆔: <code>{}</code>
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+"""
+
+ANI_DUB_LOG_TXT = """
+🏷<b>TITLE:</b> {}
+ 
+Anime{}    <code>{}</code>   
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🟩 <b>DUB</b>: {}
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+👤<b>By:</b> {} 🆔: <code>{}</code>
+〰️〰️〰️〰️〰️〰️〰️〰️〰️
+"""
+
+
+
 @Bot.on_message(filters.command("adddub") & filters.user(ADMINS))
 async def adddub(client, message):
+    Umention = message.from_user.mention
+    UID = message.from_user.id
     if message.reply_to_message:
         link = message.reply_to_message.text
         if len(message.command) != 1:
@@ -17,6 +43,12 @@ async def adddub(client, message):
             if not await present_dub_anime(anime_id):
                 try:
                     await add_dub_anime(anime_id, link)
+                    await Bot.send_photo(
+                        chat_id=ANI_LOG_CHANNEL,
+                        photo=A_PIC,
+                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, link, Umention, UID),
+                        reply_markup=ANI_LOG_BUT
+                    )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
