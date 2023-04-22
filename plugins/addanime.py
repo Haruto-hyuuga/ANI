@@ -346,15 +346,14 @@ async def fchannelSUBpost(client, message):
     CONFIRM_SUB_PB = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
-            ],
-            [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="replyclose"),
+                InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
             ]
         ]
     )
     try:
-        await message.reply_photo(photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_PB)
+        M = await message.reply_photo(photo=title_img, caption=POST_CAPTION)
+        await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_SUB_PB)
     except Exception as e:
         await message.reply_text(e)
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
@@ -460,7 +459,7 @@ async def fchannelDuBpost(client, message):
         [
             [
                 InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="replyclose"),
-                InlineKeyboardButton("CONFIRM ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
+                InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
             ]
         ]
     )
