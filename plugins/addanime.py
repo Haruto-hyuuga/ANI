@@ -470,3 +470,77 @@ async def fchannelDuBpost(client, message):
         await message.reply_text(e)
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
 
+
+@Bot.on_message(filters.command("banner") & filters.user(ADMINS))
+async def first_ep_banner(client, message):
+
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except (IndexError, ValueError):
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
+        return
+    
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            bannerImage
+            coverImage {
+                extraLarge
+            }
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            trailer {
+                id
+                site
+                thumbnail
+            }
+        }
+    }
+    '''
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    response = httpx.post(url, json={"query": query, "variables": variables})
+
+    if response.status_code != 200:
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"No anime found with the ID '{anime_id}'.\n Did you fuck up the number after command?? *_*")
+        return
+
+    cover_url = anime["coverImage"]["extraLarge"]
+    banner_url = anime["bannerImage"]
+
+
+    POST_CAPTION = """
+┏━━━━━━━━━━━━━━━━━━━━━━━
+┣ʀᴇꜱᴏʟᴜᴛɪᴏɴ:
+┣ᴀᴜᴅɪᴏ:
+┣ꜱᴜʙᴛɪᴛʟᴇ:
+┗━━━━━━━━━━━━━━━━━━━━━━━
+"""
+
+    try:
+        await message.reply_photo(photo=banner_url, caption=POST_CAPTION)
+        
+    except Exception as e:
+        await message.reply_text(f"ERROR ⚠️:\n⌛ Sending Other Image....\n\n{e}")
+        await message.reply_photo(photo=cover_url, caption=POST_CAPTION)
