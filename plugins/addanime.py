@@ -312,11 +312,9 @@ async def fchannelSUBpost(client, message):
     status = anime["status"]
     average_score = anime["averageScore"]
     
-    MAX_GENRES_LEN = 30 
-    genres = ", ".join(anime["genres"])
-    if len(genres) > MAX_GENRES_LEN:
-        split_genres = [f"<i>{genre}</i>" if genre.strip() in anime["genres"] else genre for genre in genres.split(",")]
-        genres = "\n│ ".join([", ".join(split_genres[:MAX_GENRES_LEN]), ", ".join(split_genres[MAX_GENRES_LEN:])])
+    genres = anime["genres"]
+    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
+
 
     if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
         studio = anime["studios"]["edges"][0]["node"]["name"]
@@ -334,7 +332,7 @@ async def fchannelSUBpost(client, message):
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
 ├<b>ᴛʏᴘᴇ:</b> {format}
-├<b>ɢᴇɴʀᴇꜱ:</b> <i>{genres}</i>
+├<b>ɢᴇɴʀᴇꜱ:</b> {Igenres}
 ├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
 ├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
 ├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
@@ -425,11 +423,10 @@ async def fchannelDuBpost(client, message):
     status = anime["status"]
     average_score = anime["averageScore"]
     
-    MAX_GENRES_LEN = 30 
-    genres = ", ".join(anime["genres"])
-    if len(genres) > MAX_GENRES_LEN:
-        split_genres = [f"<i>{genre}</i>" if genre.strip() in anime["genres"] else genre for genre in genres.split(",")]
-        genres = "\n│ ".join([", ".join(split_genres[:MAX_GENRES_LEN]), ", ".join(split_genres[MAX_GENRES_LEN:])])
+    
+    genres = anime["genres"]
+    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
+
 
     if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
         studio = anime["studios"]["edges"][0]["node"]["name"]
@@ -447,7 +444,7 @@ async def fchannelDuBpost(client, message):
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
 ├<b>ᴛʏᴘᴇ:</b> {format}
-├<b>ɢᴇɴʀᴇꜱ:</b> {genres}
+├<b>ɢᴇɴʀᴇꜱ:</b> {Igenres}
 ├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
 ├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
 ├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
