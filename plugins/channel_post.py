@@ -48,3 +48,30 @@ async def new_post(client: Client, message: Message):
     except Exception as e:
         print(e)
         pass
+
+
+
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
+
+@Bot.on_message(filters.channel & filters.incoming & filters.chat(SUB_CHANNEL))
+async def sub_post_link(client, message: Message):
+    P_id = message.id
+    Link = f"{Sub_C_url}/{P_id}"
+    try:
+        client.send_message(chat_id=CREATOR_GC, text=Link)
+    except:
+        pass
+
+@Bot.on_message(filters.channel & filters.incoming & filters.chat(DUB_CHANNEL))
+async def sub_post_link(client, message: Message):
+    P_id = message.id
+    Link = f"{Dub_C_url}/{P_id}"
+    try:
+        client.send_message(chat_id=CREATOR_GC, text=Link)
+    except:
+        pass
+
+
+
+
+
