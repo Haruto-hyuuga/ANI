@@ -98,6 +98,15 @@ async def adddub(client, message):
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
+                except:
+                    await add_dub_anime(anime_id, link)
+                    await client.send_photo(
+                        chat_id=ANI_LOG_CHANNEL,
+                        photo=A_PIC,
+                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
+                    )
+                    await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
+       
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
                     await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Add-DUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -148,6 +157,16 @@ async def addsub(client, message):
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
+                except:
+                    await add_sub_anime(anime_id, link)
+                    await client.send_photo(
+                        chat_id=ANI_LOG_CHANNEL,
+                        photo=A_PIC,
+                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
+                        reply_markup=ANI_LOG_BUT
+                    )
+                    await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
+ 
                 except Exception as e:
                     await message.reply_text(f"An Error Occured//-\n\n{e}")
                     await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Add-SUB CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
