@@ -79,7 +79,7 @@ Anime{}    <code>{}</code>
 
 @Bot.on_message(filters.command("adddub") & filters.user(ADMINS))
 async def adddub(client, message):
-    Umention = message.from_user.mention
+    Umention = message.from_user.mention or "None"
     UID = message.from_user.id
     if message.reply_to_message:
         link = message.reply_to_message.text
@@ -162,8 +162,7 @@ async def addsub(client, message):
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
-                        reply_markup=ANI_LOG_BUT
+                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
  
