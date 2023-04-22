@@ -83,9 +83,8 @@ async def cb_handler(client, query: CallbackQuery):
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
-            await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm SUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+            await client.send_message(chat_id=message.chat.id, text=e)
+            
     elif data.startswith("DUBconfirmpostD_"):
         anime_id = query.data.split("_")[-1]
         try:
@@ -99,9 +98,8 @@ async def cb_handler(client, query: CallbackQuery):
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
-            await client.send_message(chat_id=message.chat.id, text="SONE ERROR OCCURRED")
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ Confirm DUB POST Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+            await client.send_message(chat_id=message.chat.id, text=e)
+            
     elif data == "close":
         await query.message.delete()
         try:
