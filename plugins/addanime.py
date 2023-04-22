@@ -247,4 +247,229 @@ async def get_users(client: Bot, message: Message):
         await msg.edit(ADMIN_S_T.format(SA, DA, BOTUSERNAME))
 
 
+@Bot.on_message(filters.command("subpost") & filters.user(ADMINS))
+async def fchannelSUBpost(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except (IndexError, ValueError):
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
+        return
+
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description
+            format
+            status
+            episodes
+            duration
+            season
+            seasonYear
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            genres
+            averageScore
+            meanScore
+        }
+    }
+    '''
+
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
+
+
+    if response.status_code != 200:
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    E_title = anime["title"]["english"] or "➖"
+    J_title = anime["title"]["romaji"] or "➖"
+    format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    average_score = anime["averageScore"]
+    
+    MAX_GENRES_LEN = 30 
+    genres = ", ".join(anime["genres"])
+    if len(genres) > MAX_GENRES_LEN:
+        genres = "\n│ ".join([genres[:MAX_GENRES_LEN], genres[MAX_GENRES_LEN:]])
+    
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
+    else:
+        studio = "unknown"
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+    
+    title_img = f"https://img.anili.st/media/{anime_id}"
+
+    POST_CAPTION = f"""
+🇯🇵: <b>{J_title}</b>
+🇬🇧: <b>{E_title}</b>
+┏━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
+├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
+├<b>ᴛʏᴘᴇ:</b> {format}
+├<b>ɢᴇɴʀᴇꜱ:</b> <i>{genres}</i>
+├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
+├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
+├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
+├<b>ᴘʀᴇᴍɪᴇʀᴇᴅ:</b> {season}
+┣━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> Japanese
+├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
+┗━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    CONFIRM_SUB_PB = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
+            ],
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
+            ]
+        ]
+    )
+    try:
+        await message.reply_photo(photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_SUB_PB)
+    except Exception as e:
+        await message.reply_text(e)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
+
+
+@Bot.on_message(filters.command("dubpost") & filters.user(ADMINS))
+async def fchannelDuBpost(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except (IndexError, ValueError):
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
+        return
+
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description
+            format
+            status
+            episodes
+            duration
+            season
+            seasonYear
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            genres
+            averageScore
+            meanScore
+        }
+    }
+    '''
+
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
+
+
+    if response.status_code != 200:
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        return
+
+    E_title = anime["title"]["english"] or "➖"
+    J_title = anime["title"]["romaji"] or "➖"
+    format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    average_score = anime["averageScore"]
+    
+    MAX_GENRES_LEN = 30 
+    genres = ", ".join(anime["genres"])
+    if len(genres) > MAX_GENRES_LEN:
+        genres = "\n│ ".join([genres[:MAX_GENRES_LEN], genres[MAX_GENRES_LEN:]])
+    
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
+    else:
+        studio = "unknown"
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+    
+    title_img = f"https://img.anili.st/media/{anime_id}"
+
+    POST_CAPTION = f"""
+🇬🇧: <b>{E_title}</b>
+🇯🇵: <b>{J_title}</b>
+┏━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
+├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
+├<b>ᴛʏᴘᴇ:</b> {format}
+├<b>ɢᴇɴʀᴇꜱ:</b> <i>{genres}</i>
+├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
+├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
+├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
+├<b>ᴘʀᴇᴍɪᴇʀᴇᴅ:</b> {season}
+┣━━━━━━━━━━━━━━━━━━━━━━━
+├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> English, Japanese 
+├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> Full English, Sign & Songs
+┗━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    CONFIRM_DUB_PB = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("❗ CONFIRM POST TO SUB ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
+            ],
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close")
+            ]
+        ]
+    )
+
+    try:
+        await message.reply_photo(photo=title_img, caption=POST_CAPTION, reply_markup=CONFIRM_DUB_PB)
+    except Exception as e:
+        await message.reply_text(e)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
 
