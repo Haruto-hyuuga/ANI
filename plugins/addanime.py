@@ -1,16 +1,17 @@
 from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID, ANI_LOG_CHANNEL
+from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID, ANI_LOG_CHANNEL, ANI_LOG_URL
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 from database.inline import Ani_log_inline_f
 from pyrogram.errors import BadRequest
-
 import httpx
  
+ERROR_TITLE_IMG = ""
+        
 async def get_Log_anime_i(anime_id: int):
     
     query = '''
@@ -80,8 +81,8 @@ Anime{}    <code>{}</code>
 
 @Bot.on_message(filters.command("adddub") & filters.user(ADMINS))
 async def adddub(client, message):
-    Umention = message.from_user.mention or "None"
-    UID = message.from_user.id
+    Umention = message.from_user.mention or "ERROR"
+    UID = message.from_user.id or "ERROR"
     if message.reply_to_message:
         link = message.reply_to_message.text
         if len(message.command) != 1:
@@ -139,8 +140,8 @@ async def deldub(client, message):
 
 @Bot.on_message(filters.command("addsub") & filters.user(ADMINS))
 async def addsub(client, message):
-    Umention = message.from_user.mention
-    UID = message.from_user.id
+    Umention = message.from_user.mention or "ERROR"
+    UID = message.from_user.id or "ERROR"
     if message.reply_to_message:
         link = message.reply_to_message.text
         if len(message.command) != 1:
@@ -196,74 +197,77 @@ async def delsub(client, message):
     else:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
 
-REQPFX = ["/", "#"]
-@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
-async def arequest(client, message):
-    reply = message.reply_to_message
-    if len(message.command) != 1:
-        if reply:
-            try:
-                text = message.text.split(None, 1)[1]
-                
-                LOL = await reply.copy(REQUEST_GC, reply_to_message_id=REQ_TOPIC_ID)
-                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=LOL.id)
-                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
-            except Exception as e:
-                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD-REPLY Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
-        else:
-            try:
-                text = message.text.split(None, 1)[1]
-                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n\n💬: {text}", reply_to_message_id=REQ_TOPIC_ID)
-                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
-            except Exception as e:
-                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request Len-CMD-Txt Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
-    else:
-        await message.reply_text("Baka! mention link of anime you want to request\n〰️〰️〰️〰️OR〰️〰️〰️〰️\nWrite SUB/BUB after command while replying to a searched anime message")
-        
 
 
+
+async def channel_post_anime_info(anime_id: int):
     
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description
+            format
+            status
+            episodes
+            duration
+            season
+            seasonYear
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            genres
+            averageScore
+            meanScore
+        }
+    }
+    '''
 
-NON_A_S_T = """
-╔══════════════════════╗
-╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @{} 💕
-╚══════════════════════╝
-"""
-
-ADMIN_S_T = """
-╔══════════════════════╗
-╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠<b>ᴜꜱᴇʀꜱ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @{} 💕
-╚══════════════════════╝
-"""
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
 
 
-@Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
-async def get_users(client: Bot, message: Message):
-    msg = await client.send_message(chat_id=message.chat.id, text="⌛")
-    UID = message.from_user.id
-    suba = await full_sub_Animebase()
-    SA = len(suba)
-    duba = await full_dub_Animebase()
-    DA = len(duba)
-    if UID in ADMINS:
-        user = await full_userbase()
-        US = len(user)
-        await msg.edit(ADMIN_S_T.format(US, SA, DA, BOTUSERNAME))
+    if response.status_code != 200:
+        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="api_error⚠️"
+        return E_title, J_title, Format, episodes, status, average_score, Igenres, studio, duration, season
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
+        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="not_found⚠️"
+        return E_title, J_title, Format, episodes, status, average_score, Igenres, studio, duration, season
+
+    E_title = anime["title"]["english"] or "➖"
+    J_title = anime["title"]["romaji"] or "➖"
+    Format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    average_score = anime["averageScore"]
+    genres = anime["genres"]
+    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
     else:
-        await msg.edit(ADMIN_S_T.format(SA, DA, BOTUSERNAME))
+        studio = "unknown"
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+
+    return E_title, J_title, Format, episodes, status, average_score, Igenres, studio, duration, season
+
+
 
 
 @Bot.on_message(filters.command("subpost") & filters.user(ADMINS))
@@ -277,80 +281,18 @@ async def fchannelSUBpost(client, message):
     except (IndexError, ValueError):
         await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
         return
-
-    query = '''
-    query ($id: Int) {
-        Media (id: $id, type: ANIME) {
-            id
-            title {
-                romaji
-                english
-                native
-            }
-            description
-            format
-            status
-            episodes
-            duration
-            season
-            seasonYear
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                    }
-                }
-            }
-            genres
-            averageScore
-            meanScore
-        }
-    }
-    '''
-
-    variables = {"id": anime_id}
-    url = "https://graphql.anilist.co"
-    async with httpx.AsyncClient() as client:
-        response = await client.post(url, json={"query": query, "variables": variables})
-
-
-    if response.status_code != 200:
-        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    data = response.json()["data"]
-    anime = data["Media"]
-    if not anime:
-        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    E_title = anime["title"]["english"] or "➖"
-    J_title = anime["title"]["romaji"] or "➖"
-    format = anime["format"]
-    episodes = anime["episodes"]
-    status = anime["status"]
-    average_score = anime["averageScore"]
+    title_img = f"https://img.anili.st/media/{anime_id}" 
     
-    genres = anime["genres"]
-    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
-
-
-    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
-        studio = anime["studios"]["edges"][0]["node"]["name"]
-    else:
-        studio = "unknown"
-    duration = f"{anime['duration']} mins" if anime['duration'] else ""
-    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    
-    title_img = f"https://img.anili.st/media/{anime_id}"
-
-    POST_CAPTION = f"""
+    if not await present_sub_anime(anime_id):
+        
+        E_title, J_title, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+        POST_CAPTION = f"""
 🇯🇵: <b>{J_title}</b>
 🇬🇧: <b>{E_title}</b>
 ┏━━━━━━━━━━━━━━━━━━━━━━━
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
-├<b>ᴛʏᴘᴇ:</b> {format}
+├<b>ᴛʏᴘᴇ:</b> {Format}
 ├<b>ɢᴇɴʀᴇꜱ:</b> {Igenres}
 ├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
 ├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
@@ -361,21 +303,40 @@ async def fchannelSUBpost(client, message):
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
-    CONFIRM_SUB_PB = InlineKeyboardMarkup(
-        [
+        CONFIRM_SUB_PB = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
-                InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
+                [
+                    InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+                    InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
+                ]
             ]
-        ]
-    )
-    try:
-        M = await message.reply_photo(photo=title_img, caption=POST_CAPTION)
-        await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_SUB_PB)
-    except Exception as e:
-        await message.reply_text(e)
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
-
+        )
+        try:
+            M = await message.reply_photo(photo=title_img, caption=POST_CAPTION)
+            await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_SUB_PB)
+        except Exception as e:
+            await message.reply_text(e)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+    else:
+        POST_SAME = f"POST ALREDY EXIST IN SUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
+        try:
+            dblink = await get_sub_anime(anime_id)
+            SUB_EXIST_PB = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("POST LINK", url=dblink),
+                        InlineKeyboardButton("ANI-LOGs", url=ANI_LOG_URL)
+                    ],
+                    [
+                        InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+                    ]
+                ]
+            )
+            await message.reply_photo(photo=title_img, caption=POST_SAME, reply_markup=SUB_EXIST_PB) 
+        except Exception as e:
+            await message.reply_text(e)
+            
+        
 
 @Bot.on_message(filters.command("dubpost") & filters.user(ADMINS))
 async def fchannelDuBpost(client, message):
@@ -388,75 +349,13 @@ async def fchannelDuBpost(client, message):
     except (IndexError, ValueError):
         await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
         return
-
-    query = '''
-    query ($id: Int) {
-        Media (id: $id, type: ANIME) {
-            id
-            title {
-                romaji
-                english
-                native
-            }
-            description
-            format
-            status
-            episodes
-            duration
-            season
-            seasonYear
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                    }
-                }
-            }
-            genres
-            averageScore
-            meanScore
-        }
-    }
-    '''
-
-    variables = {"id": anime_id}
-    url = "https://graphql.anilist.co"
-    async with httpx.AsyncClient() as client:
-        response = await client.post(url, json={"query": query, "variables": variables})
-
-
-    if response.status_code != 200:
-        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    data = response.json()["data"]
-    anime = data["Media"]
-    if not anime:
-        await message.reply_text(f"<b>NO ANIME FOUND WITH GIVEN ID '{anime_id}'.\n Did you fuck up with number after command??</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    E_title = anime["title"]["english"] or "➖"
-    J_title = anime["title"]["romaji"] or "➖"
-    format = anime["format"]
-    episodes = anime["episodes"]
-    status = anime["status"]
-    average_score = anime["averageScore"]
-    
-    
-    genres = anime["genres"]
-    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
-
-
-    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
-        studio = anime["studios"]["edges"][0]["node"]["name"]
-    else:
-        studio = "unknown"
-    duration = f"{anime['duration']} mins" if anime['duration'] else ""
-    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    
     title_img = f"https://img.anili.st/media/{anime_id}"
+    
+    if not await present_dub_anime(anime_id):
+        
+        E_title, J_title, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
 
-    POST_CAPTION = f"""
+        POST_CAPTION = f"""
 🇬🇧: <b>{E_title}</b>
 🇯🇵: <b>{J_title}</b>
 ┏━━━━━━━━━━━━━━━━━━━━━━━
@@ -473,21 +372,40 @@ async def fchannelDuBpost(client, message):
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> Full English, Sign & Songs
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
-    CONFIRM_DUB_PB = InlineKeyboardMarkup(
-        [
+        CONFIRM_DUB_PB = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
-                InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
+                [
+                    InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+                    InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
+                ]
             ]
-        ]
-    )
+        )
 
-    try:
-        M = await message.reply_photo(photo=title_img, caption=POST_CAPTION)
-        await M.reply_text("Confirm Sending Post <b>To DUB Channel: @ANIME_DOWNLOADS_DUB</b>", reply_markup=CONFIRM_DUB_PB)
-    except Exception as e:
-        await message.reply_text(e)
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)  
+        try:
+            M = await message.reply_photo(photo=title_img, caption=POST_CAPTION)
+            await M.reply_text("Confirm Sending Post <b>To DUB Channel: @ANIME_DOWNLOADS_DUB</b>", reply_markup=CONFIRM_DUB_PB)
+        except Exception as e:
+            await message.reply_text(e)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID) 
+
+    else:
+        POST_SAME = f"POST ALREDY EXIST IN DUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
+        try:
+            dblink = await get_sub_anime(anime_id)
+            SUB_EXIST_PB = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("POST LINK", url=dblink),
+                        InlineKeyboardButton("ANI-LOGs", url=ANI_LOG_URL)
+                    ],
+                    [
+                        InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+                    ]
+                ]
+            )
+            await message.reply_photo(photo=title_img, caption=POST_SAME, reply_markup=SUB_EXIST_PB) 
+        except Exception as e:
+            await message.reply_text(e) 
 
 
 @Bot.on_message(filters.command("banner") & filters.user(ADMINS))
@@ -563,3 +481,76 @@ async def first_ep_banner(client, message):
     except Exception as e:
         await message.reply_text(f"ERROR ⚠️:\n⌛ Sending Other Image....\n\n{e}")
         await message.reply_photo(photo=cover_url, caption=POST_CAPTION)
+
+
+
+
+REQPFX = ["/", "#"]
+@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+async def arequest(client, message):
+    reply = message.reply_to_message
+    if len(message.command) != 1:
+        if reply:
+            try:
+                text = message.text.split(None, 1)[1]
+                
+                LOL = await reply.copy(REQUEST_GC, reply_to_message_id=REQ_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=LOL.id)
+                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
+            except Exception as e:
+                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request CMD-REPLY Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+        else:
+            try:
+                text = message.text.split(None, 1)[1]
+                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REQUESTED_ANIME \n🆔:<code>{message.from_user.id}</code>\n\n💬: {text}", reply_to_message_id=REQ_TOPIC_ID)
+                await message.reply_text("<b>REQUEST REGISTERED</b>\nThank-You Very Much💕")
+            except Exception as e:
+                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Request Len-CMD-Txt Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+    else:
+        await message.reply_text("Baka! mention link of anime you want to request\n〰️〰️〰️〰️OR〰️〰️〰️〰️\nWrite SUB/BUB after command while replying to a searched anime message")
+        
+
+
+    
+
+NON_A_S_T = """
+╔══════════════════════╗
+╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠╼ @{} 💕
+╚══════════════════════╝
+"""
+
+ADMIN_S_T = """
+╔══════════════════════╗
+╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ᴜꜱᴇʀꜱ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠╼ @{} 💕
+╚══════════════════════╝
+"""
+
+
+@Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+async def get_users(client: Bot, message: Message):
+    msg = await client.send_message(chat_id=message.chat.id, text="⌛")
+    UID = message.from_user.id
+    suba = await full_sub_Animebase()
+    SA = len(suba)
+    duba = await full_dub_Animebase()
+    DA = len(duba)
+    if UID in ADMINS:
+        user = await full_userbase()
+        US = len(user)
+        await msg.edit(ADMIN_S_T.format(US, SA, DA, BOTUSERNAME))
+    else:
+        await msg.edit(ADMIN_S_T.format(SA, DA, BOTUSERNAME))
+
