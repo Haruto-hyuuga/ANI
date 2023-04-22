@@ -75,12 +75,12 @@ async def cb_handler(client, query: CallbackQuery):
         try:
             M = query.message.reply_to_message
             FUCK = await M.copy(chat_id=SUB_CHANNEL)
-            await message.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>")
-            await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
+            await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n📂 @ANIME_DOWNLOADS_SUB")
+            await query.message.edit_text(f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
             Post_id = FUCK.id
             await client.send_message(chat_id=message.chat.id, text=f"{Sub_C_url}/{Post_id}")
             await asyncio.sleep(5)
-            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons\n👉🏻 @ANIME_DOWNLOADS_SUB")
+            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
             await client.send_message(chat_id=message.chat.id, text=e)
             
@@ -89,12 +89,12 @@ async def cb_handler(client, query: CallbackQuery):
         try:
             M = query.message.reply_to_message
             FUCK = await M.copy(chat_id=DUB_CHANNEL)
-            await message.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>")
-            await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
+            await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n📂 @ANIME_DOWNLOADS_DUB")
+            await query.message.edit_text(f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
             Post_id = FUCK.id
             await client.send_message(chat_id=message.chat.id, text=f"{Dub_C_url}/{Post_id}")
             await asyncio.sleep(5)
-            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons\n👉🏻 @ANIME_DOWNLOADS_DUB")
+            await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
             await client.send_message(chat_id=message.chat.id, text=e)
             
