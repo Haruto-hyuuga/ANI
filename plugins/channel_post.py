@@ -31,6 +31,8 @@ async def channel_post(client: Client, message: Message):
     if not DISABLE_CHANNEL_BUTTON:
         await post_message.edit_reply_markup(reply_markup)
 
+
+"""
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
 
@@ -47,7 +49,7 @@ async def new_post(client: Client, message: Message):
     except Exception as e:
         print(e)
         pass
-
+"""
 
 """
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
