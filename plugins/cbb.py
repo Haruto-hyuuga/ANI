@@ -75,13 +75,12 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         try:
             M = query.message.reply_to_message
-            FUCK = await client.copy_message(SUB_CHANNEL, query.message.chat.id, M.id)
+            Post = await M.copy(SUB_CHANNEL)
+            post_id = Post.message.id
             await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n📂 @ANIME_DOWNLOADS_SUB")
             await query.message.edit_text(f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
-            await asyncio.sleep(2)
-            post_id = FUCK.id
             await client.send_message(chat_id=message.chat.id, text=f"{Sub_C_url}/{Post_id}")
-            await asyncio.sleep(4)
+            await asyncio.sleep(5)
             await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
         except Exception as e:
             await client.send_message(chat_id=message.chat.id, text=e)
@@ -91,7 +90,7 @@ async def cb_handler(client, query: CallbackQuery):
         try:
             M = query.message.reply_to_message
             Post = await M.copy(DUB_CHANNEL)
-            post_id = Post.id
+            post_id = Post.message.id
             await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n📂 @ANIME_DOWNLOADS_DUB")
             await query.message.edit_text(f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
             await client.send_message(chat_id=message.chat.id, text=f"{Dub_C_url}/{Post_id}")
