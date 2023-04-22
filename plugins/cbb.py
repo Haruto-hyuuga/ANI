@@ -74,7 +74,7 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         try:
             M = query.message.reply_to_message
-            FUCK = M.copy(chat_id=SUB_CHANNEL)
+            FUCK = await M.copy(chat_id=SUB_CHANNEL)
             await message.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>")
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
             Post_id = FUCK.id
@@ -88,7 +88,7 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         try:
             M = query.message.reply_to_message
-            FUCK = M.copy(chat_id=DUB_CHANNEL)
+            FUCK = await M.copy(chat_id=DUB_CHANNEL)
             await message.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>")
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
             Post_id = FUCK.id
