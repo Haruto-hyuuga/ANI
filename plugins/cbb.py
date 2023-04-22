@@ -79,7 +79,7 @@ async def cb_handler(client, query: CallbackQuery):
             FUCK = client.send_photo(chat_id=SUB_CHANNEL, photo=picc, caption=Caption)
             await message.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>")
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
-            Post_id = FUCK.id
+            Post_id = FUCK.message_id
             await client.send_message(chat_id=message.chat.id, text=f"{Sub_C_url}/{Post_id}")
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
@@ -95,7 +95,7 @@ async def cb_handler(client, query: CallbackQuery):
             FUCK = client.send_photo(chat_id=DUB_CHANNEL, photo=picc, caption=Caption)
             await message.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>")
             await client.send_message(chat_id=message.chat.id, text=f"<i>REPLY TO BELOW LINK BY THIS COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
-            Post_id = FUCK.id
+            Post_id = FUCK.message_id
             await client.send_message(chat_id=message.chat.id, text=f"{Dub_C_url}/{Post_id}")
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text="Don't Forget To Edit Post's Inline Buttons")
