@@ -10,13 +10,13 @@ from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
 COMPLETE_POST_TXT = "Next Forward The Post To Channel Bot And Edit > And Add Inline Buttons Of Bot Batch Link Of Files. "
 
 async def Sub_post_link(chat_id, client):
-    async for message in client.get_chat_history(SUB_CHANNEL, limit=1):
+    async for message in client.iter_history(SUB_CHANNEL, limit=1):
         post_link = f"{Sub_C_url}/{message.id}"
         await client.send_message(chat_id, text=post_link)
         break
 
 async def Dub_post_link(chat_id, client):
-    async for message in client.get_chat_history(DUB_CHANNEL, limit=1):
+    async for message in client.iter_history(DUB_CHANNEL, limit=1):
         post_link = f"{Dub_C_url}/{message.id}"
         await client.send_message(chat_id, text=post_link)
         break
