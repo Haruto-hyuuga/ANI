@@ -7,6 +7,7 @@ from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, d
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 from database.inline import Ani_log_inline_f
+from pyrogram.errors import BadRequest
 
 import httpx
  
@@ -98,7 +99,7 @@ async def adddub(client, message):
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
-                except:
+                except BadRequest as e:
                     await add_dub_anime(anime_id, link)
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
@@ -157,7 +158,7 @@ async def addsub(client, message):
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
-                except:
+                except BadRequest as e:
                     await add_sub_anime(anime_id, link)
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
