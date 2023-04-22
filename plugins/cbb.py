@@ -85,9 +85,10 @@ async def cb_handler(client, query: CallbackQuery):
         M = query.message.reply_to_message
         P = await M.copy(SUB_CHANNEL)
         await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
-        await asyncio.sleep(10)
         await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
-        await asyncio.sleep(10)
+
+        await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
+        await asyncio.sleep(15)
         await query.message.reply_text(f"{Sub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
@@ -96,9 +97,10 @@ async def cb_handler(client, query: CallbackQuery):
         M = query.message.reply_to_message
         P = await M.copy(DUB_CHANNEL)
         await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
-        await asyncio.sleep(10)
         await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
-        await asyncio.sleep(10)
+
+        await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
+        await asyncio.sleep(15)
         await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
