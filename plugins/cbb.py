@@ -87,7 +87,7 @@ async def cb_handler(client, query: CallbackQuery):
         await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
         await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
         await asyncio.sleep(10)
-        await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
+        await client.send_message(query.message.chat.id, text=COMPLETE_POST_TXT)
 
     elif data.startswith("DUBconfirmpostD_"):
         anime_id = query.data.split("_")[-1]
@@ -96,7 +96,7 @@ async def cb_handler(client, query: CallbackQuery):
         await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
         await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
         await asyncio.sleep(10)
-        await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
+        await client.send_message(query.message.chat.id, text=COMPLETE_POST_TXT)
             
 
 
