@@ -32,7 +32,7 @@ class Bot(Client):
         try:
             db_channel = await self.get_chat(CHANNEL_ID)
             self.db_channel = db_channel
-            await self.send_message(REQUEST_GC, text = "BOT STARTED ✅", reply_to_message_id=Bot_Start_Topic)
+            await self.send_message(REQUEST_GC, text = "BOT STARTED 🔋", reply_to_message_id=Bot_Start_Topic)
         except Exception as e:
             self.LOGGER(__name__).warning(e)
             self.LOGGER(__name__).warning(f"Make Sure bot is Admin in DB Channel, and Double check the CHANNEL_ID Value, Current Value {CHANNEL_ID}")
@@ -49,5 +49,7 @@ class Bot(Client):
         await web.TCPSite(app, bind_address, PORT).start()
 
     async def stop(self, *args):
+        await self.send_message(REQUEST_GC, text = "BOT STOPPED 🪫", reply_to_message_id=Bot_Start_Topic)
         await super().stop()
         self.LOGGER(__name__).info("Bot stopped.")
+        
