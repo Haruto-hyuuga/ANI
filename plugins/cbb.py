@@ -9,19 +9,6 @@ from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
 
 COMPLETE_POST_TXT = "Next Forward The Post To Channel Bot And Edit > And Add Inline Buttons Of Bot Batch Link Of Files. "
 
-async def Sub_post_link(chat_id, client):
-    async for message in client.iter_history(SUB_CHANNEL, limit=1):
-        post_link = f"{Sub_C_url}/{message.id}"
-        await client.send_message(chat_id, text=post_link)
-        break
-
-async def Dub_post_link(chat_id, client):
-    async for message in client.iter_history(DUB_CHANNEL, limit=1):
-        post_link = f"{Dub_C_url}/{message.id}"
-        await client.send_message(chat_id, text=post_link)
-        break
-
-
 
 
 @Bot.on_callback_query()
@@ -95,8 +82,8 @@ async def cb_handler(client, query: CallbackQuery):
             await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
             await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
             chat_id = query.message.chat.id
-            await Sub_post_link(chat_id, client)
-            await asyncio.sleep(5)
+            
+            await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
         except Exception as e:
             await message.reply_text(text=e)
@@ -109,8 +96,8 @@ async def cb_handler(client, query: CallbackQuery):
             await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
             await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
             chat_id = query.message.chat.id
-            await Dub_post_link(chat_id, client)
-            await asyncio.sleep(5)
+            
+            await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
         except Exception as e:
             await message.reply_text(text=e)
