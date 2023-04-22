@@ -88,7 +88,7 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
 
         await client.send_message(SUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-        await asyncio.sleep(15)
+        await asyncio.sleep(5)
         await query.message.reply_text(f"{Sub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
@@ -100,7 +100,7 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
 
         await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-        await asyncio.sleep(15)
+        await asyncio.sleep(5)
         await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
