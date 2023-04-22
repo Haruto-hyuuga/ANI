@@ -83,18 +83,20 @@ async def cb_handler(client, query: CallbackQuery):
     elif data.startswith("SUBconfirmpostS_"):
         anime_id = query.data.split("_")[-1]
         M = query.message.reply_to_message
-        await M.copy(SUB_CHANNEL)
+        P = await M.copy(SUB_CHANNEL)
         await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
         await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
+        await query.message.reply_text(f"{Sub_C_url}{P.id}")
         await asyncio.sleep(10)
         await client.send_message(query.message.chat.id, text=COMPLETE_POST_TXT)
 
     elif data.startswith("DUBconfirmpostD_"):
         anime_id = query.data.split("_")[-1]
         M = query.message.reply_to_message
-        await M.copy(DUB_CHANNEL)
+        P = await M.copy(DUB_CHANNEL)
         await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
         await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
+        await query.message.reply_text(f"{Dub_C_url}{P.id}")
         await asyncio.sleep(10)
         await client.send_message(query.message.chat.id, text=COMPLETE_POST_TXT)
             
