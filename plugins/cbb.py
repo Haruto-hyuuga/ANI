@@ -78,29 +78,25 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         try:
             M = query.message.reply_to_message
-            Post = await M.copy(SUB_CHANNEL)
+            await M.copy(SUB_CHANNEL)
             await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
-            await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")
-            chat_id = query.message.chat.id
-            
+            await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
-        except Exception as e:
-            await message.reply_text(text=e)
+        except:
+            pass
 
     elif data.startswith("DUBconfirmpostD_"):
         anime_id = query.data.split("_")[-1]
         try:
             M = query.message.reply_to_message
-            Post = await M.copy(DUB_CHANNEL)
+            await M.copy(DUB_CHANNEL)
             await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
             await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
-            chat_id = query.message.chat.id
-            
             await asyncio.sleep(10)
             await client.send_message(chat_id=message.chat.id, text=COMPLETE_POST_TXT)
         except Exception as e:
-            await message.reply_text(text=e)
+            pass
             
     elif data == "close":
         await query.message.delete()
