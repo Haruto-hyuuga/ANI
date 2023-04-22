@@ -346,7 +346,7 @@ async def fchannelSUBpost(client, message):
     CONFIRM_SUB_PB = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="replyclose"),
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
                 InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
             ]
         ]
@@ -458,7 +458,7 @@ async def fchannelDuBpost(client, message):
     CONFIRM_DUB_PB = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="replyclose"),
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
                 InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
             ]
         ]
