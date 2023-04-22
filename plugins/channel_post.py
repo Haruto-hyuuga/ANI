@@ -49,7 +49,7 @@ async def new_post(client: Client, message: Message):
         pass
 
 
-
+"""
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
 
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(SUB_CHANNEL))
@@ -65,6 +65,7 @@ async def dub_post_link_gc(client, message: Message):
     Link = f"{Dub_C_url}/{P_id}"
     await client.send_message(chat_id=CREATOR_GC, text=Link)
     
+"""
 
 
 
