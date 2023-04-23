@@ -5,7 +5,7 @@ from pyrogram.types import Message, CallbackQuery
 from pyrogram.errors import FloodWait
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
-from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID
 
 COMPLETE_POST_TXT = "Next Forward The Post To Channel Bot And Edit > And Add Inline Buttons Of Bot Batch Link Of Files. "
 
@@ -73,7 +73,11 @@ async def cb_handler(client, query: CallbackQuery):
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
-
+    elif data == "DB_C_POST":
+        M = query.message
+        await M.copy(CHANNEL_ID)
+        await M.edit_text("<b>POSTED ✅</b>", reply_markup=BATCH_DBC_B)
+        
     elif data == "close":
         await query.message.delete()
         try:
