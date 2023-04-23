@@ -210,7 +210,7 @@ async def fchannelSUBpost(client, message):
             S = "English"
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image)
+            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
             
 
@@ -283,7 +283,7 @@ async def fchannelDuBpost(client, message):
             S = "English"
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image)
+            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
             
 
