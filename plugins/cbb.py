@@ -75,7 +75,9 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
     elif data == "DB_C_POST":
         M = query.message
-        await M.copy(CHANNEL_ID)
+        P = M.photo.file_id
+        C = M.caption if M.caption else "Unexpected Error ⚠️"
+        await client.send_photo(CHANNEL_ID, photo=P, caption=C)
         await M.edit_text("<b>POSTED ✅</b>", reply_markup=BATCH_DBC_B)
         
     elif data == "close":
