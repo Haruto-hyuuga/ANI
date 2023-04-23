@@ -113,4 +113,13 @@ async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
     )
     return ANI_LOG_BUT
 
+NOani_BUTTON = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("𝗦𝗨𝗕 𝗖𝗵𝗮𝗻𝗻𝗲𝗹", url = Sub_C_url),
+            InlineKeyboardButton("🗑️", callback_data="close"),
+            InlineKeyboardButton("𝗗𝗨𝗕 𝗖𝗵𝗮𝗻𝗻𝗲𝗹, url = Dub_C_url)
+        ]
+    ]
+)
 
