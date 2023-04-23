@@ -230,8 +230,8 @@ async def only_banner_image(anime_id: int):
     msg_caption = """
 ┏━━━━━━━━━━━━━━━━━━━━━━━
 ┣ʀᴇꜱᴏʟᴜᴛɪᴏɴ:
-┣ᴀᴜᴅɪᴏ:
-┣ꜱᴜʙᴛɪᴛʟᴇ:
+┣ᴀᴜᴅɪᴏ: {}
+┣ꜱᴜʙᴛɪᴛʟᴇ: {}
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
     return banner_pic, cover_pic, msg_caption
