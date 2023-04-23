@@ -191,17 +191,13 @@ async def fchannelSUBpost(client, message):
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English 
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
-        CONFIRM_SUB_PB = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
-                    InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")
-                ]
-            ]
-        )
+        CONFIRM_POST = InlineKeyboardMarkup([[InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"), InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"SUBconfirmpostS_{anime_id}")]])
+        CONFIRM_DBBP = InlineKeyboardMarkup([[InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"), InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DBC_BP_SUB")]])
         try:
             M = await message.reply_photo(photo=MSG_img, caption=POST_CAPTION)
-            await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_SUB_PB)
+            await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_POST)
+            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption, reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -259,18 +255,13 @@ async def fchannelDuBpost(client, message):
 ├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> Full English, Sign & Songs
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
-        CONFIRM_DUB_PB = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
-                    InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")
-                ]
-            ]
-        )
-
+        CONFIRM_POST = InlineKeyboardMarkup([[InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")]])
+        CONFIRM_DBBP = InlineKeyboardMarkup([[InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"), InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DBC_BP_DUB")]])
         try:
             M = await message.reply_photo(photo=MSG_img, caption=POST_CAPTION)
-            await M.reply_text("Confirm Sending Post <b>To DUB Channel: @ANIME_DOWNLOADS_DUB</b>", reply_markup=CONFIRM_DUB_PB)
+            await M.reply_text("Confirm Sending Post <b>To DUB Channel: @ANIME_DOWNLOADS_DUB</b>", reply_markup=CONFIRM_POST)
+            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption, reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID) 
