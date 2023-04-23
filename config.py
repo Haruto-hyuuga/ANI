@@ -4,11 +4,11 @@ from logging.handlers import RotatingFileHandler
 import random 
 
 # mainbot
-TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
+#TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
 BOTUSERNAME = "AnimeDL_Robot"
-
+TG_BOT_TOKEN = "5844274164:AAHGFMBKEIcoUBS5uPekGAtag7BBaLi5GQI"
 
 
 #DATABASE CHANNEL
