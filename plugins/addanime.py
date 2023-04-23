@@ -202,7 +202,18 @@ async def fchannelSUBpost(client, message):
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB CHANNEL POST\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+        banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+        try:
+            A = "Japanese"
+            S = "English"
+            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
+        except Exception as e:
+            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image)
+            await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
+            
+
     else:
         POST_SAME = f"POST ALREDY EXIST IN SUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
         try:
@@ -262,13 +273,19 @@ async def fchannelDuBpost(client, message):
         try:
             M = await message.reply_photo(photo=MSG_img, caption=POST_CAPTION)
             await M.reply_text("Confirm Sending Post <b>To DUB Channel: @ANIME_DOWNLOADS_DUB</b>", reply_markup=CONFIRM_POST)
-            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
-            A = "English, Japanese"
-            S = "Sign & Song, Englisg"
-            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID) 
+
+        banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+        try:
+            A = "Japanese"
+            S = "English"
+            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
+        except Exception as e:
+            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image)
+            await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
+            
 
     else:
         POST_SAME = f"POST ALREDY EXIST IN DUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
