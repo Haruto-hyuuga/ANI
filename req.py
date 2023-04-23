@@ -1,5 +1,6 @@
 import httpx
 import random 
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 
 
@@ -7,6 +8,88 @@ from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 ERROR_IMAGE = "https://telegra.ph/file/5d770ae91df7457adbd28.jpg"
 NOani_IMAGE = "https://telegra.ph/file/ecbd1f30a4a3ea06d025b.jpg"
 NO_banner_IMG = "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
+
+
+
+async def search_anime_list_by_Name(anime_name: str):
+    query = '''
+        query ($search: String) {
+            Page {
+                media(search: $search, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+                    status
+                    bannerImage
+                }
+            }
+        }
+    '''
+    variables = {"search": anime_name}
+    url = "https://graphql.anilist.co"
+    response = requests.post(url, json={"query": query, "variables": variables})
+
+    if response.status_code != 200:
+        message_text = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
+        message_button = ERROR_BUTTON
+        message_photo = ERROR_IMAGE
+        return message_text, message_button, message_photo 
+    
+    data = response.json()["data"]
+    anime_list = data["Page"]["media"]
+    if not anime_list:
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title"
+        message_button = NOani_BUTTON
+        message_photo = NOani_IMAGE
+        return message_text, message_button, message_photo
+
+    banner_image = None
+    if len(anime_list) == 1:
+        banner_image = anime_list[0]["bannerImage"]
+    else:
+        banner_images = [anime["bannerImage"] for anime in anime_list if anime["bannerImage"]]
+        if banner_images:
+            banner_image = random.choice(banner_images)
+
+    message_text = "<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    buttons = []
+    for i, anime in enumerate(anime_list[:5]):
+        title = anime["title"]["english"] or anime["title"]["romaji"]
+        anime_id = anime["id"]
+        status = anime["status"]
+        
+        if status == "FINISHED":
+            status_emoji = "🖥️"
+        elif status == "RELEASING":
+            status_emoji = "🆕"
+        elif status == "NOT_YET_RELEASED":
+            status_emoji = "🔜"
+        elif status == "CANCELLED":
+            status_emoji = "❌"
+        elif status == "HIATUS":
+            status_emoji = "🛑"
+        elif status == "UPCOMING":
+            status_emoji = "🎞️"
+        else:
+            status_emoji = ""
+            
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_{anime_id}")])
+    try:
+        buttons.append(
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+                InlineKeyboardButton("Not In List", callback_data="anime_notfound_popup")
+            ]
+        )
+    except:
+        pass
+    message_photo = banner_image or NO_banner_IMG
+    message_button = InlineKeyboardMarkup(buttons)
+    return message_text, message_button, message_photo
+
 
 async def search_find_anime_list(anime_name: str):
     
