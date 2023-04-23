@@ -42,7 +42,7 @@ async def search_find_anime_list(anime_name: str):
     data = response.json()["data"]
     anime_list = data["Page"]["media"]
     if not anime_list:
-        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title")
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title"
         message_button = NOani_BUTTON
         message_photo = NOani_IMAGE
         return message_text, message_button, message_photo
