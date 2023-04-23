@@ -175,7 +175,7 @@ async def channel_post_anime_info(anime_id: int):
         studio = "unknown"
     duration = f"{anime['duration']} mins" if anime['duration'] else ""
     season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
-    MSG_img = = f"https://img.anili.st/media/{anime_id}" 
+    MSG_img = f"https://img.anili.st/media/{anime_id}" 
 
     return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
         
