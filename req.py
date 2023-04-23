@@ -300,7 +300,7 @@ async def get_full_anime_info(anime_id: int):
         message_text = "Try Again, if problem persists contact me trough: @Maid_Robot"
         trailer_url = site_url = "https://t.me/AnimeRobots"
         cover_url = banner_url = title_img = ERROR_IMAGE
-        return first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url
+        return F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url
 
     data = response.json()["data"]
     anime = data["Media"]
@@ -310,7 +310,7 @@ async def get_full_anime_info(anime_id: int):
         message_text = "Try Searching Again Properly or Get Title From Anilist.co"
         trailer_url = site_url = "https://t.me/AnimeRobots"
         cover_url = banner_url = title_img = NOani_IMAGE
-        return first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url
+        return F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url
 
     title = anime["title"]["english"] or anime["title"]["romaji"]
     cover_url = anime["coverImage"]["extraLarge"]
