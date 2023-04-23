@@ -73,14 +73,171 @@ async def search_find_anime_list(anime_name: str):
         return message_text, message_button, message_photo
         
         
+async def get_Log_anime_i(anime_id: int):
+    
+    query = '''
+        query ($id: Int) {
+          Media(id: $id, type: ANIME) {
+            id
+            title {
+              romaji
+              english
+              native
+            }
+            episodes
+            bannerImage
+          }
+        }
+    '''
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    response = httpx.post(url, json={"query": query, "variables": variables})
+
+
+    if response.status_code != 200:
+        A_PIC = ERROR_IMAGE
+        Episodes = A_Title = "api_error⚠️"
+        return A_PIC, A_Title, Episodes
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        A_PIC = "https://te.legra.ph/file/3a603811e9275a9edd593.jpg"
+        Episodes = A_Title = "not_found⚠️"
+        return A_PIC, A_Title, Episodes
+
+    A_Title = anime["title"]["english"] or anime["title"]["romaji"]
+    Episodes = anime["episodes"]
+    A_PIC = anime["bannerImage"]
+    return A_PIC, A_Title, Episodes
+        
+        
+async def channel_post_anime_info(anime_id: int):
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description
+            format
+            status
+            episodes
+            duration
+            season
+            seasonYear
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            genres
+            averageScore
+            meanScore
+        }
+    }
+    '''
+
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, json={"query": query, "variables": variables})
+
+
+    if response.status_code != 200:
+        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="api_error⚠️"
+        MSG_img = ERROR_IMAGE
+        return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="not_found⚠️"
+        MSG_img = NOani_IMAGE
+        return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
+
+    E_title = anime["title"]["english"] or "➖"
+    J_title = anime["title"]["romaji"] or "➖"
+    Format = anime["format"]
+    episodes = anime["episodes"]
+    status = anime["status"]
+    average_score = anime["averageScore"]
+    genres = anime["genres"]
+    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
+    if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
+        studio = anime["studios"]["edges"][0]["node"]["name"]
+    else:
+        studio = "unknown"
+    duration = f"{anime['duration']} mins" if anime['duration'] else ""
+    season = f"{anime['season']} {anime['seasonYear']}" if anime['season'] else ""
+    MSG_img = = f"https://img.anili.st/media/{anime_id}" 
+
+    return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
         
         
         
-        
-        
-        
-        
-        
+async def only_banner_image(anime_id: int):
+    query = '''
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            bannerImage
+            coverImage {
+                extraLarge
+            }
+            studios(isMain: true) {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+            trailer {
+                id
+                site
+                thumbnail
+            }
+        }
+    }
+    '''
+    variables = {"id": anime_id}
+    url = "https://graphql.anilist.co"
+    response = httpx.post(url, json={"query": query, "variables": variables})
+
+    if response.status_code != 200:
+        msg_caption = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
+        banner_pic = cover_pic = ERROR_IMAGE
+        return
+
+    data = response.json()["data"]
+    anime = data["Media"]
+    if not anime:
+        msg_caption = f"No anime found with the ID '{anime_id}'.\n Did you fuck up the number after command?"
+        banner_pic = cover_pic = NOani_IMAGE
+        return
+
+    cover_pic = anime["coverImage"]["extraLarge"]
+    banner_pic = anime["bannerImage"]
+    msg_caption = """
+┏━━━━━━━━━━━━━━━━━━━━━━━
+┣ʀᴇꜱᴏʟᴜᴛɪᴏɴ:
+┣ᴀᴜᴅɪᴏ:
+┣ꜱᴜʙᴛɪᴛʟᴇ:
+┗━━━━━━━━━━━━━━━━━━━━━━━
+"""
+    return banner_pic, cover_pic, msg_caption
+
+
         
         
         
