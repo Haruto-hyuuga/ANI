@@ -9,65 +9,21 @@ from req import get_full_anime_info, channel_post_anime_info, search_find_anime_
 
 
 
-@Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
-async def animefulinfo(client, message):
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
-        return
-    try:
-        anime_id = int(args[1])
-    except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
-        return
-    
-    F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
-    
-    if F_BOOL == True:
-        
-        try:
-            await message.reply_photo(banner_url, caption=first_message)
-        except Exception as e:
-            await message.reply_photo(cover_url, caption=first_message)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        YtRESULT_B = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("🖥️ Anime Site", url=site_url),
-                    InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
-                ],
-                [
-                    InlineKeyboardButton("💬 ANIME GROUP CHAT 💬", url=GROUP_url),
-                ]
-            ]
-        )
-    
-        try:
-            await message.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
-        except Exception as e:
-            await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    else:
-        try:
-            await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-  
-
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
         return
-    try:
-        anime_id = int(args[1])
-    except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
-        return
-
+    arg = args[1]
+    if arg.isdigit():
+        try:
+            anime_id = int(arg)
+        except (IndexError, ValueError):
+            await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
+        
+    else:
+        anime_name = " ".join(args[1:])
     E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
             
     message_text = f"""
@@ -252,7 +208,52 @@ async def norequestleftc(client, message):
 
 
 
+@Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+async def animefulinfo(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        return
+    try:
+        anime_id = int(args[1])
+    except (IndexError, ValueError):
+        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
+        return
+    
+    F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
+    
+    if F_BOOL == True:
+        
+        try:
+            await message.reply_photo(banner_url, caption=first_message)
+        except Exception as e:
+            await message.reply_photo(cover_url, caption=first_message)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+        YtRESULT_B = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("🖥️ Anime Site", url=site_url),
+                    InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
+                ],
+                [
+                    InlineKeyboardButton("💬 ANIME GROUP CHAT 💬", url=GROUP_url),
+                ]
+            ]
+        )
+    
+        try:
+            await message.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
+        except Exception as e:
+            await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            
+    else:
+        try:
+            await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
+        except Exception as e:
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+  
 
 
 
