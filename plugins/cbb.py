@@ -7,9 +7,6 @@ from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID
 
-COMPLETE_POST_TXT = "Next Forward The Post To Channel Bot And Edit > And Add Inline Buttons Of Bot Batch Link Of Files. "
-
-
 
 @Bot.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
@@ -78,7 +75,9 @@ async def cb_handler(client, query: CallbackQuery):
         P = M.photo.file_id
         C = M.caption if M.caption else "Unexpected Error ⚠️"
         await client.send_photo(CHANNEL_ID, photo=P, caption=C)
-        await M.edit_text("<b>POSTED ✅</b>", reply_markup=BATCH_DBC_B)
+        await query.message.delete()
+        await asyncio.sleep(5)
+        await M.reply_text(text="<b>BANNER POSTED ✅</b>", reply_markup=BATCH_DBC_B)
         
     elif data == "close":
         await query.message.delete()
@@ -90,11 +89,10 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         M = query.message.reply_to_message
         P = await M.copy(SUB_CHANNEL)
-        await M.edit_text("<b>POSTED SUCCESSFULLY ON SUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_SUB")
-        await query.message.edit_text(f"<i>REPLY TO POST LINK BY COMMAND:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
+        await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_SUB")
+        await query.message.edit_text(f"<i>Reply To Link Below by Command:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
 
         await client.send_message(SUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-        await asyncio.sleep(5)
         await query.message.reply_text(f"{Sub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
@@ -102,11 +100,11 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = query.data.split("_")[-1]
         M = query.message.reply_to_message
         P = await M.copy(DUB_CHANNEL)
-        await M.edit_text("<b>POSTED SUCCESSFULLY ON DUB CHANNEL ✅</b>\n🔗: @ANIME_DOWNLOADS_DUB")
-        await query.message.edit_text(f"<i>REPLY TO POT LINK BY COMMAND:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
+        await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_DUB")
+        await query.message.edit_text(f"<i>Reply To Link Below By Command:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
 
         await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-        await asyncio.sleep(5)
+
         await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
