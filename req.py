@@ -3,9 +3,9 @@ from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 
 
 
-ERROR_IMAGE = ""
-NOani_IMAGE = ""
-NO_banner_IMG = ""
+ERROR_IMAGE = "https://telegra.ph/file/5d770ae91df7457adbd28.jpg"
+NOani_IMAGE = "https://telegra.ph/file/ecbd1f30a4a3ea06d025b.jpg"
+NO_banner_IMG = "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
 
 async def search_find_anime_list(anime_name: str):
     
