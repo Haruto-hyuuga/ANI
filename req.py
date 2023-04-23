@@ -169,7 +169,7 @@ async def channel_post_anime_info(anime_id: int):
     status = anime["status"]
     average_score = anime["averageScore"]
     genres = anime["genres"]
-    Igenres = " ".join([f"<i>{genre}</i> " for genre in genres])
+    Igenres = ", ".join([f"<i>{genre}</i> " for genre in genres])
     if "studios" in anime and anime["studios"] and "edges" in anime["studios"] and anime["studios"]["edges"] and len(anime["studios"]["edges"]) > 0 and "node" in anime["studios"]["edges"][0] and anime["studios"]["edges"][0]["node"] and "name" in anime["studios"]["edges"][0]["node"]:
         studio = anime["studios"]["edges"][0]["node"]["name"]
     else:
