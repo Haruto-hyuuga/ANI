@@ -96,7 +96,7 @@ async def adddub(client, message):
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
+                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
@@ -105,7 +105,7 @@ async def adddub(client, message):
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
+                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
        
@@ -155,7 +155,7 @@ async def addsub(client, message):
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
+                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID),
                         reply_markup=ANI_LOG_BUT
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
@@ -164,7 +164,7 @@ async def addsub(client, message):
                     await client.send_photo(
                         chat_id=ANI_LOG_CHANNEL,
                         photo=A_PIC,
-                        caption=ANI_DUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
+                        caption=ANI_SUB_LOG_TXT.format(A_Title, anime_id, anime_id, Episodes, link, Umention, UID)
                     )
                     await message.reply_text(f"<b>ADDED!</b>\n\nID: <b>{anime_id}</b>\nLINK: {link}")
  
