@@ -9,100 +9,7 @@ from config import R_Banner_Pic, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_P
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 
 
-@Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
-async def search_anime(client, message):
-    
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
-        return
-    anime_name = " ".join(args[1:])
 
-    
-    query = '''
-        query ($search: String) {
-            Page {
-                media(search: $search, type: ANIME) {
-                    id
-                    title {
-                        romaji
-                        english
-                        native
-                    }
-                    episodes
-                    duration
-                    status
-                    bannerImage
-                }
-            }
-        }
-    '''
-    variables = {"search": anime_name}
-    url = "https://graphql.anilist.co"
-    response = httpx.post(url, json={"query": query, "variables": variables})
-
-   
-    if response.status_code != 200:
-        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    
-    data = response.json()["data"]
-    anime_list = data["Page"]["media"]
-    if not anime_list:
-        await message.reply_text(f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title")
-        return
-
-    banner_image = None
-    if len(anime_list) == 1:
-        banner_image = anime_list[0]["bannerImage"]
-    else:
-        banner_images = [anime["bannerImage"] for anime in anime_list if anime["bannerImage"]]
-        if banner_images:
-            banner_image = random.choice(banner_images)
-
-
-    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:10]):
-        title = anime["title"]["english"] or anime["title"]["romaji"]
-        anime_id = anime["id"]
-        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        try:
-            duration = f"{anime['duration']} mins" if anime['duration'] else ""
-        except:
-            duration = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes} 🕒: <b>{duration}</b>  ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
-
-    if banner_image:
-        try:
-            await message.reply_photo(
-                photo=banner_image,
-                caption=message_text,
-                reply_markup=ANIME_RESULT_B
-            )
-        except Exception as e:
-            await message.reply_text(
-                text=message_text,
-                reply_markup=ANIME_RESULT_B
-            )
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    else:
-        M_banner_Pic = await R_Banner_Pic()
-        try:
-            await message.reply_photo(
-                photo=M_banner_Pic,
-                caption=message_text,
-                reply_markup=ANIME_RESULT_B
-            )
-        except Exception as e:
-            await message.reply_text(
-                text=message_text,
-                reply_markup=ANIME_RESULT_B
-            )
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-PVT Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -363,104 +270,7 @@ async def animefulinfo(client, message):
 
 
 
-@Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
-async def gcanimesearch(client, message):
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
-        return
-    anime_name = " ".join(args[1:])
 
-    
-    query = '''
-        query ($search: String) {
-            Page {
-                media(search: $search, type: ANIME) {
-                    id
-                    title {
-                        romaji
-                        english
-                        native
-                    }
-                    episodes
-                    duration
-                    status
-                    bannerImage
-                }
-            }
-        }
-    '''
-    variables = {"search": anime_name}
-    url = "https://graphql.anilist.co"
-    response = httpx.post(url, json={"query": query, "variables": variables})
-
-   
-    if response.status_code != 200:
-        await message.reply_text("<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot", reply_markup=ERROR_BUTTON)
-        return
-
-    
-    data = response.json()["data"]
-    anime_list = data["Page"]["media"]
-    if not anime_list:
-        await message.reply_text(f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title")
-        return
-
-    banner_image = None
-    if len(anime_list) == 1:
-        banner_image = anime_list[0]["bannerImage"]
-    else:
-        banner_images = [anime["bannerImage"] for anime in anime_list if anime["bannerImage"]]
-        if banner_images:
-            banner_image = random.choice(banner_images)
-
-
-    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:10]):
-        title = anime["title"]["english"] or anime["title"]["romaji"]
-        anime_id = anime["id"]
-        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        duration = f"{anime['duration']} mins" if anime['duration'] else ""
-
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b> 🕒:<b>{duration}</b>  ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>\n➥<code> /download {anime_id} </code>\n\n"
-
-
-    RESULT_B = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"),
-                InlineKeyboardButton("𝗡𝗼𝘁 𝗶𝗻 𝗟𝗶𝘀𝘁 🔎", callback_data="anime_notfound_popup")
-            ]
-        ]
-    )
-    if banner_image:
-        try:
-            await message.reply_photo(
-                photo=banner_image,
-                caption=message_text,
-                reply_markup=RESULT_B
-            )
-        except Exception as e:
-            await message.reply_text(
-                text=message_text,
-                reply_markup=RESULT_B
-            )
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom API banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    else:
-        M_banner_Pic = await R_Banner_Pic()
-        try:
-            await message.reply_photo(
-                photo=M_banner_Pic,
-                caption=message_text,
-                reply_markup=RESULT_B
-            )
-        except Exception as e:
-            await message.reply_text(
-                text=message_text,
-                reply_markup=RESULT_B
-            )
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Search CMD-GC Error\nrandom saved banner image\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
@@ -583,3 +393,66 @@ async def nofullanineleftc(client, message):
 async def norequestleftc(client, message):
      await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
     
+@Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+async def search_anime(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        return
+    anime_name = " ".join(args[1:])
+    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
+    try:
+        await message.reply_photo(
+            photo=message_photo,
+            caption=message_text,
+            reply_markup=message_button
+        )
+    except Exception as e:
+        await message.reply_text(
+            text=message_text,
+            reply_markup=message_button 
+        )
+        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            
+
+
+@Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
+async def gcanimesearch(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        return
+    anime_name = " ".join(args[1:])
+    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
+    try:
+        await message.reply_photo(
+            photo=message_photo,
+            caption=message_text,
+            reply_markup=message_button
+        )
+    except Exception as e:
+        await message.reply_text(
+            text=message_text,
+            reply_markup=message_button 
+        )
+        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
