@@ -248,7 +248,7 @@ async def fchannelDuBpost(client, message):
 ┏━━━━━━━━━━━━━━━━━━━━━━━
 ├<b>ᴇᴘɪꜱᴏᴅᴇꜱ:</b> {episodes}
 ├<b>ᴅᴜʀᴀᴛɪᴏɴ:</b> {duration}
-├<b>ᴛʏᴘᴇ:</b> {format}
+├<b>ᴛʏᴘᴇ:</b> {Format}
 ├<b>ɢᴇɴʀᴇꜱ:</b> {Igenres}
 ├<b>ꜱᴄᴏʀᴇ:</b> {average_score}
 ├<b>ꜱᴛᴜᴅɪᴏ:</b> {studio}
