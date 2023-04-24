@@ -112,12 +112,13 @@ async def gcanimedlcmd(client, message):
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def search_anime(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
         return
     anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name)
+    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
     try:
         await message.reply_photo(
             photo=message_photo,
@@ -135,12 +136,13 @@ async def search_anime(client, message):
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimesearch(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
         return
     anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name)
+    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
     try:
         await message.reply_photo(
             photo=message_photo,
