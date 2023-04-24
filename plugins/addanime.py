@@ -7,6 +7,7 @@ from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, d
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
 from database.user_stats import get_user_stats
+from database.req_Db import full_requestDB_DUB, full_requestDB_SUB
 from database.inline import Ani_log_inline_f
 from pyrogram.errors import BadRequest
 from req import get_Log_anime_i, channel_post_anime_info, only_banner_image
@@ -383,7 +384,9 @@ ADMIN_S_T = """
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 ╠<b>👥ᴜꜱᴇʀꜱ:</b> {}
 ╠<b>🌸ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+║<b>ꜱᴜʙ ᴘᴇɴᴅɪɴɢ ʀᴇ𝚀ᴜᴇꜱᴛ:</b> {}
 ╠<b>🍀ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
+║<b>ᴅᴜʙᴘᴇɴᴅɪɴɢ ʀᴇ𝚀ᴜᴇꜱᴛ:</b> {}
 ╚══════════════════════╝
 """
 @Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
@@ -399,7 +402,11 @@ async def get_users(client: Bot, message: Message):
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
-        await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, US, SA, DA))
+        r_s_p = await full_requestDB_SUB()
+        SR = len(r_s_p)
+        r_d_p = await full_requestDB_DUB()
+        DR = len(r_d_p)
+        await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, US, SA, SR, DA, DR))
     else:
         await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, BOTUSERNAME, SA, DA))
 
