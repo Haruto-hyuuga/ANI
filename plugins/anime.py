@@ -189,6 +189,7 @@ async def animefulinfo(client, message):
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def pvt_many_anime_list(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -215,6 +216,7 @@ async def pvt_many_anime_list(client, message):
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & filters.chat(FS_GROUP))
 async def gc_many_anime_list(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
