@@ -1,7 +1,7 @@
 from pyrogram import filters
 from bot import Bot
 import asyncio
-from pyrogram.types import Message, CallbackQuery
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import FloodWait
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
@@ -68,7 +68,7 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "anime_download_popup":
         await query.answer("TO DOWNLOAD THE ANIME YOU WANT TAP ON (/download 12345) And SEND, YOU'LL GET DOWNLOAD LINK or YOU CAN USE (/anime id) TOO", show_alert=True)
     elif data == "anime_notfound_popup":
-        await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎", show_alert=True)
+        await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎, OR USE COMMAND /list or /fullsearch", show_alert=True)
     elif data == "GroupAnimeInfo":
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
     elif data == "gcAresultclose":
@@ -113,9 +113,12 @@ async def cb_handler(client, query: CallbackQuery):
 
     elif data.startswith("Anime_DL_"):
         B_DATA = query.data.split("_")[-1]
-        user_id, anime_id = B_DATA.split(":")
-        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-        message_text = f"""
+        u_id, a_id = B_DATA.split(":")
+        user_id = int(u_id)
+        anime_id = int(a_id)
+        if user_id == query.from_user.id:
+            E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+            message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
 🇯🇵: <b><u>{J_title}</u></b>
 ━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -125,8 +128,12 @@ async def cb_handler(client, query: CallbackQuery):
 ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
 """
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
-        await query.message.delete()
+            new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+            await query.message.delete()
+            await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        else:
+            await query.answer("The Person Who Searced Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+            
         
 
 
