@@ -160,7 +160,7 @@ async def full_info_anime_list_by_Name(anime_name: str):
         else:
             status_emoji = ""
             
-        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_FI_{anime_id}")])
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{anime_id}")])
     try:
         buttons.append(
             [
