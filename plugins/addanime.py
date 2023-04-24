@@ -6,6 +6,7 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
+from database.user_stats import get_user_stats
 from database.inline import Ani_log_inline_f
 from pyrogram.errors import BadRequest
 from req import get_Log_anime_i, channel_post_anime_info, only_banner_image
@@ -357,37 +358,48 @@ async def arequest(client, message):
  
 NON_A_S_T = """
 ╔══════════════════════╗
-╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
+╠╼ 👤 {} 𝙎𝙩𝙖𝙩𝙨~
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ᴀɴɪᴍᴇ ꜱᴇᴀʀᴄʜᴇᴅ:</b> {} 
+╠<b>ᴀɴɪᴍᴇ ʀᴇ𝚀ᴜᴇꜱᴛᴇᴅ:</b> {} 
+╠<b>ᴀɴɪᴍᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ:</b> {} 
+╠══════════════════════
+╠╼ @{} 𝙎𝙩𝙖𝙩𝙨 📂~
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 ╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
 ╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @{} 💕
 ╚══════════════════════╝
 """
 ADMIN_S_T = """
 ╔══════════════════════╗
+╠╼ 👤 {} 𝙎𝙩𝙖𝙩𝙨~
+║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+╠<b>ʙᴏᴛ ᴀᴅᴍɪɴ ⭐</b>
+╠<b>ᴀɴɪᴍᴇ ꜱᴇᴀʀᴄʜᴇᴅ:</b> {} 
+╠<b>ᴀɴɪᴍᴇ ʀᴇ𝚀ᴜᴇꜱᴛᴇᴅ:</b> {} 
+╠<b>ᴀɴɪᴍᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ:</b> {} 
+╠══════════════════════
 ╠╼ 𝘿𝙖𝙩𝙖𝙗𝙖𝙨𝙚 𝙎𝙩𝙖𝙩𝙨  📂
 ║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠<b>ᴜꜱᴇʀꜱ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
-╠<b>ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
-║▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-╠╼ @{} 💕
+╠<b>👥ᴜꜱᴇʀꜱ:</b> {}
+╠<b>🌸ᴛᴏᴛᴀʟ ꜱᴜʙ ᴀɴɪᴍᴇ:</b> {}
+╠<b>🍀ᴛᴏᴛᴀʟ ᴅᴜʙ ᴀɴɪᴍᴇ:</b> {} 
 ╚══════════════════════╝
 """
 @Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(chat_id=message.chat.id, text="⌛")
+    M = message.from_user.mention
     UID = message.from_user.id
     suba = await full_sub_Animebase()
     SA = len(suba)
     duba = await full_dub_Animebase()
     DA = len(duba)
+    D_L, R_Q, S_R, Ani_i = get_user_stats(UID)
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
-        await msg.edit(ADMIN_S_T.format(US, SA, DA, BOTUSERNAME))
+        await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, US, SA, DA))
     else:
-        await msg.edit(ADMIN_S_T.format(SA, DA, BOTUSERNAME))
+        await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, BOTUSERNAME, SA, DA))
 
