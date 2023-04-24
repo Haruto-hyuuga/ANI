@@ -158,7 +158,7 @@ async def cb_handler(client, query: CallbackQuery):
             try:
                 await query.message.delete()
                 await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-                await update_SC(user_id)
+                await update_SC(UID)
             except Exception as e:
                 await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
