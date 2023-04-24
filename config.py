@@ -4,11 +4,11 @@ from logging.handlers import RotatingFileHandler
 import random 
 
 # mainbot
-#TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
+TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
 BOTUSERNAME = "AnimeDL_Robot"
-TG_BOT_TOKEN = "5844274164:AAHGFMBKEIcoUBS5uPekGAtag7BBaLi5GQI"
+#TG_BOT_TOKEN = "5844274164:AAHGFMBKEIcoUBS5uPekGAtag7BBaLi5GQI"
 
 
 #DATABASE CHANNEL
@@ -109,16 +109,19 @@ ABOUT_TEXT = """
 <b>COMMANDS LIST:</b>
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
-/find or /search  'ANIME TITLE'
-<i>Use this command to get list of anime series that matches your search query and get download id</i>
-
-/anime or /download 'ANIME ID'
+/anime or /download <b>𝙰𝙽𝙸𝙼𝙴 𝙽𝙰𝙼𝙴 / 𝙸𝙳</b>
 <i>Use this command to get anime download link from channels</i>
 
-/anime_info or /info 'ANIME ID'
+/find or /search  <b>𝙰𝙽𝙸𝙼𝙴 𝙽𝙰𝙼𝙴</b>
+<i>search for anime that best matches your search query</i>
+
+/list or /fullsearch <b>𝙰𝙽𝙸𝙼𝙴 𝙽𝙰𝙼𝙴</b>
+<i>search for all anime that matches your search query</i>
+
+/anime_info or /info <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
 <i>Use this command to get detailed anime info trailer and many more</i>
 
-/request (reply to anime info msg)
+/request (𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚜𝚎𝚊𝚛𝚌𝚑𝚎𝚍 𝚖𝚎𝚜𝚜𝚊𝚐𝚎)
 <i>Use this command to Request anime to add in Bot</i>
 
 /channels
