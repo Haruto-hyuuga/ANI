@@ -73,7 +73,7 @@ async def search_anime_list_by_Name(anime_name: str, UID: int):
         elif status == "HIATUS":
             status_emoji = "🛑"
         elif status == "UPCOMING":
-            status_emoji = "🎞️"
+            status_emoji = "🕊️"
         else:
             status_emoji = ""
             
