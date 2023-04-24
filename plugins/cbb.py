@@ -4,6 +4,7 @@ import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import FloodWait
 from database.inline import*
+from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
 from req import channel_post_anime_info, download_anime_buttons_db
@@ -49,8 +50,12 @@ async def cb_handler(client, query: CallbackQuery):
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{query.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL", reply_to_message_id=LOL.id)
+
+            UID = query.from_user.id
+            await update_RQ_SUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 
     elif data == "REQUEST_DA":
         try:
@@ -62,6 +67,9 @@ async def cb_handler(client, query: CallbackQuery):
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{query.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL", reply_to_message_id=LOL.id)
+
+            UID = query.from_user.id
+            await update_RQ_DUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
@@ -94,6 +102,7 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.reply_to_message.delete()
         except:
             pass
+
     elif data.startswith("SUBconfirmpostS_"):
         if query.from_user.id in ADMINS:
             anime_id = query.data.split("_")[-1]
@@ -141,8 +150,13 @@ async def cb_handler(client, query: CallbackQuery):
 """
             UID = user_id
             new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-            await query.message.delete()
-            await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            try:
+                await query.message.delete()
+                await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                await update_SC(user_id)
+            except Exception as e:
+                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
 
