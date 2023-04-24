@@ -57,7 +57,7 @@ async def anime_info(client, message):
 
             
 
-@Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
+@Bot.on_message(filters.command(["download", "anime", "search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimedlcmd(client, message):
     UID = message.from_user.id
     args = message.text.split()
