@@ -30,7 +30,7 @@ async def search_anime_list_by_Name(anime_name: str):
     '''
     variables = {"search": anime_name}
     url = "https://graphql.anilist.co"
-    response = requests.post(url, json={"query": query, "variables": variables})
+    response = httpx.post(url, json={"query": query, "variables": variables})
 
     if response.status_code != 200:
         message_text = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
