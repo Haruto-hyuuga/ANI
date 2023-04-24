@@ -136,7 +136,8 @@ async def cb_handler(client, query: CallbackQuery):
 ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
 """
-            new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+            UID = user_id
+            new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
             await query.message.delete()
             await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
         else:
