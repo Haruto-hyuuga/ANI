@@ -195,8 +195,8 @@ async def search_find_anime_list(anime_name: str):
                         english
                         native
                     }
-                    episodes
-                    duration
+#                    episodes
+#                    duration
                     status
                     bannerImage
                 }
@@ -233,17 +233,32 @@ async def search_find_anime_list(anime_name: str):
 
 
     message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
-    for i, anime in enumerate(anime_list[:10]):
+    for i, anime in enumerate(anime_list[:20]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
-        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        status = anime["status"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
-        try:
-            duration = f"{anime['duration']} mins" if anime['duration'] else ""
-        except:
-            duration = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+#        episodes = anime["episodes"] or "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+        status = anime["status"] or "🏷️"
 
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n<i>🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: {episodes} 🕒ᴅᴜʀᴀᴛɪᴏɴ: {duration}</i>\n➥<code> /download {anime_id} </code>\n\n"
+        if status == "FINISHED":
+            status_emoji = "🖥️"
+        elif status == "RELEASING":
+            status_emoji = "🆕"
+        elif status == "NOT_YET_RELEASED":
+            status_emoji = "🔜"
+        elif status == "CANCELLED":
+            status_emoji = "❌"
+        elif status == "HIATUS":
+            status_emoji = "🛑"
+        elif status == "UPCOMING":
+            status_emoji = "🎞️"
+        else:
+            status_emoji = "🏷️"
+#        try:
+#            duration = f"{anime['duration']} mins" if anime['duration'] else ""
+#        except:
+#            duration = "𝚞𝚗𝚔𝚗𝚘𝚠𝚗"
+
+        message_text += f"<b><u>{i+1}</u>{status_emoji}</b>: <b>{title}</b>\n<i>➥<code> /anime_info {anime_id} </code>\n\n"
         message_photo = banner_image or NO_banner_IMG
         message_button = ANIME_RESULT_B
         
