@@ -142,6 +142,21 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+
+    elif data.startswith("FUclose_"):
+        UID = query.data.split("_")[-1]
+        CLICK = query.from_user.id
+        user_id = int(UID)
+        if CLICK not in ADMINS:
+            if not CLICK == user_id:
+                await query.answer("You're Not Allowed Baka!", show_alert=True)
+                return
+            
+        await query.message.delete()
+        try: 
+            await query.message.reply_to_message.delete()
+        except:
+            pass
             
         
 
