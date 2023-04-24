@@ -37,7 +37,7 @@ async def anime_info(client, message):
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
 
 """
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
 
         try:
             await message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
@@ -85,7 +85,7 @@ async def gcanimedlcmd(client, message):
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
 
 """
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
     
         if message.reply_to_message:
             try:
@@ -182,6 +182,7 @@ async def norequestleftc(client, message):
 
 @Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def animefulinfo(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
@@ -202,6 +203,7 @@ async def animefulinfo(client, message):
             await message.reply_photo(cover_url, caption=first_message)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+        S_CB_DATA = f"{UID}:{anime_id}"
         YtRESULT_B = InlineKeyboardMarkup(
             [
                 [
@@ -209,7 +211,7 @@ async def animefulinfo(client, message):
                     InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
                 ],
                 [
-                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{anime_id}"),
+                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}""),
                     InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
                 ]
             ]
@@ -250,6 +252,4 @@ async def many_anime_list(client, message):
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
-
-
 
