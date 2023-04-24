@@ -158,27 +158,6 @@ async def gcanimesearch(client, message):
 
 
 
-@Bot.on_message(filters.command(["search", "find"]) & filters.private)
-async def nosearchpvtcleft(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-  
-@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
-async def nodownloadleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-  
-@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
-async def nofullanineleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-        
-@Bot.on_message(filters.command(["list", "fullsearch"]) & filters.private)
-async def listfullsearchfs(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-        
-@Bot.on_message(filters.command("request") & filters.private)
-async def norequestleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-
-
 
 @Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def animefulinfo(client, message):
@@ -253,3 +232,22 @@ async def many_anime_list(client, message):
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
+@Bot.on_message(filters.command(["search", "find"]) & filters.private)
+async def fsnosearchpvtcleft(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+  
+@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
+async def fsnodownloadleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+  
+@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
+async def fsnofullanineleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+        
+@Bot.on_message(filters.command(["list", "fullsearch"]) & filters.private)
+async def fslistfullsearchfs(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+        
+@Bot.on_message(filters.command("request") & filters.private)
+async def fsnorequestleftc(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
