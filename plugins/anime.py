@@ -183,7 +183,7 @@ async def animefulinfo(client, message):
 # add stats
     try:
         await update_SC(UID)
-    except:
+    except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
@@ -210,7 +210,7 @@ async def pvt_many_anime_list(client, message):
 # add stats
     try:
         await update_SC(UID)
-    except:
+    except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & filters.chat(FS_GROUP))
@@ -236,7 +236,7 @@ async def gc_many_anime_list(client, message):
 # add stats
     try:
         await update_SC(UID)
-    except:
+    except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
