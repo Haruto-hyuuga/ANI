@@ -41,7 +41,7 @@ async def search_anime_list_by_Name(anime_name: str):
     data = response.json()["data"]
     anime_list = data["Page"]["media"]
     if not anime_list:
-        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title"
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY</b> '{anime_name}'\n\nTry Searching More Accurate Anime Title or on our channels"
         message_button = NOani_BUTTON
         message_photo = NOani_IMAGE
         return message_text, message_button, message_photo
@@ -54,7 +54,7 @@ async def search_anime_list_by_Name(anime_name: str):
         if banner_images:
             banner_image = random.choice(banner_images)
 
-    message_text = "<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
     buttons = []
     for i, anime in enumerate(anime_list[:5]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
@@ -76,12 +76,13 @@ async def search_anime_list_by_Name(anime_name: str):
         else:
             status_emoji = ""
             
-        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_{anime_id}")])
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{anime_id}")])
     try:
         buttons.append(
             [
-                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
-                InlineKeyboardButton("Not In List", callback_data="anime_notfound_popup")
+                InlineKeyboardButton("ᴄʟᴏꜱᴇ", callback_data="close"),
+                InlineKeyboardButton("ɴᴏᴛ ɪɴ ʟɪꜱᴛ", callback_data="anime_notfound_popup"),
+                InlineKeyboardButton("ℹ️❔", callback_data="emoji_info_popup")
             ]
         )
     except:
@@ -89,6 +90,93 @@ async def search_anime_list_by_Name(anime_name: str):
     message_photo = banner_image or NO_banner_IMG
     message_button = InlineKeyboardMarkup(buttons)
     return message_text, message_button, message_photo
+
+
+
+
+
+async def full_info_anime_list_by_Name(anime_name: str):
+    query = '''
+        query ($search: String) {
+            Page {
+                media(search: $search, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+                    status
+                    bannerImage
+                }
+            }
+        }
+    '''
+    variables = {"search": anime_name}
+    url = "https://graphql.anilist.co"
+    response = httpx.post(url, json={"query": query, "variables": variables})
+
+    if response.status_code != 200:
+        message_text = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
+        message_button = ERROR_BUTTON
+        message_photo = ERROR_IMAGE
+        return message_text, message_button, message_photo 
+    
+    data = response.json()["data"]
+    anime_list = data["Page"]["media"]
+    if not anime_list:
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY</b> '{anime_name}'\n\nTry Searching More Accurate Anime Title or on our channels"
+        message_button = NOani_BUTTON
+        message_photo = NOani_IMAGE
+        return message_text, message_button, message_photo
+
+    banner_image = None
+    if len(anime_list) == 1:
+        banner_image = anime_list[0]["bannerImage"]
+    else:
+        banner_images = [anime["bannerImage"] for anime in anime_list if anime["bannerImage"]]
+        if banner_images:
+            banner_image = random.choice(banner_images)
+
+    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    buttons = []
+    for i, anime in enumerate(anime_list[:9]):
+        title = anime["title"]["english"] or anime["title"]["romaji"]
+        anime_id = anime["id"]
+        status = anime["status"]
+        
+        if status == "FINISHED":
+            status_emoji = "🖥️"
+        elif status == "RELEASING":
+            status_emoji = "🆕"
+        elif status == "NOT_YET_RELEASED":
+            status_emoji = "🔜"
+        elif status == "CANCELLED":
+            status_emoji = "❌"
+        elif status == "HIATUS":
+            status_emoji = "🛑"
+        elif status == "UPCOMING":
+            status_emoji = "🎞️"
+        else:
+            status_emoji = ""
+            
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_FI_{anime_id}")])
+    try:
+        buttons.append(
+            [
+                InlineKeyboardButton("ᴄʟᴏꜱᴇ", callback_data="close"),
+                InlineKeyboardButton("ɴᴏᴛ ɪɴ ʟɪꜱᴛ", callback_data="anime_notfound_popup"),
+                InlineKeyboardButton("ℹ️❔", callback_data="emoji_info_popup")
+            ]
+        )
+    except:
+        pass
+    message_photo = banner_image or NO_banner_IMG
+    message_button = InlineKeyboardMarkup(buttons)
+    return message_text, message_button, message_photo
+
+
+
 
 
 async def search_find_anime_list(anime_name: str):
@@ -126,7 +214,7 @@ async def search_find_anime_list(anime_name: str):
     data = response.json()["data"]
     anime_list = data["Page"]["media"]
     if not anime_list:
-        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY '{anime_name}'.</b>\n\nTry Searching On Our Channel or Anilist and Copy Paste Title"
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY </b>'{anime_name}'\n\nTry Searching More Accurate Anime Title or Search On Our Channels"
         message_button = NOani_BUTTON
         message_photo = NOani_IMAGE
         return message_text, message_button, message_photo
@@ -234,14 +322,18 @@ async def channel_post_anime_info(anime_id: int):
 
 
     if response.status_code != 200:
-        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="api_error⚠️"
+        E_title="<b>An Error Occurred</b>
+        J_title="<i>try again or report this to @Maid_Robot"
+        Format=episodes=status=average_score=Igenres=studio=duration=season="api_error⚠️"
         MSG_img = ERROR_IMAGE
         return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
 
     data = response.json()["data"]
     anime = data["Media"]
     if not anime:
-        E_title=J_title=Format=episodes=status=average_score=Igenres=studio=duration=season="not_found⚠️"
+        E_title=f"No Search Results For {anime_id}"
+        J_title="<i>given id is most likely to be invalid</i>"
+        Format=episodes=status=average_score=Igenres=studio=duration=season="None"
         MSG_img = NOani_IMAGE
         return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
 
