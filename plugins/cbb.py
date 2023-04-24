@@ -71,6 +71,9 @@ async def cb_handler(client, query: CallbackQuery):
         await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎, OR USE COMMAND /list or /fullsearch", show_alert=True)
     elif data == "GroupAnimeInfo":
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
+    elif data == "":
+        await query.answer("💕", show_alert=True)
+
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
     elif data == "DB_C_POST":
