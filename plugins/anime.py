@@ -54,7 +54,7 @@ async def anime_info(client, message):
         try:
             anime_id = int(arg)
         except (IndexError, ValueError):
-            await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
+            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
             return
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
@@ -92,18 +92,22 @@ async def anime_info(client, message):
 
 @Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
 async def gcanimedlcmd(client, message):
-    user = message.from_user.id
+
     args = message.text.split()
     if len(args) < 2:
+        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
         return
-    try:
-        anime_id = int(args[1])
-    except (IndexError, ValueError):
-        return
+    arg = args[1]
+    if arg.isdigit():
+        try:
+            anime_id = int(arg)
+        except (IndexError, ValueError):
+            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            return
 
-    E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
             
-    message_text = f"""
+        message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
 🇯🇵: <b><u>{J_title}</u></b>
 ━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -114,48 +118,33 @@ async def gcanimedlcmd(client, message):
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
 
 """
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+    
+        if message.reply_to_message:
+            try:
+                await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            except Exception as e:
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    buttons = []
+        if not message.reply_to_message:
+            try:
+                await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            except Exception as e:
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if await present_sub_anime(anime_id):
+    else:
+        anime_name = " ".join(args[1:])
+        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name)
         try:
-            sblink = await get_sub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕", url = sblink)])
+            await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
         except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    if await present_dub_anime(anime_id):
-        try:
-            dblink = await get_dub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕", url = dblink)])
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not await present_sub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗦𝗨𝗕)", callback_data="REQUEST_SA")])
-            message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not await present_dub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"gcAresultclose"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗗𝗨𝗕)", callback_data="REQUEST_DA")])
-            message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if message.reply_to_message:
-        try:
-            await message.reply_to_message.reply_photo(MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not message.reply_to_message:
-        try:
-            await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 
   
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
