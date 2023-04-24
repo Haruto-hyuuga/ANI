@@ -6,6 +6,9 @@ from pyrogram.errors import FloodWait
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID
+from req import channel_post_anime_info, download_anime_buttons_db
+
+
 
 
 @Bot.on_callback_query()
@@ -108,6 +111,22 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
+    elif data.startswith("DUBconfirmpostD_"):
+        anime_id = query.data.split("_")[-1]
+        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+        message_text = f"""
+🇬🇧: <b><u>{E_title}</u></b>
+🇯🇵: <b><u>{J_title}</u></b>
+━━━━━━━━━━━━━━━━━━━━━━━━━
+ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
+ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
+ᴛʏᴘᴇ: <b>{Format}</b>
+ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
+ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
+"""
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client)
+        await query.message.delete()
+        
 
 
 
