@@ -11,6 +11,7 @@ from req import get_full_anime_info, channel_post_anime_info, search_find_anime_
 
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def anime_info(client, message):
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
@@ -46,7 +47,7 @@ async def anime_info(client, message):
 
     else:
         anime_name = " ".join(args[1:])
-        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name)
+        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
         try:
             await message.reply_photo(message_photo, caption=message_text, reply_markup=message_button)
         except Exception as e:
@@ -58,7 +59,7 @@ async def anime_info(client, message):
 
 @Bot.on_message(filters.command(["download", "anime"]) & filters.chat(FS_GROUP))
 async def gcanimedlcmd(client, message):
-
+    UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
@@ -100,7 +101,7 @@ async def gcanimedlcmd(client, message):
 
     else:
         anime_name = " ".join(args[1:])
-        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name)
+        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
         try:
             await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
         except Exception as e:
