@@ -134,7 +134,7 @@ ABOUT_TEXT = """
 REQUEST_TEXT = """
 <b>To Request Anime Series/Movies:</b>
 
-|• <i>Use Command:</i> <code>/download id</code>
+|• <i>Use Command:</i> <code>/download or /search</code>
 |• <i>then click on Request Button on message</i>
 
 |• <i>Use Command:</i> <code>#request</code>
