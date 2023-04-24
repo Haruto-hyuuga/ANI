@@ -23,19 +23,51 @@ async def add_user_stats(user_id: int):
     return
 
 async def update_DL(user_id: int):
-    User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
+    if not await present_user_stats(UID):
+        try:
+            await add_user_stats(UID)
+            User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
+        except:
+            pass
+    else:
+        User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
+        
     return
 
 async def update_RQ(user_id: int):
-    User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
+    if not await present_user_stats(UID):
+        try:
+            await add_user_stats(UID)
+            User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
+        except:
+            pass
+    else:
+        User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
+    
     return
 
 async def update_SC(user_id: int):
-    User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
+    if not await present_user_stats(UID):
+        try:
+            await add_user_stats(UID)
+            User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
+        except:
+            pass
+    else:
+        User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
+        
     return
 
 async def update_Anid(user_id: int, Ani_UID: str):
-    User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
+    if not await present_user_stats(UID):
+        try:
+            await add_user_stats(UID)
+            User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
+        except:
+            pass
+    else:
+        User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
+        
     return
 
 async def get_user_stats(user_id: int):
