@@ -245,7 +245,8 @@ async def search_find_anime_list(anime_name: str):
         message_text += f"<b><u>{i+1}</u></b>🏷️: <b>{title}</b>\n<i>🖥️ᴇᴘɪꜱᴏᴅᴇꜱ: {episodes} 🕒ᴅᴜʀᴀᴛɪᴏɴ: {duration}</i>\n➥<code> /download {anime_id} </code>\n\n"
         message_photo = banner_image or NO_banner_IMG
         message_button = ANIME_RESULT_B
-        return message_text, message_button, message_photo
+        
+    return message_text, message_button, message_photo
         
         
 async def get_Log_anime_i(anime_id: int):
