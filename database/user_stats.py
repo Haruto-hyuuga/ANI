@@ -22,6 +22,9 @@ async def add_user_stats(user_id: int):
     )
     return
 
+async def update_DL(user_id: int):
+    
+
 async def full_userbase_stats():
     user_docs = User_S.find()
     user_ids = []
