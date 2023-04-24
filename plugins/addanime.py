@@ -6,8 +6,8 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from database.anime_db import present_sub_anime, get_sub_anime, add_sub_anime, del_sub_anime, full_sub_Animebase
 from database.anime_db import present_dub_anime, get_dub_anime, add_dub_anime, del_dub_anime, full_dub_Animebase
 from database.database import full_userbase
-from database.user_stats import get_user_stats
-from database.req_Db import full_requestDB_DUB, full_requestDB_SUB
+#from database.user_stats import get_user_stats
+#from database.req_Db import full_requestDB_DUB, full_requestDB_SUB
 from database.inline import Ani_log_inline_f
 from pyrogram.errors import BadRequest
 from req import get_Log_anime_i, channel_post_anime_info, only_banner_image
@@ -398,14 +398,14 @@ async def get_users(client: Bot, message: Message):
     SA = len(suba)
     duba = await full_dub_Animebase()
     DA = len(duba)
-    D_L, R_Q, S_R, Ani_i = get_user_stats(UID)
+    D_L, R_Q, S_R, Ani_i = ["~", "~", "~", "~"] #get_user_stats(UID)
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
-        r_s_p = await full_requestDB_SUB()
-        SR = len(r_s_p)
-        r_d_p = await full_requestDB_DUB()
-        DR = len(r_d_p)
+ #       r_s_p = await full_requestDB_SUB()
+        SR = "⚠️" # len(r_s_p)
+ #       r_d_p = await full_requestDB_DUB()
+        DR = "⚠️" # len(r_d_p)
         await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, US, SA, SR, DA, DR))
     else:
         await msg.edit(ADMIN_S_T.format(M, S_R, R_Q, D_L, BOTUSERNAME, SA, DA))
