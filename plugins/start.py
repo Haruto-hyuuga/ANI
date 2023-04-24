@@ -33,7 +33,14 @@ async def Log_inl_but(id: str):
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def start_command(client , message: Message):
     id = message.from_user.id
-
+    if not await present_user(id):
+        try:
+            await add_user(id)
+            LB = await Log_inl_but(id)
+            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            pass
     text = message.text
     if len(text)>7:
         try:
@@ -109,13 +116,7 @@ async def start_command(client , message: Message):
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not await present_user(id):
-        try:
-            await add_user(id)
-            LB = await Log_inl_but(id)
-            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
-        except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 #    if not await  present_user_stats(id):
 #        try:
 #            await add_user_stats(id)
@@ -136,6 +137,14 @@ from database.inline import AllFSCB
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
     id = message.from_user.id
+    if not await present_user(id):
+        try:
+            await add_user(id)
+            LB = await Log_inl_but(id)
+            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            pass
     update = message
     MC = await is_subscribed_SC(filter, client, update)
     DC = await is_subscribed_DC(filter, client, update)
@@ -198,13 +207,7 @@ async def not_joined(client: Client, message: Message):
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
         await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start Force SUB CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    if not await present_user(id):
-        try:
-            await add_user(id)
-            LB = await Log_inl_but(id)
-            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
-        except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 #    if not await  present_user_stats(id):
 #        try:
 #            await add_user_stats(id)
