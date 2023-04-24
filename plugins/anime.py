@@ -191,7 +191,10 @@ async def nodownloadleftc(client, message):
 async def nofullanineleftc(client, message):
      await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
         
-
+@Bot.on_message(filters.command(["list", "fullsearch"]) & filters.private)
+async def listfullsearchfs(client, message):
+     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+        
 @Bot.on_message(filters.command("request") & filters.private)
 async def norequestleftc(client, message):
      await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
