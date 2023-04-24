@@ -1,11 +1,11 @@
 import pymongo, os
 from config import SUB_ANIME_DB, DUB_ANIME_DB
 
-dbclient1 = pymongo.MongoClient(SUB_ANIME_DB, serverSelectionTimeoutMS=5000)
+dbclient1 = pymongo.MongoClient(SUB_ANIME_DB)
 database1 = dbclient1["SUB_ANIME"]
 sub_anime = database1['Anime_list']
 
-dbclient2 = pymongo.MongoClient(DUB_ANIME_DB, serverSelectionTimeoutMS=5000)
+dbclient2 = pymongo.MongoClient(DUB_ANIME_DB)
 database2 = dbclient2["DUB_ANIME"]
 dub_anime = database2['Anime_list']
 
