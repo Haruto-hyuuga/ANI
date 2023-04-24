@@ -30,9 +30,9 @@ async def update_DL(user_id: int):
         except:
             pass
     else:
-        User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
-        
+        User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True) 
     return
+
 
 async def update_RQ(user_id: int):
     if not await present_user_stats(UID):
@@ -43,8 +43,8 @@ async def update_RQ(user_id: int):
             pass
     else:
         User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
-    
     return
+
 
 async def update_SC(user_id: int):
     if not await present_user_stats(UID):
@@ -55,8 +55,8 @@ async def update_SC(user_id: int):
             pass
     else:
         User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
-        
     return
+
 
 async def update_Anid(user_id: int, Ani_UID: str):
     if not await present_user_stats(UID):
@@ -67,8 +67,8 @@ async def update_Anid(user_id: int, Ani_UID: str):
             pass
     else:
         User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
-        
     return
+
 
 async def get_user_stats(user_id: int):
     user_stats = User_S.find_one({'_id': user_id})
