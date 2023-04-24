@@ -185,7 +185,7 @@ async def animefulinfo(client, message):
 
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
-async def many_anime_list(client, message):
+async def pvt_many_anime_list(client, message):
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
@@ -206,7 +206,7 @@ async def many_anime_list(client, message):
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & filters.chat(FS_GROUP))
-async def many_anime_list(client, message):
+async def gc_many_anime_list(client, message):
     args = message.text.split()
     if len(args) < 2:
         await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
