@@ -8,7 +8,7 @@ from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
 from req import channel_post_anime_info, download_anime_buttons_db
-
+from database.req_Db import add_SUB_request
 
 
 
@@ -40,35 +40,40 @@ async def cb_handler(client, query: CallbackQuery):
             text = CREDIT_TEXT,
             reply_markup = CREDIT_B
         )
-    elif data == "REQUEST_SA":
+    elif data.startswith("REQUEST_SA_"):
+        QDS = query.data.split("_")[-1]
+        anime_id = int(QDS)
+        UID = query.from_user.id
         try: 
             message = query.message
             picc = message.photo.file_id
             Caption = message.caption if message.caption else ""
             await message.edit_text(
-                text=f"{Caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME FOR SUB CHANNEL✅</n>"
+                text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
-            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{query.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR SUB CHANNEL", reply_to_message_id=LOL.id)
-
-            UID = query.from_user.id
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR SUB CHANNEL", reply_to_message_id=LOL.id)
+           
+            await add_SUB_request(anime_id)
             await update_RQ_SUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-
-    elif data == "REQUEST_DA":
+    elif data.startswith("REQUEST_DA_"):
+        QDS = query.data.split("_")[-1]
+        anime_id = int(QDS)
+        UID = query.from_user.id
         try:
             message = query.message
             picc = message.photo.file_id
             Caption = message.caption if message.caption else ""
             await message.edit_text(
-                text=f"{Caption}\n\n📬<b>REQUEST REGISTERED FOR THIS ANIME FOR DUB CHANNEL✅</n>"
+                text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
-            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{query.from_user.id}</code>\n\n⚠️ REQUESTED ANIME FOR DUB CHANNEL", reply_to_message_id=LOL.id)
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR DUB CHANNEL", reply_to_message_id=LOL.id)
 
-            UID = query.from_user.id
+            await add_DUB_request(anime_id)
             await update_RQ_DUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -159,6 +164,7 @@ async def cb_handler(client, query: CallbackQuery):
             
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+
 
     elif data.startswith("FUclose_"):
         UID = query.data.split("_")[-1]
