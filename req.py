@@ -161,7 +161,7 @@ async def full_info_anime_list_by_Name(anime_name: str, UID: int):
             status_emoji = "🎞️"
         else:
             status_emoji = ""
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <code> /anime_info {anime_id}</code>/n"
+        message_text += f"<b><u>{i+1}</u></b>🏷️: <code> /anime_info {anime_id}</code>\n"
         S_CB_DATA = f"{UID}:{anime_id}" 
         buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{S_CB_DATA}")])
     try:
