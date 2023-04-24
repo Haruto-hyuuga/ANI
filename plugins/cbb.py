@@ -111,8 +111,9 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
         await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
 
-    elif data.startswith("DUBconfirmpostD_"):
-        anime_id = query.data.split("_")[-1]
+    elif data.startswith("Anime_DL_"):
+        B_DATA = query.data.split("_")[-1]
+        user_id, anime_id = B_DATA.split(":")
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
         message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
