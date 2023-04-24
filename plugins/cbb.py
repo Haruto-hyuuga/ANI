@@ -4,11 +4,11 @@ import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import FloodWait
 from database.inline import*
-#from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC
+from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
 from req import channel_post_anime_info, download_anime_buttons_db
-#from database.req_Db import add_SUB_request
+from database.req_Db import add_SUB_request
 
 
 
@@ -54,8 +54,8 @@ async def cb_handler(client, query: CallbackQuery):
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR SUB CHANNEL", reply_to_message_id=LOL.id)
            
-#            await add_SUB_request(anime_id)
-#            await update_RQ_SUB(UID)
+            await add_SUB_request(anime_id)
+            await update_RQ_SUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
@@ -73,8 +73,8 @@ async def cb_handler(client, query: CallbackQuery):
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR DUB CHANNEL", reply_to_message_id=LOL.id)
 
-#            await add_DUB_request(anime_id)
-#            await update_RQ_DUB(UID)
+            await add_DUB_request(anime_id)
+            await update_RQ_DUB(UID)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
@@ -158,7 +158,7 @@ async def cb_handler(client, query: CallbackQuery):
             try:
                 await query.message.delete()
                 await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-#                await update_SC(UID)
+                await update_SC(UID)
             except Exception as e:
                 await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
