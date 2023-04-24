@@ -23,7 +23,10 @@ async def add_user_stats(user_id: int):
     return
 
 async def update_DL(user_id: int):
-    
+async def add_user_stats(user_id: int):
+    User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
+    return
+
 
 async def full_userbase_stats():
     user_docs = User_S.find()
