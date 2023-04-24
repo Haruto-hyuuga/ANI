@@ -33,7 +33,7 @@ USER_TOPIC_ID = 152
 DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
 SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongodb.net/?retryWrites=true&w=majority"
 DUB_ANIME_DB = "mongodb+srv://tasesey566:r7bEdOZnnE2lgL7H@cluster0.i17yfwi.mongodb.net/?retryWrites=true&w=majority"
-USER_STATS_DB = ""
+USER_STATS_DB = "mongodb+srv://koneson986:IeFLbCQq60A5Hsmo@cluster0.68ublv1.mongodb.net/?retryWrites=true&w=majority"
 
 
 SUB_CHANNEL = -1001741236715
