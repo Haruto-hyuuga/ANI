@@ -2,43 +2,13 @@ from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
-from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
 from config import R_Banner_Pic, GROUP_url, FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
+
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name
 
 
-async def download_anime_buttons_db(anime_id, message_text, client) -> None:
-    buttons = []
-    if await present_sub_anime(anime_id):
-        try:
-            sblink = await get_sub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕", url = sblink)])
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    if await present_dub_anime(anime_id):
-        try:
-            dblink = await get_dub_anime(anime_id)
-            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕", url = dblink)])
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    if not await present_sub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"close"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗦𝗨𝗕)", callback_data="REQUEST_SA")])
-            message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    if not await present_dub_anime(anime_id):
-        try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"close"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗗𝗨𝗕)", callback_data="REQUEST_DA")])
-            message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    new_message_text = message_text
-    return new_message_text, buttons 
+ 
 
 
 
@@ -261,7 +231,8 @@ async def animefulinfo(client, message):
                     InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
                 ],
                 [
-                    InlineKeyboardButton("💬 ANIME GROUP CHAT 💬", url=GROUP_url),
+                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{anime_id}"),
+                    InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
                 ]
             ]
         )
