@@ -86,6 +86,9 @@ async def cb_handler(client, query: CallbackQuery):
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
     elif data == "emoji_info_popup":
         await query.answer("Emoji Info:\n🖥️: Finished Series\n🆕: Currently Airing\n🔜: Not Yet Released\n❌: Cancelled\n🛑: Hiatus\n🕊️: Upcoming", show_alert=True)
+    elif data == "Request_Pending_popup":
+        await query.answer("REQUEST FOR THIS ANIME IS ALREADY BEEN SENT BY OTHER USERS\n we'll add it as soon as possible 🕊️", show_alert=True)
+    
 
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
