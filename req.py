@@ -12,7 +12,7 @@ NO_banner_IMG = "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
 
 
 
-async def search_anime_list_by_Name(anime_name: str, UID: str):
+async def search_anime_list_by_Name(anime_name: str, UID: int):
     query = '''
         query ($search: String) {
             Page {
@@ -97,7 +97,7 @@ async def search_anime_list_by_Name(anime_name: str, UID: str):
 
 
 
-async def full_info_anime_list_by_Name(anime_name: str):
+async def full_info_anime_list_by_Name(anime_name: str, UID: int):
     query = '''
         query ($search: String) {
             Page {
@@ -162,7 +162,8 @@ async def full_info_anime_list_by_Name(anime_name: str):
         else:
             status_emoji = ""
             
-        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{anime_id}")])
+        S_CB_DATA = f"{UID}:{anime_id}" 
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{S_CB_DATA}")])
     try:
         buttons.append(
             [
