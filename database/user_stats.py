@@ -6,7 +6,7 @@ database = dbclient["BOT_USERS"]
 
 User_S = database['USER_STATS']
 
-async def present_user(user_id : int):
+async def present_user_stats(user_id : int):
     found = User_S.find_one({'_id': user_id})
     return bool(found)
 
