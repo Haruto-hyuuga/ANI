@@ -24,9 +24,9 @@ async def add_user_stats(user_id: int):
     return
 
 async def update_DL(user_id: int):
-    if not await present_user_stats(UID):
+    if not await present_user_stats(user_id):
         try:
-            await add_user_stats(UID)
+            await add_user_stats(user_id)
             User_S.update_one({'_id': user_id}, {'$inc': {'_DL': 1}}, upsert=True)
         except:
             pass
@@ -36,9 +36,9 @@ async def update_DL(user_id: int):
 
 
 async def update_RQ_SUB(user_id: int):
-    if not await present_user_stats(UID):
+    if not await present_user_stats(user_id):
         try:
-            await add_user_stats(UID)
+            await add_user_stats(user_id)
             User_S.update_one({'_id': user_id}, {'$inc': {'S_RQ': 1}}, upsert=True)
         except:
             pass
@@ -48,9 +48,9 @@ async def update_RQ_SUB(user_id: int):
 
 
 async def update_RQ_DUB(user_id: int):
-    if not await present_user_stats(UID):
+    if not await present_user_stats(user_id):
         try:
-            await add_user_stats(UID)
+            await add_user_stats(user_id)
             User_S.update_one({'_id': user_id}, {'$inc': {'D_RQ': 1}}, upsert=True)
         except:
             pass
@@ -60,9 +60,9 @@ async def update_RQ_DUB(user_id: int):
 
 
 async def update_SC(user_id: int):
-    if not await present_user_stats(UID):
+    if not await present_user_stats(user_id):
         try:
-            await add_user_stats(UID)
+            await add_user_stats(user_id)
             User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
         except:
             pass
@@ -72,9 +72,9 @@ async def update_SC(user_id: int):
 
 
 async def update_Anid(user_id: int, Ani_UID: str):
-    if not await present_user_stats(UID):
+    if not await present_user_stats(user_id):
         try:
-            await add_user_stats(UID)
+            await add_user_stats(user_id)
             User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
         except:
             pass
