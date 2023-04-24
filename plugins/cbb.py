@@ -5,7 +5,7 @@ from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, 
 from pyrogram.errors import FloodWait
 from database.inline import*
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
-from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
 from req import channel_post_anime_info, download_anime_buttons_db
 
 
@@ -74,13 +74,16 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
     elif data == "DB_C_POST":
-        M = query.message
-        P = M.photo.file_id
-        C = M.caption if M.caption else "Unexpected Error ⚠️"
-        await client.send_photo(CHANNEL_ID, photo=P, caption=C)
-        await query.message.delete()
-        await asyncio.sleep(5)
-        await M.reply_text(text="<b>BANNER POSTED ✅</b>", reply_markup=BATCH_DBC_B)
+        if query.from_user.id in ADMINS:
+            M = query.message
+            P = M.photo.file_id
+            C = M.caption if M.caption else "Unexpected Error ⚠️"
+            await client.send_photo(CHANNEL_ID, photo=P, caption=C)
+            await query.message.delete()
+            await asyncio.sleep(5)
+            await M.reply_text(text="<b>BANNER POSTED ✅</b>", reply_markup=BATCH_DBC_B)
+        else: 
+            await query.answer("You're Not Allowed Baka!", show_alert=True)
         
     elif data == "close":
         await query.message.delete()
@@ -89,27 +92,32 @@ async def cb_handler(client, query: CallbackQuery):
         except:
             pass
     elif data.startswith("SUBconfirmpostS_"):
-        anime_id = query.data.split("_")[-1]
-        M = query.message.reply_to_message
-        P = await M.copy(SUB_CHANNEL)
-        await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_SUB")
-        await query.message.edit_text(f"<i>Reply To Link Below by Command:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
+        if query.from_user.id in ADMINS:
+            anime_id = query.data.split("_")[-1]
+            M = query.message.reply_to_message
+            P = await M.copy(SUB_CHANNEL)
+            await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_SUB")
+            await query.message.edit_text(f"<i>Reply To Link Below by Command:</i>\n\n👉🏻  <code>/addsub {anime_id}</code>")    
 
-        await client.send_message(SUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-        await query.message.reply_text(f"{Sub_C_url}/{P.id}", disable_web_page_preview=True)
-        await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
+            await client.send_message(SUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
+            await query.message.reply_text(f"{Sub_C_url}/{P.id}", disable_web_page_preview=True)
+            await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
+        else:
+            await query.answer("You're Not Allowed Baka!", show_alert=True)
 
     elif data.startswith("DUBconfirmpostD_"):
-        anime_id = query.data.split("_")[-1]
-        M = query.message.reply_to_message
-        P = await M.copy(DUB_CHANNEL)
-        await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_DUB")
-        await query.message.edit_text(f"<i>Reply To Link Below By Command:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
+        if query.from_user.id in ADMINS:
+            anime_id = query.data.split("_")[-1]
+            M = query.message.reply_to_message
+            P = await M.copy(DUB_CHANNEL)
+            await M.edit_text("<b>✅Sent:</b> @ANIME_DOWNLOADS_DUB")
+            await query.message.edit_text(f"<i>Reply To Link Below By Command:</i>\n\n👉🏻  <code>/adddub {anime_id}</code>")
 
-        await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
-
-        await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
-        await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
+            await client.send_message(DUB_CHANNEL, text="➖➖➖➖🖥️➖➖➖➖")
+            await query.message.reply_text(f"{Dub_C_url}/{P.id}", disable_web_page_preview=True)
+            await client.send_message(query.message.chat.id, text="➖➖➖➖👆🏻➖➖➖➖")
+        else:
+            await query.answer("You're Not Allowed Baka!", show_alert=True)
 
     elif data.startswith("Anime_DL_"):
         B_DATA = query.data.split("_")[-1]
@@ -132,7 +140,7 @@ async def cb_handler(client, query: CallbackQuery):
             await query.message.delete()
             await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
         else:
-            await query.answer("The Person Who Searced Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+            await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
             
         
 
