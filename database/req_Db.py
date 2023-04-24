@@ -6,24 +6,48 @@ dbclient = pymongo.MongoClient(DB_URI)
 database = dbclient["REQUESTS"]
 
 
-Req_data = database['anime']
+Req_Sub = database['Sub_Anime']
 
-async def present_request(anime_id: int):
-    found = Req_data.find_one({'_id': anime_id})
+async def present_SUB_request(anime_id: int):
+    found = Req_Sub.find_one({'_id': anime_id})
     return bool(found)
 
-async def add_request(anime_id: int):
-    Req_data.insert_one({'_id': anime_id})
+async def add_SUB_request(anime_id: int):
+    Req_Sub.insert_one({'_id': anime_id})
     return
 
-async def full_requestDB():
-    user_docs = Req_data.find()
+async def full_requestDB_SUB():
+    user_docs = Req_Sub.find()
     anime_id = []
     for doc in user_docs:
         anime_id.append(doc['_id'])
         
     return anime_id
 
-async def del_request(anime_id: int):
-    Req_data.delete_one({'_id': anime_id})
+async def del_SUB_request(anime_id: int):
+    Req_Sub.delete_one({'_id': anime_id})
+    return
+
+
+
+Req_Dub = database['Dub_Anime']
+
+async def present_DUB_request(anime_id: int):
+    found = Req_Dub.find_one({'_id': anime_id})
+    return bool(found)
+
+async def add_DUB_request(anime_id: int):
+    Req_Dub.insert_one({'_id': anime_id})
+    return
+
+async def full_requestDB_DUB():
+    user_docs = Req_Dub.find()
+    anime_id = []
+    for doc in user_docs:
+        anime_id.append(doc['_id'])
+        
+    return anime_id
+
+async def del_DUB_request(anime_id: int):
+    Req_Dub.delete_one({'_id': anime_id})
     return
