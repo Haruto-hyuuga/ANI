@@ -3,7 +3,7 @@ import random
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
-#from database.req_Db import present_DUB_request, present_SUB_request
+from database.req_Db import present_DUB_request, present_SUB_request
 from config import ERR_TOPIC_ID, REQUEST_GC
 
 
@@ -559,15 +559,23 @@ async def download_anime_buttons_db(anime_id, message_text, client, UID) -> None
 
     if not await present_sub_anime(anime_id):
         try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗦𝗨𝗕)", callback_data=f"REQUEST_SA_{anime_id}")])
-            message_text += f"✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ\n"
+            if not await present_DUB_request(anime_id):
+                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗗𝗨𝗕)", callback_data="REQUEST_DA_{anime_id}")])
+                message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
+            else:
+                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗣𝗲𝗻𝗱𝗶𝗻𝗴 (𝗗𝗨𝗕)", callback_data="Request_Pending_popup")])
+                message_text += f"<b>✲ ʀᴇ𝚀ᴜᴇꜱᴛ ᴘᴇɴᴅɪɴɢ ꜰᴏʀ ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
         
     if not await present_dub_anime(anime_id):
         try:
-            buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗗𝗨𝗕)", callback_data="REQUEST_DA_{anime_id}")])
-            message_text += f"✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ\n"
+            if not await present_SUB_request(anime_id):
+                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗦𝗨𝗕)", callback_data=f"REQUEST_SA_{anime_id}")])
+                message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
+            else:
+                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗣𝗲𝗻𝗱𝗶𝗻𝗴 (𝗦𝗨𝗕)", callback_data="Request_Pending_popup")])
+                message_text += f"<b>✲ ʀᴇ𝚀ᴜᴇꜱᴛ ᴘᴇɴᴅɪɴɢ ꜰᴏʀ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download CMD-GC Error\nif NOT present SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
         
@@ -576,25 +584,7 @@ async def download_anime_buttons_db(anime_id, message_text, client, UID) -> None
     return new_message_text, buttons
         
         
-        
-"""
-            if not await present_DUB_request(anime_id):
-                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗗𝗨𝗕)", callback_data="REQUEST_DA_{anime_id}")])
-                message_text += f"<b>✲ ʀᴇ𝚀ᴜᴇꜱᴛ ᴘᴇɴᴅɪɴɢ ꜰᴏʀ ᴅᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-            else:
-                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗣𝗲𝗻𝗱𝗶𝗻𝗴 (𝗗𝗨𝗕)", callback_data="Request_Pending_popup")])
-                message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-        
-        
-            if not await present_SUB_request(anime_id):
-                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 (𝗦𝗨𝗕)", callback_data=f"REQUEST_SA_{anime_id}")])
-                message_text += f"<b>✲ ʀᴇ𝚀ᴜᴇꜱᴛ ᴘᴇɴᴅɪɴɢ ꜰᴏʀ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-            else:
-                buttons.append([InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"), InlineKeyboardButton("𝗣𝗲𝗻𝗱𝗶𝗻𝗴 (𝗦𝗨𝗕)", callback_data="Request_Pending_popup")])
-                message_text += f"<b>✘ ɴᴏᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ɪɴ ꜱᴜʙ ᴄʜᴀɴɴᴇʟ</b>\n"
-         
-
-"""
+     
         
         
 
