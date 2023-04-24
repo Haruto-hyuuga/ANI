@@ -211,7 +211,7 @@ async def animefulinfo(client, message):
                     InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
                 ],
                 [
-                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}""),
+                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
                     InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
                 ]
             ]
