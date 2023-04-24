@@ -38,7 +38,9 @@ async def update_Anid(user_id: int):
     User_S.update_one({'_id': user_id}, {'$set': {'_DL': dl_value}}, upsert=True)
     return
 
-
+async def get_user_stats(user_id: int):
+    user_stats = User_S.find_one({'_id': user_id})
+    return user_stats
 
 async def full_userbase_stats():
     user_docs = User_S.find()
