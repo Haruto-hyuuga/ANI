@@ -132,30 +132,6 @@ async def search_anime(client, message):
             
 
 
-
-@Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
-async def many_anime_list(client, message):
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
-        return
-    anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
-    try:
-        await message.reply_photo(
-            photo=message_photo,
-            caption=message_text,
-            reply_markup=message_button
-        )
-    except Exception as e:
-        await message.reply_text(
-            text=message_text,
-            reply_markup=message_button 
-        )
-        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-
-
 @Bot.on_message(filters.command(["search", "find"]) & filters.chat(FS_GROUP))
 async def gcanimesearch(client, message):
     args = message.text.split()
@@ -250,6 +226,27 @@ async def animefulinfo(client, message):
   
 
 
+@Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+async def many_anime_list(client, message):
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        return
+    anime_name = " ".join(args[1:])
+    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
+    try:
+        await message.reply_photo(
+            photo=message_photo,
+            caption=message_text,
+            reply_markup=message_button
+        )
+    except Exception as e:
+        await message.reply_text(
+            text=message_text,
+            reply_markup=message_button 
+        )
+        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            
 
 
 
