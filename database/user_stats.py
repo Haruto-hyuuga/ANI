@@ -35,6 +35,8 @@ async def update_SC(user_id: int):
     return
 
 async def update_Anid(user_id: int):
+    User_S.update_one({'_id': user_id}, {'$set': {'_DL': dl_value}}, upsert=True)
+    return
 
 
 
