@@ -34,15 +34,19 @@ async def update_SC(user_id: int):
     User_S.update_one({'_id': user_id}, {'$inc': {'_SrCh': 1}}, upsert=True)
     return
 
-async def update_Anid(user_id: int):
-    User_S.update_one({'_id': user_id}, {'$set': {'_DL': dl_value}}, upsert=True)
+async def update_Anid(user_id: int, Ani_UID: str):
+    User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
     return
 
 async def get_user_stats(user_id: int):
     user_stats = User_S.find_one({'_id': user_id})
-    return user_stats
+    D_L = user_stats['_DL']
+    R_Q = user_stats['_RQ']
+    S_R = user_stats['_SrCh']
+    Ani_i = user_stats['Ani_id']
+    return D_L, R_Q, S_R, Ani_i
 
-async def full_userbase_stats():
+async def full_stats_userbase():
     user_docs = User_S.find()
     user_ids = []
     for doc in user_docs:
