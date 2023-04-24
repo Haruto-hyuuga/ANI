@@ -10,6 +10,7 @@ from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_C
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC, FSCMD
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON
+from database.user_stats import add_user_stats, add_user_stats, update_DL
 
 USER_LOG_TXT = """
 🟢 #New_User
@@ -36,8 +37,10 @@ async def start_command(client , message: Message):
     text = message.text
     if len(text)>7:
         try:
+            await update_DL(id)
             base64_string = text.split(" ", 1)[1]
         except:
+            await message.reply_text("Some Error Occured, Please Reort Bot Onwer", reply_markup=ERROR_BUTTON)
             return
         string = await decode(base64_string)
         argument = string.split("-")
@@ -108,7 +111,12 @@ async def start_command(client , message: Message):
             await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+    if not await  present_user_stats(id):
+        try:
+            await add_user_stats(id)
+        except:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Couldn't add USER STATS\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        
 
     
 #=====================================================================================##
@@ -192,6 +200,11 @@ async def not_joined(client: Client, message: Message):
             await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
         except Exception as e:
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+    if not await  present_user_stats(id):
+        try:
+            await add_user_stats(id)
+        except:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Couldn't add USER STATS\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 @Bot.on_message(filters.command('channels'))
