@@ -14,9 +14,10 @@ async def add_user_stats(user_id: int):
     User_S.insert_one(
       {
         '_id': user_id,
-        '_DL': 0
-        '_RQ': 0
-        '_SrCh': 0
+        '_DL': 0,
+        'S_RQ': 0,
+        'D_RQ': 0,
+        '_SrCh': 0,
         'Ani_id': 0
       }
     )
@@ -34,15 +35,27 @@ async def update_DL(user_id: int):
     return
 
 
-async def update_RQ(user_id: int):
+async def update_RQ_SUB(user_id: int):
     if not await present_user_stats(UID):
         try:
             await add_user_stats(UID)
-            User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
+            User_S.update_one({'_id': user_id}, {'$inc': {'S_RQ': 1}}, upsert=True)
         except:
             pass
     else:
-        User_S.update_one({'_id': user_id}, {'$inc': {'_RQ': 1}}, upsert=True)
+        User_S.update_one({'_id': user_id}, {'$inc': {'S_RQ': 1}}, upsert=True)
+    return
+
+
+async def update_RQ_DUB(user_id: int):
+    if not await present_user_stats(UID):
+        try:
+            await add_user_stats(UID)
+            User_S.update_one({'_id': user_id}, {'$inc': {'D_RQ': 1}}, upsert=True)
+        except:
+            pass
+    else:
+        User_S.update_one({'_id': user_id}, {'$inc': {'D_RQ': 1}}, upsert=True)
     return
 
 
