@@ -66,13 +66,13 @@ async def cb_handler(client, query: CallbackQuery):
             await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     elif data == "anime_download_popup":
-        await query.answer("TO DOWNLOAD THE ANIME YOU WANT TAP ON (/download 12345) And SEND, YOU'LL GET DOWNLOAD LINK or YOU CAN USE (/anime id) TOO", show_alert=True)
+        await query.answer("TO DOWNLOAD THE ANIME YOU WANT TAP ON (/download 12345) And SEND\n\nYOU CAN ALSO USE (/anime id)", show_alert=True)
     elif data == "anime_notfound_popup":
-        await query.answer("IF ANIME YOUR LOOKING FOR IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎, OR USE COMMAND /list or /fullsearch", show_alert=True)
+        await query.answer("IF ANIME IS NOT IN LIST, TRY SEARCHING MORE ACCURATE TITLE 🔎.\nOR USE COMMAND /list or /fullsearch", show_alert=True)
     elif data == "GroupAnimeInfo":
         await query.answer("START BOT IN PRIVATE FOR DETAILED ANIME INFO AND DOWNLOAD LINKS 💕", show_alert=True)
-    elif data == "":
-        await query.answer("💕", show_alert=True)
+    elif data == "emoji_info_popup":
+        await query.answer("Emoji Info:\n🖥️: Finished Series\n🆕: Currently Airing\n🔜: Not Yet Released\n❌: Cancelled\n🛑: Hiatus\n🕊️: Upcoming", show_alert=True)
 
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
