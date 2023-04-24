@@ -2,6 +2,7 @@ from bot import Bot
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
+from database.user_stats import update_SC
 from config import FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
 
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
@@ -53,7 +54,11 @@ async def anime_info(client, message):
         except Exception as e:
             await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
             
 
@@ -107,7 +112,11 @@ async def gcanimedlcmd(client, message):
         except Exception as e:
             await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -131,6 +140,11 @@ async def search_anime(client, message):
             reply_markup=message_button 
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -182,6 +196,11 @@ async def animefulinfo(client, message):
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
   
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -204,6 +223,11 @@ async def pvt_many_anime_list(client, message):
             reply_markup=message_button 
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 @Bot.on_message(filters.command(["list", "fullsearch"]) & filters.chat(FS_GROUP))
 async def gc_many_anime_list(client, message):
@@ -225,6 +249,11 @@ async def gc_many_anime_list(client, message):
             reply_markup=message_button 
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+# add stats
+    try:
+        await update_SC(UID)
+    except:
+        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
 @Bot.on_message(filters.command(["search", "find"]) & filters.private)
