@@ -139,7 +139,7 @@ async def gcanimesearch(client, message):
         await message.reply_text("<b>Bish Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
         return
     anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
+    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name)
     try:
         await message.reply_photo(
             photo=message_photo,
