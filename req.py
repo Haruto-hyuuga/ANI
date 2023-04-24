@@ -325,7 +325,7 @@ async def channel_post_anime_info(anime_id: int):
 
 
     if response.status_code != 200:
-        E_title="<b>An Error Occurred</b>
+        E_title="<b>An Error Occurred</b>"
         J_title="<i>try again or report this to @Maid_Robot"
         Format=episodes=status=average_score=Igenres=studio=duration=season="api_error⚠️"
         MSG_img = ERROR_IMAGE
