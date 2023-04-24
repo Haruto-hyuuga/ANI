@@ -1,7 +1,7 @@
 import pymongo, os
 from config import USER_STATS_DB
 
-dbclient = pymongo.MongoClient(DB_URI)
+dbclient = pymongo.MongoClient(USER_STATS_DB)
 database = dbclient["BOT_USERS"]
 
 User_S = database['USER_STATS']
