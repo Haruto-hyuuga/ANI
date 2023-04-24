@@ -398,7 +398,7 @@ async def get_users(client: Bot, message: Message):
     SA = len(suba)
     duba = await full_dub_Animebase()
     DA = len(duba)
-    D_L, R_Q, S_R, Ani_i = get_user_stats(UID)
+    D_L, R_Q, S_R, Ani_i = await get_user_stats(UID)
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
