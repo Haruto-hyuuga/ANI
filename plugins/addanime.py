@@ -10,7 +10,7 @@ from database.user_stats import get_user_stats
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB
 from database.inline import Ani_log_inline_f, user_close
 from pyrogram.errors import BadRequest
-from req import get_Log_anime_i, channel_post_anime_info, only_banner_image
+from req import get_Log_anime_i, channel_post_anime_info, only_banner_image, search_user_id
     
 
 @Bot.on_message(filters.command("subpost") & filters.user(ADMINS) & filters.group)
