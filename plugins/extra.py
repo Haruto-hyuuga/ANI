@@ -111,22 +111,21 @@ async def delete_anilist_acc(client, message):
 
 @Bot.on_message(filters.command("reqlist") & filters.user(ADMINS))
 async def pending_req_list(client, message):
-    L = "🕊️"
-    EM = await message.reply_text(L)
-    Msg = "〰️〰️〰️〰️SUB REQUEST〰️〰️〰️〰️\n"
+
+    msg = "〰️〰️〰️〰️SUB REQUEST〰️〰️〰️〰️\n"
     Squery = await full_requestDB_SUB()
     for i, user in enumerate(Squery):
-        Msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
+        msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
+    await message.reply_text(msg)
 
-    await EM.edit(Msg)
 
-    L2 = "🦋"
-    FM = await message.reply_text(L2)
-    Mdg += "〰️〰️〰️DUB REQUEST〰️〰️〰️"
+    msg2 = "〰️〰️〰️DUB REQUEST〰️〰️〰️"
     Dquery = await full_requestDB_DUB()
     for i, user in enumerate(Dquery):
-        Mdg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
-    await FM.edit(Mdg)
+        msg2 += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
+    await message.reply_text(msg2)
+
+
 
 @Bot.on_message(filters.command("delsreq") & filters.user(ADMINS))
 async def delete_subreq_list(client, message):
