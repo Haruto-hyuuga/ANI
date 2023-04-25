@@ -3,9 +3,9 @@ from pyrogram import Client, filters, __version__
 from pyrogram.types import Message
 from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL
 from database.inline import AllFSCB
-from database.user_stats import get_user_Ani_Id, update_Anid, search_user_name
+from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request
-from req import search_user_name
+from req import search_user_name, search_user_id
 
 GC_LOG_TXT = """
 🔴 #New_GROUP
