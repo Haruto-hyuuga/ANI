@@ -1,5 +1,6 @@
 import httpx
 import random 
+import time
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
@@ -92,15 +93,15 @@ async def search_user_id(Ani_id: int):
         return
 
     user_id = user["id"]
-    user_name = user["name"]
-    user_url = user["siteUrl"]
+#    user_name = user["name"]
+#    user_url = user["siteUrl"]
     anime_stats = user["statistics"]["anime"]
 
     Ani_C = anime_stats["count"]
     Ani_MW = anime_stats["minutesWatched"]
     Ani_EW = anime_stats["episodesWatched"]
     Ani_MS = anime_stats["meanScore"]
-    message_photo = f'https://img.anili.st/user/{data["id"]}?a={time.time()}'
+    message_photo = f'https://img.anili.st/user/{user_id}?a={time.time()}'
     return message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS
 
 
