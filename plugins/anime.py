@@ -9,7 +9,6 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
 
 
-
 @Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def anime_info(client, message):
     UID = message.from_user.id
@@ -44,26 +43,35 @@ async def anime_info(client, message):
             try:
                 await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
             except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
         if not message.reply_to_message:
             try:
                 await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
             except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime CMD-GC Error\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     else:
         anime_name = " ".join(args[1:])
         message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
-        try:
-            await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
-        except Exception as e:
-            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+        if message.reply_to_message:
+            try:
+                await message.reply_to_message.reply_photo(photo=message_photo, caption=message_text, reply_markup=message_button)
+            except Exception as e:
+                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+        if not message.reply_to_message:
+            try:
+                await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
+            except Exception as e:
+                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
-@Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+@Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def search_anime(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -86,7 +94,11 @@ async def search_anime(client, message):
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
 
-@Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+
+
+
+# ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
+@Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -142,7 +154,8 @@ async def animefulinfo(client, message):
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+# ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
+@Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -169,53 +182,14 @@ async def pvt_many_anime_list(client, message):
     except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-@Bot.on_message(filters.command(["list", "fullsearch"]) & filters.chat(FS_GROUP))
-async def gc_many_anime_list(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /list Naruto")
-        return
-    anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await search_find_anime_list(anime_name)
-    try:
-        await message.reply_photo(
-            photo=message_photo,
-            caption=message_text,
-            reply_markup=message_button
-        )
-    except Exception as e:
-        if str(e) == 'CAPTION_TOO_LONG':
-            await message.reply_text(
-                text=message_text,
-                reply_markup=message_button 
-            )
-        else:
-            await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-# add stats
-    try:
-        await update_SC(UID)
-    except Exception as e:
-        await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
+        
+@Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "info"]))
+async def nosearchppvtsearchfs(client, message):
+     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT)
+        
 
-@Bot.on_message(filters.command(["search", "find"]) & filters.private)
-async def fsnosearchpvtcleft(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-  
-@Bot.on_message(filters.command(["download", "anime"]) & filters.private)
-async def fsnodownloadleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-  
-@Bot.on_message(filters.command(["anime_info", "info"]) & filters.private)
-async def fsnofullanineleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
+@Bot.on_message(filters.command(["download", "anime", "search", "find", "request"]))
+async def nogcanimedlcmd(client, message):
+    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT)
         
-@Bot.on_message(filters.command(["list", "fullsearch"]) & filters.private)
-async def fslistfullsearchfs(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
-        
-@Bot.on_message(filters.command("request") & filters.private)
-async def fsnorequestleftc(client, message):
-     await message.reply_photo(photo=ALLCMD_FS_PIC, caption=ALLCMD_FS_TXT)
