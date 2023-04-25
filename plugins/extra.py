@@ -50,7 +50,7 @@ async def auth_ani_acc(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
+        await message.reply_text("<b>Mention Your Anilist Username or Id</b>")
         return
     arg = args[1]
     if arg.isdigit():
