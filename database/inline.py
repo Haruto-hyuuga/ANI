@@ -113,6 +113,16 @@ async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
     )
     return ANI_LOG_BUT
 
+async def user_close(UID: int) -> InlineKeyboardMarkup:
+    USER_CLOSE = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}")
+            ]
+        ]
+    )
+    return USER_CLOSE
+
 NOani_BUTTON = InlineKeyboardMarkup(
     [
         [
