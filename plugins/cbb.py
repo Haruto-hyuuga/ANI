@@ -158,13 +158,61 @@ async def cb_handler(client, query: CallbackQuery):
 """
             UID = user_id
             new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-            try:
-                await query.message.delete()
-                await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-                await update_SC(UID)
-            except Exception as e:
-                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
+            if query.message.reply_to_message:
+                try:
+                    await query.message.delete()
+                    await query.message.reply_to_message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                    await update_SC(UID)
+                except Exception as e:
+                    await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            if not query.message.reply_to_message:
+                try:
+                    await query.message.delete()
+                    await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                    await update_SC(UID)
+                except Exception as e:
+                    await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+   
+        else:
+            await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+
+    elif data.startswith("Anime_FL_I_"):
+        B_DATA = query.data.split("_")[-1]
+        u_id, a_id = B_DATA.split(":")
+        user_id = int(u_id)
+        anime_id = int(a_id)
+        if user_id == query.from_user.id:
+            F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
+            if F_BOOL == True:
+                try:
+                    F_MSG1 = await query.message.reply_photo(banner_url, caption=first_message)
+                except Exception as e:
+                    F_MSG1 = await query.message.reply_photo(cover_url, caption=first_message)
+                    pass
+                S_CB_DATA = f"{UID}:{anime_id}"
+                YtRESULT_B = InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton("🖥️ Anime Site", url=site_url),
+                            InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
+                        ],
+                        [
+                            InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
+                            InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
+                        ]
+                   ]
+                )
+                try:
+                    await query.F_MSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
+                except Exception as e:
+                    await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            else:
+                try:
+                    await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
+                except Exception as e:
+                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+  
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
 
