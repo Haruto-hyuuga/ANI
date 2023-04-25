@@ -189,7 +189,7 @@ async def cb_handler(client, query: CallbackQuery):
                 except Exception as e:
                     F_MSG1 = await query.message.reply_photo(cover_url, caption=first_message)
                     pass
-                S_CB_DATA = f"{UID}:{anime_id}"
+                S_CB_DATA = f"{user_id}:{anime_id}"
                 YtRESULT_B = InlineKeyboardMarkup(
                     [
                         [
