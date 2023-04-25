@@ -103,6 +103,14 @@ BATCH_DBC_B = InlineKeyboardMarkup(
     ]
 )
 
+BOT_DM_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("💠 AUTHORISE 💠", url=f"https://t.me/{BOTUSERNAME}")
+        ]
+    ]
+)
+
 async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
     ANI_LOG_BUT = InlineKeyboardMarkup(
         [
