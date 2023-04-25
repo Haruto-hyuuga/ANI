@@ -7,7 +7,7 @@ from database.inline import*
 from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC, update_Anid
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
-from req import channel_post_anime_info, download_anime_buttons_db, search_user_id
+from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info
 from database.req_Db import add_SUB_request, add_DUB_request
 
 
