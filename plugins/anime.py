@@ -10,54 +10,8 @@ from req import get_full_anime_info, channel_post_anime_info, search_find_anime_
 
 
 
-@Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+@Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def anime_info(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
-        return
-    arg = args[1]
-    if arg.isdigit():
-        try:
-            anime_id = int(arg)
-        except (IndexError, ValueError):
-            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
-            return
-
-        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-            
-        message_text = f"""
-🇬🇧: <b><u>{E_title}</u></b>
-🇯🇵: <b><u>{J_title}</u></b>
-━━━━━━━━━━━━━━━━━━━━━━━━━
-ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
-ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
-ᴛʏᴘᴇ: <b>{Format}</b>
-ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
-ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
-
-"""
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-
-        try:
-            await message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-        except Exception as e:
-            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    else:
-        anime_name = " ".join(args[1:])
-        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
-        try:
-            await message.reply_photo(message_photo, caption=message_text, reply_markup=message_button)
-        except Exception as e:
-            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-
-@Bot.on_message(filters.command(["download", "anime", "search", "find"]) & filters.chat(FS_GROUP))
-async def gcanimedlcmd(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
@@ -106,6 +60,7 @@ async def gcanimedlcmd(client, message):
         except Exception as e:
             await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download CMD-PVT Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 
 
 @Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
