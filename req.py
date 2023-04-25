@@ -41,17 +41,67 @@ async def search_user_name(user_name: str):
         message_text = "No Such User Found On Anilist, Check Your Anilist Username And Try Again Or Use Anilist USER ID"
         return
 
-    message_text = "Top 4 matching users:"
+    message_text = "𝘽𝙚𝙨𝙩 𝙈𝙖𝙩𝙘𝙝𝙞𝙣𝙜 𝙍𝙚𝙨𝙪𝙡𝙩𝙨 𝙁𝙤𝙧 𝙐𝙨𝙚𝙧𝙨:\nplease check if it's your account by going through url then click on your username to sync account"
     buttons = []
     for i, user in enumerate(user_list[:4]):
         user_name = user["name"]
-        user_id = user["id"]
-        buttons.append([InlineKeyboardButton(f"{user_name}", url=user["siteUrl"])])
-        F_B = InlineKeyboardMarkup(buttons)
-        print(f"{i+1}. {user_name} - {user['siteUrl']}")
-        print(f"About: {user['about']}\n")
+        Ani_id = user["id"]
+        buttons.append(
+            [
+                InlineKeyboardButton(f"{i+1}👤: {user_name}", callback_data=f"Ani_User_{Ani_id}")
+                InlineKeyboardButton("check ☑️", url=user["siteUrl"])
+            ]
+        )
+        message_button = InlineKeyboardMarkup(buttons)
 
-    return message_text, F_B
+    return message_text, message_button
+
+
+async def search_user_id(Ani_id: int):
+    USER_QRY = """
+    query ($id: Int) {
+        User (id: $id) {
+            id
+            name
+            siteUrl
+            statistics {
+                anime {
+                    count
+                    episodesWatched
+                    minutesWatched
+                    meanScore
+                }
+            }
+        }
+    }
+    """
+    variables = {"id": Ani_id}
+    url = "https://graphql.anilist.co"
+    response = await httpx.post(url, json={"query": USER_QRY, "variables": variables})
+
+    if response.status_code != 200:
+        message_photo=ERROR_IMAGE
+        Ani_C=Ani_MW=Ani_EW=Ani_MS="error⚠️"
+        return
+
+    data = response.json()["data"]
+    user = data["User"]
+    if not user:
+        message_photo=NOani_IMAGE
+        Ani_C=Ani_MW=Ani_EW=Ani_MS="None"
+        return
+
+    user_id = user["id"]
+    user_name = user["name"]
+    user_url = user["siteUrl"]
+    anime_stats = user["statistics"]["anime"]
+
+    Ani_C = anime_stats["count"]
+    Ani_MW = anime_stats["minutesWatched"]
+    Ani_EW = anime_stats["episodesWatched"]
+    Ani_MS = anime_stats["meanScore"]
+    message_photo = f'https://img.anili.st/user/{data["id"]}?a={time.time()}'
+    return message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS
 
 
 
