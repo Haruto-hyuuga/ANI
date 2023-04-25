@@ -4,11 +4,11 @@ import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import FloodWait
 from database.inline import*
-from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC
+from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC, update_Anid
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
-from req import channel_post_anime_info, download_anime_buttons_db
-from database.req_Db import add_SUB_request
+from req import channel_post_anime_info, download_anime_buttons_db, search_user_name
+from database.req_Db import add_SUB_request, 
 
 
 
@@ -190,7 +190,7 @@ async def cb_handler(client, query: CallbackQuery):
         try:
             await update_Anid(user_id, Ani_UID)
             await query.message.delete()
-            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_id(Ani_UID)
+            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_name(Ani_UID)
             await message.reply_photo(
                 photo=message_photo,
                 caption=f"SUCCESSFULLY SET ANILIST ACCOUNT ✅\nAnime Watched: {Ani_C}\nEpisodes Watched: {Ani_EW}\nScore: {Ani_MS}"
