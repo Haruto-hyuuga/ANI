@@ -76,6 +76,7 @@ ANIME_RESULT_B = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton("📥 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data="anime_download_popup"),
+            InlineKeyboardButton("ℹ️❔", callback_data="emoji_info_popup"),
             InlineKeyboardButton("𝗡𝗼𝘁 𝗜𝗻 𝗟𝗶𝘀𝘁 🔎", callback_data="anime_notfound_popup")
         ]
     ]
