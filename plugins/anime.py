@@ -116,9 +116,10 @@ async def animefulinfo(client, message):
     if F_BOOL == True:
         
         try:
-            await message.reply_photo(banner_url, caption=first_message)
+            FMSG1 = await message.reply_photo(banner_url, caption=first_message)
+        except AttributeError:
+            FMSG1 = await message.reply_photo(cover_url, caption=first_message)
         except Exception as e:
-            await message.reply_photo(cover_url, caption=first_message)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
         S_CB_DATA = f"{UID}:{anime_id}"
@@ -136,9 +137,9 @@ async def animefulinfo(client, message):
         )
     
         try:
-            await message.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
+            await FMSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
         except Exception as e:
-            await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
     else:
@@ -146,7 +147,7 @@ async def animefulinfo(client, message):
             await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-  
+            
 # add stats
     try:
         await update_SC(UID)
