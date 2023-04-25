@@ -171,11 +171,15 @@ async def pvt_many_anime_list(client, message):
             reply_markup=message_button
         )
     except Exception as e:
-        await message.reply_text(
-            text=message_text,
-            reply_markup=message_button 
-        )
-        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        if str(e) == 'MESSAGE_TOO_LONG':
+            await message.reply_text(
+                text=message_text,
+                reply_markup=message_button 
+            )
+        else:
+            await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+            await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        pass
 # add stats
     try:
         await update_SC(UID)
