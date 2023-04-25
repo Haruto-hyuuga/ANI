@@ -82,6 +82,11 @@ async def update_Anid(user_id: int, Ani_UID: str):
         User_S.update_one({'_id': user_id}, {'$set': {'Ani_id': Ani_UID}}, upsert=True)
     return
 
+async def get_user_Ani_Id(user_id: int):
+    user_stats = User_S.find_one({'_id': user_id})
+    Ani_i = user_stats['Ani_id']
+    return Ani_i
+
 
 async def get_user_stats(user_id: int):
     user_stats = User_S.find_one({'_id': user_id})
