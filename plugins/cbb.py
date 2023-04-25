@@ -184,7 +184,39 @@ async def cb_handler(client, query: CallbackQuery):
         except:
             pass
             
-        
+    elif data.startswith("Ani_User_"):
+        Ani_UID = query.data.split("_")[-1]
+        user_id = query.from_user.id
+        try:
+            await update_Anid(user_id, Ani_UID)
+            await query.message.delete()
+            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_id(Ani_UID)
+            await message.reply_photo(
+                photo=message_photo,
+                caption=f"SUCCESSFULLY SET ANILIST ACCOUNT ✅\nAnime Watched: {Ani_C}\nEpisodes Watched: {Ani_EW}\nScore: {Ani_MS}"
+            )
+        except Exception as e:
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
