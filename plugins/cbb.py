@@ -239,7 +239,7 @@ async def cb_handler(client, query: CallbackQuery):
             await update_Anid(user_id, Ani_UID)
             await query.message.delete()
             message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_id(Ani_UID)
-            await message.reply_photo(
+            await query.message.reply_photo(
                 photo=message_photo,
                 caption=f"SUCCESSFULLY SET ANILIST ACCOUNT ✅\nAnime Watched: {Ani_C}\nEpisodes Watched: {Ani_EW}\nScore: {Ani_MS}"
             )
