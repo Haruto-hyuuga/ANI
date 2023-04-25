@@ -91,10 +91,11 @@ async def get_user_Ani_Id(user_id: int):
 async def get_user_stats(user_id: int):
     user_stats = User_S.find_one({'_id': user_id})
     D_L = user_stats['_DL']
-    R_Q = user_stats['_RQ']
+    R_Qs = user_stats['S_RQ']
+    R_Qd = user_stats['D_RQ']
     S_R = user_stats['_SrCh']
     Ani_i = user_stats['Ani_id']
-    return D_L, R_Q, S_R, Ani_i
+    return D_L, R_Qs, R_Qd, S_R, Ani_i
 
 async def full_stats_userbase():
     user_docs = User_S.find()
