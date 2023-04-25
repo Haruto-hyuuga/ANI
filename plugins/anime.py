@@ -188,13 +188,15 @@ async def pvt_many_anime_list(client, message):
 
 
 from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
+from database.inline import BOT_DM_B
         
+
 @Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "info"]))
 async def nosearchppvtsearchfs(client, message):
-     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT)
+     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
         
 
 @Bot.on_message(filters.command(["download", "anime", "search", "find", "request"]))
 async def nogcanimedlcmd(client, message):
-    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT)
+    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
         
