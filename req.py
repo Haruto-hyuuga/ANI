@@ -12,6 +12,48 @@ NOani_IMAGE = "https://telegra.ph/file/ecbd1f30a4a3ea06d025b.jpg"
 NO_banner_IMG = "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
 
 
+async def search_user_name(user_name: str):
+    query = """
+    query ($search: String) {
+        Page {
+            users(search: $search) {
+                id
+                name
+                siteUrl
+                about(asHtml: false)
+            }
+        }
+    }
+    """
+    variables = {"search": user_name}
+    url = "https://graphql.anilist.co"
+    response = await httpx.post(url, json={"query": query, "variables": variables})
+
+    if response.status_code != 200:
+        message_button = ERROR_BUTTON
+        message_text = "Something Went Wrong, Try Again Later If Problem Persist Contact Owner"
+        return 
+
+    data = response.json()["data"]
+    user_list = data["Page"]["users"]
+    if not user_list:
+        message_button = NOani_BUTTON
+        message_text = "No Such User Found On Anilist, Check Your Anilist Username And Try Again Or Use Anilist USER ID"
+        return
+
+    message_text = "Top 4 matching users:"
+    buttons = []
+    for i, user in enumerate(user_list[:4]):
+        user_name = user["name"]
+        user_id = user["id"]
+        buttons.append([InlineKeyboardButton(f"{user_name}", url=user["siteUrl"])])
+        F_B = InlineKeyboardMarkup(buttons)
+        print(f"{i+1}. {user_name} - {user['siteUrl']}")
+        print(f"About: {user['about']}\n")
+
+    return message_text, F_B
+
+
 
 async def search_anime_list_by_Name(anime_name: str, UID: int):
     query = '''
