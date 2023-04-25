@@ -223,24 +223,21 @@ async def gc_many_anime_list(client, message):
         return
     anime_name = " ".join(args[1:])
     message_text, message_button, message_photo = await search_find_anime_list(anime_name)
-    max_chars_per_message = 4096
-
     try:
         await message.reply_photo(
             photo=message_photo,
-            caption=message_text[:-len(description)-2],
+            caption=message_text,
             reply_markup=message_button
         )
     except Exception as e:
         if str(e) == 'CAPTION_TOO_LONG':
-            last_emoji_index = message_text[:max_chars_per_message].rfind('ℹ️')
-            if last_emoji_index != -1:
-                await message.reply_photo(
-                photo=message_photo,
-                caption=message_text[:last_emoji_index+1],
+            await message.reply_text(
+                text=message_text,
                 reply_markup=message_button 
             )
-        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        else:
+            await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
 # add stats
     try:
         await update_SC(UID)
