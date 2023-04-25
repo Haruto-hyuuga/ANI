@@ -111,19 +111,22 @@ async def delete_anilist_acc(client, message):
 
 @Bot.on_message(filters.command("reqlist") & filters.user(ADMINS))
 async def pending_req_list(client, message):
-    L = "⌛"
+    L = "🕊️"
     EM = await message.reply_text(L)
     Msg = "〰️〰️〰️〰️SUB REQUEST〰️〰️〰️〰️\n"
     Squery = await full_requestDB_SUB()
     for i, user in enumerate(Squery):
         Msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
 
-    await EM.edit(f"{L}\n\n{Msg}")
+    await EM.edit(Msg)
+
+    L2 = "🦋"
+    FM = await message.reply_text(L2)
     Mdg += "〰️〰️〰️DUB REQUEST〰️〰️〰️"
     Dquery = await full_requestDB_DUB()
     for i, user in enumerate(Dquery):
         Mdg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
-    await EM.edit(f"{Msg}\n\n{Mdg}")
+    await FM.edit(Mdg)
 
 @Bot.on_message(filters.command("delsreq") & filters.user(ADMINS))
 async def delete_subreq_list(client, message):
@@ -136,7 +139,7 @@ async def delete_subreq_list(client, message):
         await message.reply_text(e)
 
 @Bot.on_message(filters.command("deldreq") & filters.user(ADMINS))
-async def delete_subreq_list(client, message):
+async def delete_dubreq_list(client, message):
     ani = message.text.split(None, 1)[1]
     try:
         anime = int(ani)
