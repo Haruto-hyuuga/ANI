@@ -47,10 +47,11 @@ async def search_user_name(user_name: str):
     for i, user in enumerate(user_list[:4]):
         user_name = user["name"]
         Ani_id = user["id"]
+        P_link = user["siteUrl"]
         buttons.append(
             [
-                InlineKeyboardButton(f"{i+1}👤: {user_name}", callback_data=f"Ani_User_{Ani_id}")
-                InlineKeyboardButton("check ☑️", url=user["siteUrl"])
+                InlineKeyboardButton(f"{i+1}👤: {user_name}", callback_data=f"Ani_User_{Ani_id}"),
+                InlineKeyboardButton("check ☑️", url=P_link)
             ]
         )
         message_button = InlineKeyboardMarkup(buttons)
