@@ -89,6 +89,17 @@ async def R_Banner_Pic():
     return M_banner_Pic
 
 
+PVT_FS_TXT = """
+To Use These Commands You Need To Start Me in Private First.
+"""
+PVT_FS_PIC = "https://telegra.ph/file/38a10470c95a78708f008.jpg"
+O_PVT_FS_TXT = """
+These Commands Only Work In Private To Avoid Spam In Groups
+"""
+O_PVT_FS_PIC = "https://telegra.ph/file/4bbfb4c68f55259c071d9.jpg"
+
+
+
 FORCE_MSG = """
 <b><u>Hey There fellow Anime Lover!</u></b>
 <b>To Use This Bot You Must Join My Channels and Group, Since This Is A Free Service But It Takes Heck Lot Of Work~</b>
