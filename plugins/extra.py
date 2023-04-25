@@ -112,15 +112,17 @@ async def delete_anilist_acc(client, message):
 @Bot.on_message(filters.command("reqlist") & filters.user(ADMINS))
 async def pending_req_list(client, message):
 
-    msg = "〰️〰️〰️〰️SUB REQUEST〰️〰️〰️〰️\n"
     Squery = await full_requestDB_SUB()
+    TSR = len(Squery)
+    msg = f"Total SUB Requests: {TSR}\n〰️〰️〰️〰️⌛〰️〰️〰️〰️\n\n"
     for i, user in enumerate(Squery):
         msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
     await message.reply_text(msg)
 
 
-    msg2 = "〰️〰️〰️DUB REQUEST〰️〰️〰️"
     Dquery = await full_requestDB_DUB()
+    TDR = len(Dquery)
+    msg2 = f"Total DUB Requests: {TDR}\n〰️〰️〰️〰️⌛〰️〰️〰️〰️\n\n"
     for i, user in enumerate(Dquery):
         msg2 += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
     await message.reply_text(msg2)
