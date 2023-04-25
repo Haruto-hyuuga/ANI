@@ -183,6 +183,11 @@ async def pvt_many_anime_list(client, message):
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
+
+
+
+
+from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
         
 @Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "info"]))
 async def nosearchppvtsearchfs(client, message):
