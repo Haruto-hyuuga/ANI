@@ -4,6 +4,7 @@ from pyrogram.types import Message
 from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL
 from database.inline import AllFSCB
 from database.user_stats import get_user_Ani_Id, update_Anid, search_user_name
+from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request
 from req import search_user_name
 
 GC_LOG_TXT = """
@@ -106,6 +107,51 @@ async def delete_anilist_acc(client, message):
     except:
         await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
         await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+
+@Bot.on_message(filters.command("reqlist") & filters.user(ADMINS))
+async def pending_req_list(client, message):
+    L = "⌛"
+    EM = await message.reply_text(L)
+    Msg = "〰️〰️〰️〰️SUB REQUEST〰️〰️〰️〰️\n"
+    Squery = await full_requestDB_SUB()
+    for i, user in enumerate(Squery):
+        Msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
+
+    await EM.edit(f"{L}\n\n{Msg}")
+    Mdg += "〰️〰️〰️DUB REQUEST〰️〰️〰️"
+    Dquery = await full_requestDB_DUB()
+    for i, user in enumerate(Dquery):
+        Mdg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
+    await EM.edit(f"{Msg}\n\n{Mdg}")
+
+@Bot.on_message(filters.command("delsreq") & filters.user(ADMINS))
+async def delete_subreq_list(client, message):
+    ani = message.text.split(None, 1)[1]
+    try:
+        anime = int(ani)
+        await del_SUB_request(anime)
+        await message.reply_text("🗑️✅")
+    except Exception as e:
+        await message.reply_text(e)
+
+@Bot.on_message(filters.command("deldreq") & filters.user(ADMINS))
+async def delete_subreq_list(client, message):
+    ani = message.text.split(None, 1)[1]
+    try:
+        anime = int(ani)
+        await del_DUB_request(anime)
+        await message.reply_text("🗑️✅")
+    except Exception as e:
+        await message.reply_text(e)
+        
+
+    
+
+
+
+
+
 
 
 
