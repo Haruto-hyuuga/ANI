@@ -136,8 +136,8 @@ async def fchannelDuBpost(client, message):
 
         banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
         try:
-            A = "Japanese"
-            S = "English"
+            A = "English, Japanese"
+            S = "Eng Sign & Songs, Full Sub"
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
