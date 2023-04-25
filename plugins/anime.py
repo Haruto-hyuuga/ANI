@@ -156,6 +156,7 @@ async def animefulinfo(client, message):
 
 
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
+max_chars_per_message = 4096
 @Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
@@ -166,21 +167,20 @@ async def pvt_many_anime_list(client, message):
     anime_name = " ".join(args[1:])
     message_text, message_button, message_photo = await search_find_anime_list(anime_name)
     try:
-        await message.reply_photo(
-            photo=message_photo,
-            caption=message_text,
-            reply_markup=message_button
-        )
-    except Exception as e:
-        if str(e) == 'MESSAGE_TOO_LONG':
+        if len(text) > max_chars_per_message:
             await message.reply_text(
                 text=message_text,
                 reply_markup=message_button 
             )
         else:
-            await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-        pass
+            await message.reply_photo(
+                photo=message_photo,
+                caption=message_text,
+                reply_markup=message_button
+            )
+    except Exception as e:
+        await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 # add stats
     try:
         await update_SC(UID)
