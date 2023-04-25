@@ -28,7 +28,7 @@ async def search_user_name(user_name: str):
     """
     variables = {"search": user_name}
     url = "https://graphql.anilist.co"
-    response = await httpx.post(url, json={"query": query, "variables": variables})
+    response = httpx.post(url, json={"query": query, "variables": variables})
 
     if response.status_code != 200:
         message_button = ERROR_BUTTON
@@ -79,7 +79,7 @@ async def search_user_id(Ani_id: int):
     """
     variables = {"id": Ani_id}
     url = "https://graphql.anilist.co"
-    response = await httpx.post(url, json={"query": USER_QRY, "variables": variables})
+    response = httpx.post(url, json={"query": USER_QRY, "variables": variables})
 
     if response.status_code != 200:
         message_photo=ERROR_IMAGE
