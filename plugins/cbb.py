@@ -203,9 +203,9 @@ async def cb_handler(client, query: CallbackQuery):
                    ]
                 )
                 try:
-                    await query.F_MSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
+                    await F_MSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
                 except Exception as e:
-                    await message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                    await query.message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                     await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
                 try:
