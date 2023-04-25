@@ -236,6 +236,7 @@ async def full_info_anime_list_by_Name(anime_name: str, UID: int):
             banner_image = random.choice(banner_images)
 
     message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    message_text += "Note: <i>these buttons will return detailed anime info.</i>"
     buttons = []
     for i, anime in enumerate(anime_list[:9]):
         title = anime["title"]["english"] or anime["title"]["romaji"]
@@ -256,9 +257,8 @@ async def full_info_anime_list_by_Name(anime_name: str, UID: int):
             status_emoji = "🎞️"
         else:
             status_emoji = ""
-        message_text += f"<b><u>{i+1}</u></b>🏷️: <code> /anime_info {anime_id}</code>\n"
         S_CB_DATA = f"{UID}:{anime_id}" 
-        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_DL_{S_CB_DATA}")])
+        buttons.append([InlineKeyboardButton(f"{status_emoji} {title}", callback_data=f"Anime_FL_I_{S_CB_DATA}")])
     try:
         buttons.append(
             [
