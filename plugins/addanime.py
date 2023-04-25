@@ -460,7 +460,7 @@ async def get_users(client: Bot, message: Message):
         if Ani_i == 0:
             await msg.edit(NO_ANI_ADMIN.format(M, S_R, R_Qs, R_Qd, D_L, US, SA, SR, DA, DR))
         else:
-            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = search_user_id(Ani_i)
+            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_id(Ani_i)
             await msg.delete()
             await message.reply_photo(
                 photo=message_photo,
@@ -472,7 +472,7 @@ async def get_users(client: Bot, message: Message):
         if Ani_i == 0:
             await msg.edit(NO_ANI_MEM.format(M, S_R, R_Qs, R_Qd, D_L))
         else:
-            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = search_user_id(Ani_i)
+            message_photo, Ani_C, Ani_MW, Ani_EW, Ani_MS = await search_user_id(Ani_i)
             await msg.delete()
             await message.reply_photo(
                 photo=message_photo,
