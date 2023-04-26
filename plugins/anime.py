@@ -98,7 +98,7 @@ async def search_anime(client, message):
 
 
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
-@Bot.on_message(filters.command(["anime_info", "info"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(filters.command(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -193,7 +193,7 @@ from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
 from database.inline import BOT_DM_B
         
 
-@Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "info"]))
+@Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
      await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
         
