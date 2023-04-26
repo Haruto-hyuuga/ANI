@@ -167,7 +167,7 @@ async def pvt_many_anime_list(client, message):
     anime_name = " ".join(args[1:])
     message_text, message_button, message_photo = await search_find_anime_list(anime_name)
     try:
-        if len(text) > max_chars_per_message:
+        if len(message_text) > max_chars_per_message:
             await message.reply_text(
                 text=message_text,
                 reply_markup=message_button 
