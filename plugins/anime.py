@@ -112,7 +112,7 @@ async def animefulinfo(client, message):
         return
     
     F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
-    Sfirst_message = f"{first_message[:950].strip()}..."
+    Sfirst_message = f"{first_message[:650].strip()}..."
 
     if F_BOOL == True:
         
