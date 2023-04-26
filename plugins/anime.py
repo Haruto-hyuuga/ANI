@@ -112,13 +112,14 @@ async def animefulinfo(client, message):
         return
     
     F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
-    
+    Sfirst_message = f"{first_message[:950].strip()}..."
+
     if F_BOOL == True:
         
         try:
-            FMSG1 = await message.reply_photo(banner_url, caption=first_message)
+            FMSG1 = await message.reply_photo(banner_url, caption=Sfirst_message)
         except AttributeError:
-            FMSG1 = await message.reply_photo(cover_url, caption=first_message)
+            FMSG1 = await message.reply_photo(cover_url, caption=Sfirst_message)
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-1 Error\nwhile banner img with description\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
@@ -156,7 +157,7 @@ async def animefulinfo(client, message):
 
 
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
-max_chars_per_message = 4096
+
 @Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
