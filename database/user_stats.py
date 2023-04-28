@@ -71,7 +71,7 @@ async def update_SC(user_id: int):
     return
 
 
-async def update_Anid(user_id: int, Ani_UID: str):
+async def update_Anid(user_id: int, Ani_UID: int):
     if not await present_user_stats(user_id):
         try:
             await add_user_stats(user_id)
