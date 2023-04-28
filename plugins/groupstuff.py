@@ -103,10 +103,10 @@ async def gcbroadcastmsg(client, message):
                 await broadcast_msg.copy(chat_id)
                 successful += 1
             except UserIsBlocked:
-                await del_chat(chat_id)
+#                await del_chat(chat_id)
                 blocked += 1
             except InputUserDeactivated:
-                await del_chat(chat_id)
+#                await del_chat(chat_id)
                 deleted += 1
             except ChatWriteForbidden:
                 unsuccessful += 1
