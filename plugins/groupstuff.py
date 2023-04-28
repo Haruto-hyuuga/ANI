@@ -89,7 +89,7 @@ async def gcbroadcastmsg(client, message):
         broadcast_msg = message.reply_to_message
         total = 0
         successful = 0
-        dbgct = len(qurry)
+        dbgct = len(query)
         deleted = 0
         unsuccessful = 0
         
@@ -120,9 +120,9 @@ async def gcbroadcastmsg(client, message):
 👥Total Groups: {dbgct}
 📢Total Group Tried: {total} 
 ✅Successful: {successful}
-⚠️Unsuccessful: {unsuccessful}
-💀Deleted: {deleted}
+⚠️Unsuccessful: {unsuccessful} // 🗑️Deleted: {deleted}
 """
+
         
         return await pls_wait.edit(status)
 
