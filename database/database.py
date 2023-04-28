@@ -13,7 +13,8 @@ async def present_user(user_id : int):
     return bool(found)
 
 async def add_user(user_id: int):
-    user_data.insert_one({'_id': user_id})
+    if not await present_user(user_id):
+        user_data.insert_one({'_id': user_id})
     return
 
 async def full_userbase():
@@ -36,7 +37,8 @@ async def present_chat(chat_id: int):
     return bool(found)
 
 async def add_chat(chat_id: int):
-    chat_data.insert_one({'_id': chat_id})
+    if not await present_chat(chat_id):
+        chat_data.insert_one({'_id': chat_id})
     return
 
 async def full_chatbase():
