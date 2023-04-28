@@ -466,7 +466,7 @@ async def get_users(client: Bot, message: Message):
             await message.reply_photo(
                 photo=message_photo,
                 caption=ANI_ADMIN.format(M, Ani_C, Ani_EW, Ani_MW, Ani_MS, S_R, R_Qs, R_Qd, D_L, US, SA, SR, DA, DR),
-                reply_marup=user_close(UID)
+                reply_markup=user_close(UID)
             )
 
     else:
@@ -478,7 +478,7 @@ async def get_users(client: Bot, message: Message):
             await message.reply_photo(
                 photo=message_photo,
                 caption=ANI_MEM.format(M, S_R, R_Qs, R_Qd, D_L, Ani_C, Ani_EW, Ani_MW, Ani_MS),
-                reply_marup=user_close(UID)
+                reply_markup=user_close(UID)
             )
 
 
