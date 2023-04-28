@@ -150,7 +150,7 @@ async def animefulinfo(client, message):
                     InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="Ani_Decs_{S_CB_DATA}"),
                 ],
                 [
-                    InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
+                    InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{UID}"),
                     InlineKeyboardButton("𝗗𝗶𝘀𝗰𝘂𝘀𝘀", url=GROUP_url),
                 ]
             ]
