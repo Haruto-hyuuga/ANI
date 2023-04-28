@@ -161,7 +161,7 @@ async def cb_handler(client, query: CallbackQuery):
             try:
                 QQ = query.message
                 await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(MSG_img))
-                await query.message.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                await QQ.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
                 await update_SC(UID)
             except Exception as e:
                 await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -178,23 +178,29 @@ async def cb_handler(client, query: CallbackQuery):
             F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
             if F_BOOL == True:
                 try:
+                    QQ = query.message
+                    await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(title_img))
+                    S_CB_DATA = f"{user_id}:{anime_id}"
+                    YtRESULT_B = InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
+                            ],
+                            [
+                                InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data="close"),
+                                InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="close"),
+                            ]
+                       ]
+                    )
+                    await QQ.edit_text(message_text, reply_markup=YtRESULT_B)
+
+
+
                     F_MSG1 = await query.message.reply_photo(banner_url, caption=first_message)
                 except Exception as e:
                     F_MSG1 = await query.message.reply_photo(cover_url, caption=first_message)
                     pass
-                S_CB_DATA = f"{user_id}:{anime_id}"
-                YtRESULT_B = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton("🖥️ Anime Site", url=site_url),
-                            InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
-                        ],
-                        [
-                            InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
-                            InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
-                        ]
-                   ]
-                )
+
                 try:
                     await F_MSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
                 except Exception as e:
