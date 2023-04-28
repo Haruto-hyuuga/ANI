@@ -6,7 +6,7 @@ import asyncio
 from config import ADMINS, BOT_ID, REQUEST_GC, ERR_TOPIC_ID
 from config import USER_LOG_CHANNEL as LOGG
 from database.database import present_chat, add_chat, full_chatbase, del_chat
-from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, BotKicked, UserNotParticipant
+from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, UserNotParticipant
 from database.inline import GC_START_B, Ani_log_group
 from req import get_cmd
 NCL_txt = """
