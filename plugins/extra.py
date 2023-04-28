@@ -49,7 +49,7 @@ async def auth_ani_acc(client, message):
                 await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
         else:
-            await message.reply_text(f"You're Anilist Account Is Already Added With ID: {Ani_id}\n\n<b>To Delete And Add New Id Use Command: /unauth </b>\nTo Add New Id Delete First Id Then /auth Agin")
+            await message.reply_text(f"You're Anilist Account Is Already Added With ID: {Ani_i}\n\n<b>To Delete And Add New Id Use Command: /unauth </b>\nTo Add New Id Delete First Id Then /auth Agin")
     else:
         user_name = message.text.split(None, 1)[1]
         try:
