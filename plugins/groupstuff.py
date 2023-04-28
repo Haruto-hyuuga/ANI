@@ -6,7 +6,7 @@ import asyncio
 from config import ADMINS, BOT_ID, REQUEST_GC, ERR_TOPIC_ID
 from config import USER_LOG_CHANNEL as LOGG
 from database.database import present_chat, add_chat, full_chatbase, del_chat
-from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, UserNotParticipant
+from pyrogram.errors import FloodWait, Unauthorized, ChatWriteForbidden, UserNotParticipant
 from database.inline import GC_START_B, Ani_log_group
 from req import get_cmd
 NCL_txt = """
@@ -102,8 +102,8 @@ async def gcbroadcastmsg(client, message):
                 await asyncio.sleep(e.x)
                 await broadcast_msg.copy(chat_id)
                 successful += 1
-            
-            
+            except Unauthorized:
+                unsuccessful += 1
             except ChatWriteForbidden:
                 unsuccessful += 1
             except UserNotParticipant:
