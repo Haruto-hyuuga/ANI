@@ -14,7 +14,7 @@ START_B = InlineKeyboardMarkup(
             InlineKeyboardButton("𝗖𝗥𝗘𝗗𝗜𝗧𝘀", callback_data="Credits_a")
         ],
         [
-            InlineKeyboardButton("𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧", url=GROUP_url),
+            InlineKeyboardButton("𝗔𝗗𝗗 𝗕𝗢𝗧 𝗧𝗢 𝗬𝗢𝗨𝗥 𝗚𝗥𝗢𝗨𝗣", url=f"https://t.me/{BOTUSERNAME}?startgroup=true"),
         ]
     ]
 )
@@ -121,6 +121,27 @@ async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
         ]
     )
     return ANI_LOG_BUT
+
+async def Ani_log_group(link: str) -> InlineKeyboardMarkup:
+    ANI_LOG_BUT = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton("CHAT LINK 💬🔗", url=link)
+            ]
+        ]
+    )
+    return GC_LOG_BUT
+
+GC_START_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("➕ Add To Group", url = f"https://t.me/{BOTUSERNAME}?startgroup=true"),
+            InlineKeyboardButton("Give Review 🌟", url = BOT_C_url)
+        ]
+    ]
+)
+
+
 
 async def user_close(UID: int) -> InlineKeyboardMarkup:
     USER_CLOSE = InlineKeyboardMarkup(
