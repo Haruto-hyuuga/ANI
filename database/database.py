@@ -28,3 +28,24 @@ async def del_user(user_id: int):
     user_data.delete_one({'_id': user_id})
     return
 
+
+chat_data = database['GROUPs']
+
+async def present_chat(chat_id: int):
+    found = chat_data.find_one({'_id': chat_id})
+    return bool(found)
+
+async def add_chat(chat_id: int):
+    chat_data.insert_one({'_id': chat_id})
+    return
+
+async def full_chatbase():
+    chat_docs = chat_data.find()
+    chat_ids = []
+    for doc in chat_docs:
+        chat_ids.append(doc['_id'])
+    return chat_ids
+
+async def del_chat(chat_id: int):
+    chat_data.delete_one({'_id': chat_id})
+    return
