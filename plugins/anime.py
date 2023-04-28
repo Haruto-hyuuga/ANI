@@ -4,12 +4,12 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.user_stats import update_SC
 from config import FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC, GROUP_url
-
+from req import get_cmd
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
+from plugins.groupstuff import new_gc_logger
 
-
-@Bot.on_message(filters.command(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def anime_info(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -69,9 +69,17 @@ async def anime_info(client, message):
                 await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+    if messages.chat.type == "group":
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(filters.command(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def search_anime(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -93,12 +101,21 @@ async def search_anime(client, message):
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
+    if messages.chat.type == "group":
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+        
 
 
 
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
-@Bot.on_message(filters.command(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -159,7 +176,7 @@ async def animefulinfo(client, message):
 
 # ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
 
-@Bot.on_message(filters.command(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -194,12 +211,30 @@ from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
 from database.inline import BOT_DM_B
         
 
-@Bot.on_message(filters.command(["list", "fullsearch", "anime_info", "ainfo"]))
+@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
      await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
         
+    if messages.chat.type == "group":
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-@Bot.on_message(filters.command(["download", "anime", "search", "find", "request"]))
+
+@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]))
 async def nogcanimedlcmd(client, message):
     await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
         
+    if messages.chat.type == "group":
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
