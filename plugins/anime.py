@@ -219,8 +219,7 @@ from database.inline import BOT_DM_B
 
 @Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
-     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
-        
+    await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
     if messages.chat.type == "group":
         try:
             id = message.chat.id
