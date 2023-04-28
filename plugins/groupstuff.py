@@ -110,9 +110,6 @@ async def gcbroadcastmsg(client, message):
                 deleted += 1
             except ChatWriteForbidden:
                 unsuccessful += 1
-            except BotKicked:
-                await del_chat(chat_id)
-                deleted += 1
             except UserNotParticipant:
                 await del_chat(chat_id)
                 deleted += 1
