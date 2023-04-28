@@ -57,7 +57,7 @@ async def cb_handler(client, query: CallbackQuery):
             await add_SUB_request(anime_id)
             await update_RQ_SUB(UID)
         except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n SUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     elif data.startswith("REQUEST_DA_"):
         QDS = query.data.split("_")[-1]
@@ -76,7 +76,7 @@ async def cb_handler(client, query: CallbackQuery):
             await add_DUB_request(anime_id)
             await update_RQ_DUB(UID)
         except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     elif data == "anime_download_popup":
         await query.answer("TO DOWNLOAD THE ANIME YOU WANT TAP ON (/download 12345) And SEND\n\nYOU CAN ALSO USE (/anime id)", show_alert=True)
@@ -160,11 +160,11 @@ async def cb_handler(client, query: CallbackQuery):
             new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
             try:
                 QQ = query.message
-                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(MSG_img))
+                await client.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(MSG_img))
                 await QQ.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
                 await update_SC(UID)
             except Exception as e:
-                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
    
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
@@ -179,7 +179,7 @@ async def cb_handler(client, query: CallbackQuery):
             if F_BOOL == True:
                 try:
                     QQ = query.message
-                    await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(title_img))
+                    await client.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(title_img))
                     S_CB_DATA = f"{user_id}:{anime_id}"
                     YtRESULT_B = InlineKeyboardMarkup(
                         [
@@ -224,7 +224,7 @@ async def cb_handler(client, query: CallbackQuery):
                 QQ = query.message
                 await QQ.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
             except Exception as e:
-                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
    
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
@@ -254,10 +254,10 @@ async def cb_handler(client, query: CallbackQuery):
             )
             QQ = query.message
             try:
-                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(banner_pic))
+                await client.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(banner_pic))
                 await QQ.edit_text(msg_caption, reply_markup=RESULT_B)
             except:
-                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(cover_pic))
+                await client.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(cover_pic))
                 await QQ.edit_text(msg_caption, reply_markup=RESULT_B)
             
         else:
@@ -291,7 +291,7 @@ async def cb_handler(client, query: CallbackQuery):
                 caption=f"SUCCESSFULLY SET ANILIST ACCOUNT ✅\nAnime Watched: {Ani_C}\nEpisodes Watched: {Ani_EW}\nScore: {Ani_MS}"
             )
         except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Request Button query Error\n DUB anime button\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
