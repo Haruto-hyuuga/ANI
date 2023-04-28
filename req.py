@@ -654,33 +654,22 @@ async def get_full_anime_info(anime_id: int):
         
 async def only_description(anime_id: int):
     query = '''
-    query ($id: Int) {
-        Media (id: $id, type: ANIME) {
-            id
-            title {
-                romaji
-                english
-                native
-            }
-            bannerImage
-            coverImage {
-                extraLarge
-            }
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                    }
-                }
-            }
-            trailer {
+        query ($id: Int) {
+            Media (id: $id, type: ANIME) {
                 id
-                site
-                thumbnail
+                title {
+                    romaji
+                    english
+                    native
+                }
+                bannerImage
+                coverImage {
+                    extraLarge
+                }
+                description(asHtml: false)
             }
         }
-    }
-    '''
+        '''
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
     response = httpx.post(url, json={"query": query, "variables": variables})
