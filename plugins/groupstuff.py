@@ -8,7 +8,7 @@ from config import USER_LOG_CHANNEL as LOGG
 from database.database import present_chat, add_chat, full_chatbase, del_chat
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, BotKicked, UserNotParticipant
 from database.inline import GC_START_B, Ani_log_group
-
+from req import get_cmd
 NCL_txt = """
 #NEW_GROUP  ⛩️🟥
 ━━━━━━━━━━━━━━━
@@ -44,7 +44,7 @@ async def new_gc_logger(client, chat_id, N, UN):
             
 
 
-@Bot.on_message(filters.command(["start", "help"]) & filters.group)
+@Bot.on_message(get_cmd(["start", "help"]) & filters.group)
 async def on_startgclog(client, message):
     id = message.chat.id
     N = message.chat.title
@@ -82,7 +82,7 @@ async def welcomenewgc(client, message):
 
 
 
-@Bot.on_message(filters.command('gcbroadcast') & filters.user(ADMINS))
+@Bot.on_message(get_cmd('gcbroadcast') & filters.user(ADMINS))
 async def gcbroadcastmsg(client, message):
     if message.reply_to_message:
         query = await full_chatbase()
