@@ -6,8 +6,8 @@ from pyrogram.errors import FloodWait
 from database.inline import*
 from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC, update_Anid
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
-from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
-from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info, get_Log_anime_i
+from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS, GROUP_url
+from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info, get_Log_anime_i, only_description
 from database.req_Db import add_SUB_request, add_DUB_request
 from pyrogram.types import InputMediaPhoto
 
@@ -187,8 +187,11 @@ async def cb_handler(client, query: CallbackQuery):
                                 InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                             ],
                             [
+                                InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="Ani_Decs_{S_CB_DATA}"),
+                            ],
+                            [
                                 InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
-                                InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="close"),
+                                InlineKeyboardButton("𝗗𝗶𝘀𝗰𝘂𝘀𝘀", url=GROUP_url),
                             ]
                        ]
                     )
@@ -223,6 +226,40 @@ async def cb_handler(client, query: CallbackQuery):
             except Exception as e:
                 await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
    
+        else:
+            await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+
+    elif data.startswith("Ani_Decs_"):
+        B_DATA = query.data.split("_")[-1]
+        u_id, a_id = B_DATA.split(":")
+        user_id = int(u_id)
+        anime_id = int(a_id)
+        if user_id == query.from_user.id:
+            banner_pic, cover_pic, msg_caption, trailer_url, site_url = await only_description(anime_id)
+            S_CB_DATA = f"{user_id}:{anime_id}"
+            RESULT_B = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("🖥️ 𝐀𝐧𝐢𝐦𝐞 𝐒𝐢𝐭𝐞", url=site_url),
+                        InlineKeyboardButton("𝐖𝐚𝐭𝐜𝐡 𝐓𝐫𝐚𝐢𝐥𝐞𝐫 🎬", url=trailer_url)
+                    ],
+                    [
+                        InlineKeyboardButton("💬 𝐃𝐢𝐬𝐜𝐮𝐬𝐬", url=GROUP_url),
+                        InlineKeyboardButton("𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 ⚡", callback_data=f"ONLY_DL_{S_CB_DATA}"),             
+                    ],
+                    [
+                        InlineKeyboardButton("𝗕𝗔𝗖𝗞 (𝐚𝐧𝐢𝐦𝐞 𝐢𝐧𝐟𝐨)", callback_data=f"Anime_FL_I_{S_CB_DATA}"),             
+                    ]
+                ]
+            )
+            QQ = query.message
+            try:
+                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(banner_pic))
+                await QQ.edit_text(msg_caption, reply_markup=RESULT_B)
+            except:
+                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(cover_pic))
+                await QQ.edit_text(msg_caption, reply_markup=RESULT_B)
+            
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
 
