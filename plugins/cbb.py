@@ -214,7 +214,7 @@ async def cb_handler(client, query: CallbackQuery):
             A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
             message_text = f"""
 {A_Title}
-
+{A_Title}
 ᴇᴘɪꜱᴏᴅᴇꜱ: {Episodes}
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 """
