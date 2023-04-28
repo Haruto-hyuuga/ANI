@@ -1,5 +1,6 @@
 from bot import Bot
 from pyrogram import Client, filters
+from req import get_cmd
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from config import ADMINS, Sub_C_url, Dub_C_url, REQUEST_GC, BOTUSERNAME, REQ_TOPIC_ID, ERR_TOPIC_ID, ANI_LOG_CHANNEL, ANI_LOG_URL
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
@@ -13,7 +14,7 @@ from pyrogram.errors import BadRequest
 from req import get_Log_anime_i, channel_post_anime_info, only_banner_image, search_user_id
     
 
-@Bot.on_message(filters.command("subpost") & filters.user(ADMINS) & filters.group)
+@Bot.on_message(get_cmd("subpost") & filters.user(ADMINS) & filters.group)
 async def fchannelSUBpost(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -91,7 +92,7 @@ async def fchannelSUBpost(client, message):
             
         
 
-@Bot.on_message(filters.command("dubpost") & filters.user(ADMINS) & filters.group)
+@Bot.on_message(get_cmd("dubpost") & filters.user(ADMINS) & filters.group)
 async def fchannelDuBpost(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -165,7 +166,7 @@ async def fchannelDuBpost(client, message):
 
 
 
-@Bot.on_message(filters.command("banner") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("banner") & filters.user(ADMINS))
 async def first_ep_banner(client, message):
     args = message.text.split()
     if len(args) < 2:
@@ -212,7 +213,7 @@ Anime{}    <code>{}</code>
 """
 
 
-@Bot.on_message(filters.command("adddub") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("adddub") & filters.user(ADMINS))
 async def adddub(client, message):
     Umention = message.from_user.mention or "ERROR"
     UID = message.from_user.id or "ERROR"
@@ -254,7 +255,7 @@ async def adddub(client, message):
         await message.reply_text(f"Bish Reply To Post Link From Channel:\n {Dub_C_url}")
         
 
-@Bot.on_message(filters.command("deldub") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("deldub") & filters.user(ADMINS))
 async def deldub(client, message):
     if len(message.command) != 1:
         text = message.text.split(None, 1)[1]
@@ -271,7 +272,7 @@ async def deldub(client, message):
     else:
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
 
-@Bot.on_message(filters.command("addsub") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("addsub") & filters.user(ADMINS))
 async def addsub(client, message):
     Umention = message.from_user.mention or "ERROR"
     UID = message.from_user.id or "ERROR"
@@ -313,7 +314,7 @@ async def addsub(client, message):
         await message.reply_text(f"Bish Reply To Post Link From Channel:\n {Sub_C_url}")
         
     
-@Bot.on_message(filters.command("delsub") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("delsub") & filters.user(ADMINS))
 async def delsub(client, message):
     if len(message.command) != 1:
         text = message.text.split(None, 1)[1]
@@ -331,8 +332,8 @@ async def delsub(client, message):
         await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
 
 
-REQPFX = ["/", "#"]
-@Bot.on_message(filters.command("request", prefixes=REQPFX) & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+
+@Bot.on_message(get_cmd("request") & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def arequest(client, message):
     reply = message.reply_to_message
     if len(message.command) != 1:
@@ -440,7 +441,7 @@ ANI_ADMIN = """
 """
 
 
-@Bot.on_message(filters.command('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(chat_id=message.chat.id, text="⌛")
     M = message.from_user.mention
