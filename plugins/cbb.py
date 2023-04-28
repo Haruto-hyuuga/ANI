@@ -187,31 +187,18 @@ async def cb_handler(client, query: CallbackQuery):
                                 InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
                             ],
                             [
-                                InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data="close"),
+                                InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
                                 InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="close"),
                             ]
                        ]
                     )
                     await QQ.edit_text(message_text, reply_markup=YtRESULT_B)
-
-
-
-                    F_MSG1 = await query.message.reply_photo(banner_url, caption=first_message)
-                except Exception as e:
-                    F_MSG1 = await query.message.reply_photo(cover_url, caption=first_message)
-                    pass
-
-                try:
-                    await F_MSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
                 except Exception as e:
                     await query.message.reply_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                     await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             else:
-                try:
-                    await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
-                except Exception as e:
-                    await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-  
+                await query.message.edit_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
 
