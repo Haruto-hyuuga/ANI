@@ -210,6 +210,9 @@ if not 5541041517 in ADMINS:  # note
   ADMINS.append(5541041517)
 if not 5329765587 in ADMINS:  # schwi
   ADMINS.append(5329765587)
+if not 5908829591 in ADMINS:  # argha 2
+  ADMINS.append(5908829591)
+  
 
 
 
