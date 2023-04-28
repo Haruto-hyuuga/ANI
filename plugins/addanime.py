@@ -447,6 +447,7 @@ async def get_users(client: Bot, message: Message):
     M = message.from_user.mention
     UID = message.from_user.id
     D_L, R_Qs, R_Qd, S_R, Ani_i = await get_user_stats(UID)
+    USER_CLOSE = await user_close(UID)
     if UID in ADMINS:
         user = await full_userbase()
         US = len(user)
@@ -466,7 +467,7 @@ async def get_users(client: Bot, message: Message):
             await message.reply_photo(
                 photo=message_photo,
                 caption=ANI_ADMIN.format(M, Ani_C, Ani_EW, Ani_MW, Ani_MS, S_R, R_Qs, R_Qd, D_L, US, SA, SR, DA, DR),
-                reply_markup=user_close(UID)
+                reply_markup=USER_CLOSE
             )
 
     else:
@@ -478,7 +479,7 @@ async def get_users(client: Bot, message: Message):
             await message.reply_photo(
                 photo=message_photo,
                 caption=ANI_MEM.format(M, S_R, R_Qs, R_Qd, D_L, Ani_C, Ani_EW, Ani_MW, Ani_MS),
-                reply_markup=user_close(UID)
+                reply_markup=USER_CLOSE
             )
 
 
