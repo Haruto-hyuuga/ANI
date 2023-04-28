@@ -135,7 +135,7 @@ async def animefulinfo(client, message):
         return
     
     F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
-    Sfirst_message = f"{first_message[:650].strip()}..."
+    Sfirst_message = f"{first_message[:990].strip()}..."
 
     if F_BOOL == True:
         
@@ -152,9 +152,9 @@ async def animefulinfo(client, message):
                 [
                     InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                 ],
-                [
-                    InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="Ani_Decs_{S_CB_DATA}"),
-                ],
+#                [
+#                    InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data=f"Ani_Decs_{S_CB_DATA}"),
+#                ],
                 [
                     InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{UID}"),
                     InlineKeyboardButton("𝗗𝗶𝘀𝗰𝘂𝘀𝘀", url=GROUP_url),
