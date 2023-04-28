@@ -17,8 +17,16 @@ __Public URL:__ @{}
 __CHAT ID:__ `{}`
 {}
 """
-GROUP_TEXT = ""
+GROUP_TEXT = """
+Start me in private to discover all of my commands and functions, or to download amazing anime content. I'm excited to help you! ♡
+"""
 
+NEW_GROUP_TEXT = """
+Owo I've been brought into new world!
+Thanks for having me in <b>{}</b>
+
+To ensure that I can work properly, please make sure to promote me as an admin. I'm looking forward to helping you all ^_^
+"""
 
 async def new_gc_logger(client, chat_id, N, UN):
     try:
@@ -65,7 +73,7 @@ async def welcomenewgc(client, message):
         if member.id == BOT_ID:
             await asyncio.sleep(10)
             video = await Vid_Random()
-            await client.send_video(message.chat.id, video, caption=GROUP_TEXT, reply_markup=GC_START_B)
+            await client.send_video(message.chat.id, video, caption=NEW_GROUP_TEXT.format(N), reply_markup=GC_START_B)
     
 
 
