@@ -212,8 +212,9 @@ async def cb_handler(client, query: CallbackQuery):
         anime_id = int(a_id)
         if user_id == query.from_user.id:
             A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
+            
             message_text = f"""
-            message_text = f"""
+{A_Title}
 ᴇᴘɪꜱᴏᴅᴇꜱ: {Episodes}
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
