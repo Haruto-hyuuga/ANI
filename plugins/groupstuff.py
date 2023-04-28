@@ -89,7 +89,7 @@ async def gcbroadcastmsg(client, message):
         broadcast_msg = message.reply_to_message
         total = 0
         successful = 0
-        blocked = 0
+        dbgct = len(qurry)
         deleted = 0
         unsuccessful = 0
         
@@ -102,27 +102,26 @@ async def gcbroadcastmsg(client, message):
                 await asyncio.sleep(e.x)
                 await broadcast_msg.copy(chat_id)
                 successful += 1
-            except UserIsBlocked:
-#                await del_chat(chat_id)
-                blocked += 1
-            except InputUserDeactivated:
-#                await del_chat(chat_id)
-                deleted += 1
+            
+            
             except ChatWriteForbidden:
                 unsuccessful += 1
             except UserNotParticipant:
                 await del_chat(chat_id)
                 deleted += 1
+                
+                
             except:
                 unsuccessful += 1
                 pass
             total += 1
         
         status = f"""Broadcast Completed📡
-👥Total Groups: {total}
+👥Total Groups: {dbgct}
+📢Total Group Tried: {total} 
 ✅Successful: {successful}
 ⚠️Unsuccessful: {unsuccessful}
-💀Deleted: {deleted}  || 🚫Error: {blocked}
+💀Deleted: {deleted}
 """
         
         return await pls_wait.edit(status)
