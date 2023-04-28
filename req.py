@@ -703,7 +703,7 @@ async def only_description(anime_id: int):
 🇬🇧: {ET}
 🇯🇵: {JT}
 ———————————————
-<b>ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ:</b> {DSCP}
+<b>ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ:</b> {Description}
 """
     msg_caption = f"{Long_msg[:1000].strip()}..."
     return banner_pic, cover_pic, msg_caption, trailer_url, site_url
