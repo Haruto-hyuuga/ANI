@@ -1,9 +1,14 @@
+from bot import Bot
+from pyrogram import Client, filters
+from pyrogram.types import Message
+
+import asyncio
+from config import ADMINS
+from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, BotKicked, UserNotParticipant
 
 
-from pyrogram.errors.exceptions import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, BotKicked, UserNotParticipant
-
-@app.on_message(get_cmd('gcbroadcast') & filters.user(DEV))
-async def gcbroadcastmsg(client: app, message: Message):
+@Bot.on_message(filters.command('gcbroadcast') & filters.user(ADMINS))
+async def gcbroadcastmsg(client, message):
     if message.reply_to_message:
         query = await full_chatbase()
         broadcast_msg = message.reply_to_message
@@ -51,5 +56,4 @@ async def gcbroadcastmsg(client: app, message: Message):
         return await pls_wait.edit(status)
 
     else:
-        await app.send_sticker(message.chat.id, sticker=REPY_ERROR_STICKER)
-        await message.reply(REPLY_ERROR)
+        await message.reply("Reply To the message")
