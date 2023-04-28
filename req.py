@@ -757,9 +757,26 @@ async def download_anime_buttons_db(anime_id, message_text, client, UID) -> None
         
         
 
+from pyrogram import filters
+from typing import Union
+from config import BOTUSERNAME as botusername
 
+def get_cmd(comm: Union[list, str]):
+  res = list()
+  if isinstance(comm, str):
+    res.extend([comm, f"{comm}@{botusername}"])
+  if isinstance(comm, list):
+    for com in comm:
+      res.extend([com, f"{com}@{botusername}"])
+  return filters.command(res, prefixes=["/", "?", "$", "!", "#", "@", ",", ".", "+", "~", "™", ";", ":", "-", "_"]) 
 
-
+def parse_com(com, key):
+  try:
+    r = com.split(key,1)[1]
+  except KeyError:
+    return None
+  r = (r.split(" ", 1)[1] if len(r.split()) >= 1 else None)
+  return r
 
 
 
