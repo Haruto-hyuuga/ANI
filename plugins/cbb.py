@@ -7,7 +7,7 @@ from database.inline import*
 from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC, update_Anid
 from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
-from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info
+from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info, get_Log_anime_i
 from database.req_Db import add_SUB_request, add_DUB_request
 from pyrogram.types import InputMediaPhoto
 
@@ -184,7 +184,7 @@ async def cb_handler(client, query: CallbackQuery):
                     YtRESULT_B = InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
+                                InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                             ],
                             [
                                 InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
@@ -199,6 +199,30 @@ async def cb_handler(client, query: CallbackQuery):
             else:
                 await query.message.edit_text("An Error Occurred, Try Agin\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                 
+        else:
+            await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
+
+    elif data.startswith("ONLY_DL_"):
+        B_DATA = query.data.split("_")[-1]
+        u_id, a_id = B_DATA.split(":")
+        user_id = int(u_id)
+        anime_id = int(a_id)
+        if user_id == query.from_user.id:
+            A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
+            message_text = f"""
+{A_Title}
+
+ᴇᴘɪꜱᴏᴅᴇꜱ: {Episodes}
+━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+            UID = user_id
+            new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
+            try:
+                QQ = query.message
+                await QQ.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            except Exception as e:
+                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+   
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
 
