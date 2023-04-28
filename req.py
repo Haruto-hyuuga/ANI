@@ -392,9 +392,14 @@ async def get_Log_anime_i(anime_id: int):
         Episodes = A_Title = "not_found⚠️"
         return A_PIC, A_Title, Episodes
 
-    A_Title = anime["title"]["english"] or anime["title"]["romaji"]
+    ET = anime["title"]["english"] or "➖"
+    JT = anime["title"]["romaji"] or "➖"
     Episodes = anime["episodes"]
     A_PIC = anime["bannerImage"]
+    A_Title = f"""
+🇬🇧: {ET}
+🇯🇵: {JT}
+"""
     return A_PIC, A_Title, Episodes
         
         
