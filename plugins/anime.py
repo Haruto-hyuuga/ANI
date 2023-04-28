@@ -69,7 +69,7 @@ async def anime_info(client, message):
                 await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     try:
-        if messages.chat.type == "group":
+        if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
             id = message.chat.id
             N = message.chat.title
             UN = message.chat.username
@@ -105,7 +105,7 @@ async def search_anime(client, message):
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
-    if messages.chat.type == "group":
+    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
             id = message.chat.id
             N = message.chat.title
@@ -220,7 +220,7 @@ from database.inline import BOT_DM_B
 @Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
-    if messages.chat.type == "group":
+    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
             id = message.chat.id
             N = message.chat.title
@@ -234,7 +234,7 @@ async def nosearchppvtsearchfs(client, message):
 async def nogcanimedlcmd(client, message):
     await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
         
-    if messages.chat.type == "group":
+    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
             id = message.chat.id
             N = message.chat.title
