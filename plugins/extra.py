@@ -78,7 +78,7 @@ async def delete_anilist_acc(client, message):
             await message.reply_text("DELETED ANILIST ACCOUNT 🗑️✅")
     except Exception as e:
         await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Deleting User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 @Bot.on_message(get_cmd("reqlist") & filters.user(ADMINS))
