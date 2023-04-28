@@ -33,10 +33,10 @@ async def Log_inl_but(id: str):
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def start_command(client , message: Message):
     id = message.from_user.id
-    if not await present_user(id):
-        await add_user(id)
-        LB = await Log_inl_but(id)
-        await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+#    if not await present_user(id):
+#        await add_user(id)
+#        LB = await Log_inl_but(id)
+#        await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
     text = message.text
     if len(text)>7:
         try:
@@ -101,22 +101,23 @@ async def start_command(client , message: Message):
 
     else:
         try:
+  
             FINAL_VID = await Vid_Random()
             await message.reply_video(
                 video = FINAL_VID,
                 caption = START_MSG.format(message.from_user.mention),
                reply_markup = START_B,
             )
+            if not await present_user(id):
+                await add_user(id)
+                LB = await Log_inl_but(id)
+                await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+            if not await present_user_stats(id):
+                await add_user_stats(id)
             return
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    try:
-        if not await present_user_stats(id):
-            await add_user_stats(id)
-    except:
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Couldn't add USER STATS\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-        
-
+    
     
 #=====================================================================================##
 
@@ -201,10 +202,6 @@ async def not_joined(client: Client, message: Message):
         await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start Force SUB CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     try:
-        if not await present_user(id):
-            await add_user(id)
-            LB = await Log_inl_but(id)
-            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
         if not await present_user_stats(id):
             await add_user_stats(id)
     except:
