@@ -123,7 +123,7 @@ async def Ani_log_inline_f(UID: int, link: str) -> InlineKeyboardMarkup:
     return ANI_LOG_BUT
 
 async def Ani_log_group(link: str) -> InlineKeyboardMarkup:
-    ANI_LOG_BUT = InlineKeyboardMarkup(
+    GC_LOG_BUT = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton("CHAT LINK 💬🔗", url=link)
