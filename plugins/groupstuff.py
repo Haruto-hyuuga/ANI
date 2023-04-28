@@ -4,6 +4,7 @@ from pyrogram.types import Message
 
 import asyncio
 from config import ADMINS
+from database.database import present_chat, add_chat, full_chatbase, del_chat
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, ChatWriteForbidden, BotKicked, UserNotParticipant
 
 
@@ -46,11 +47,11 @@ async def gcbroadcastmsg(client, message):
                 pass
             total += 1
         
-        status = f"""**Broadcast Completed**📡
-👥__Total Groups:__ {total}
-✅__Successful:__ {successful}
-⚠️__Unsuccessful:__ {unsuccessful}
-💀__Deleted:__ {deleted}  || 🚫__Error:__ {blocked}
+        status = f"""Broadcast Completed📡
+👥Total Groups: {total}
+✅Successful: {successful}
+⚠️Unsuccessful: {unsuccessful}
+💀Deleted: {deleted}  || 🚫Error: {blocked}
 """
         
         return await pls_wait.edit(status)
