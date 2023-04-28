@@ -654,22 +654,26 @@ async def get_full_anime_info(anime_id: int):
         
 async def only_description(anime_id: int):
     query = '''
-        query ($id: Int) {
-            Media (id: $id, type: ANIME) {
+    query ($id: Int) {
+        Media (id: $id, type: ANIME) {
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            bannerImage
+            coverImage {
+                extraLarge
+            }
+            description
+            siteUrl
+            trailer {
                 id
-                title {
-                    romaji
-                    english
-                    native
-                }
-                bannerImage
-                coverImage {
-                    extraLarge
-                }
-                description(asHtml: false)
             }
         }
-        '''
+    }
+    '''
     variables = {"id": anime_id}
     url = "https://graphql.anilist.co"
     response = httpx.post(url, json={"query": query, "variables": variables})
@@ -677,6 +681,7 @@ async def only_description(anime_id: int):
     if response.status_code != 200:
         msg_caption = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
         banner_pic = cover_pic = ERROR_IMAGE
+        trailer_url = site_url = "https://t.me/AnimeRobots"
         return
 
     data = response.json()["data"]
@@ -684,18 +689,24 @@ async def only_description(anime_id: int):
     if not anime:
         msg_caption = f"No anime found with the ID '{anime_id}'.\n Did you fuck up the number after command?"
         banner_pic = cover_pic = NOani_IMAGE
+        trailer_url = site_url = "https://t.me/AnimeRobots"
         return
 
+    ET = anime["title"]["english"] or "➖"
+    JT = anime["title"]["romaji"] or "➖"
+    site_url = anime['siteUrl']
+    trailer_url = f"https://www.youtube.com/watch?v={anime['trailer']['id']}" if anime['trailer'] else "https://t.me/AnimeRobots"
     cover_pic = anime["coverImage"]["extraLarge"]
     banner_pic = anime["bannerImage"]
-    msg_caption = """
-┏━━━━━━━━━━━━━━━━━━━━━━━
-┣ʀᴇꜱᴏʟᴜᴛɪᴏɴ:
-┣ᴀᴜᴅɪᴏ: {}
-┣ꜱᴜʙᴛɪᴛʟᴇ: {}
-┗━━━━━━━━━━━━━━━━━━━━━━━
+    Description = anime["description"]
+    Long_msg = """
+🇬🇧: {ET}
+🇯🇵: {JT}
+———————————————
+<b>ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴ:</b> {DSCP}
 """
-    return banner_pic, cover_pic, msg_caption
+    msg_caption = f"{Long_msg[:1000].strip()}..."
+    return banner_pic, cover_pic, msg_caption, trailer_url, site_url
         
         
         
