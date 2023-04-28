@@ -10,7 +10,7 @@ from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_C
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC, FSCMD
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON
-from database.user_stats import add_user_stats, add_user_stats, update_DL, del_user_stats
+from database.user_stats import add_user_stats, add_user_stats, update_DL, del_user_stats, present_user_stats
 
 USER_LOG_TXT = """
 🟢 #New_User
