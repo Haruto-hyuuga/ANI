@@ -213,10 +213,10 @@ async def cb_handler(client, query: CallbackQuery):
         if user_id == query.from_user.id:
             A_PIC, A_Title, Episodes = await get_Log_anime_i(anime_id)
             message_text = f"""
-{A_Title}
-{A_Title}
+            message_text = f"""
 ᴇᴘɪꜱᴏᴅᴇꜱ: {Episodes}
 ━━━━━━━━━━━━━━━━━━━━━━━━━
+
 """
             UID = user_id
             new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
