@@ -699,7 +699,7 @@ async def only_description(anime_id: int):
     cover_pic = anime["coverImage"]["extraLarge"]
     banner_pic = anime["bannerImage"]
     Description = anime["description"]
-    Long_msg = """
+    Long_msg = f"""
 🇬🇧: {ET}
 🇯🇵: {JT}
 ———————————————
