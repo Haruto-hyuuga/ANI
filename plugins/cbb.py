@@ -187,7 +187,7 @@ async def cb_handler(client, query: CallbackQuery):
                                 InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                             ],
                             [
-                                InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="Ani_Decs_{S_CB_DATA}"),
+                                InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data=f"Ani_Decs_{S_CB_DATA}"),
                             ],
                             [
                                 InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
