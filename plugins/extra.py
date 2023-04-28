@@ -70,13 +70,13 @@ async def delete_anilist_acc(client, message):
     UID = message.from_user.id
     try:
         Ani_i = await get_user_Ani_Id(UID)
-        if Ani_id == 0:
+        if Ani_i == 0:
             await message.reply_text("You Never Added Anilist Account Retard")
         else:
             Ani_no = 0
             await update_Anid(UID, Ani_no)
             await message.reply_text("DELETED ANILIST ACCOUNT 🗑️✅")
-    except:
+    except Exception as e:
         await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
