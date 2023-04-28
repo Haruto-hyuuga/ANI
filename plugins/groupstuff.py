@@ -18,7 +18,7 @@ __CHAT ID:__ `{}`
 {}
 """
 GROUP_TEXT = """
-Start me in private to discover all of my commands and functions, or to download amazing anime content. I'm excited to help you! ♡
+Start me in private to discover all of my commands and functions, or to download amazing anime content. I'm excited to help you find your fav anime ♡
 """
 
 NEW_GROUP_TEXT = """
