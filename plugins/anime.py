@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B
 from database.user_stats import update_SC
-from config import FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC
+from config import FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC, GROUP_url
 
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
@@ -127,16 +127,17 @@ async def animefulinfo(client, message):
         YtRESULT_B = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖥️ Anime Site", url=site_url),
-                    InlineKeyboardButton("Watch Trailer 🖥️", url=trailer_url)
+                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                 ],
                 [
-                    InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"Anime_DL_{S_CB_DATA}"),
-                    InlineKeyboardButton("𝗖𝗟𝗢𝗦𝗘", callback_data="close"),             
+                    InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data="Ani_Decs_{S_CB_DATA}"),
+                ],
+                [
+                    InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{user_id}"),
+                    InlineKeyboardButton("𝗗𝗶𝘀𝗰𝘂𝘀𝘀", url=GROUP_url),
                 ]
             ]
         )
-    
         try:
             await FMSG1.reply_photo(title_img, caption=message_text, reply_markup=YtRESULT_B)
         except Exception as e:
