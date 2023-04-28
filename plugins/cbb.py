@@ -9,7 +9,7 @@ from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUES
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS
 from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info
 from database.req_Db import add_SUB_request, add_DUB_request
-
+from pyrogram.types import InputMediaPhoto
 
 
 @Bot.on_callback_query()
@@ -158,20 +158,13 @@ async def cb_handler(client, query: CallbackQuery):
 """
             UID = user_id
             new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-            if query.message.reply_to_message:
-                try:
-                    await query.message.delete()
-                    await query.message.reply_to_message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-                    await update_SC(UID)
-                except Exception as e:
-                    await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            if not query.message.reply_to_message:
-                try:
-                    await query.message.delete()
-                    await query.message.reply_photo(photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-                    await update_SC(UID)
-                except Exception as e:
-                    await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            try:
+                QQ = query.message
+                await cleint.edit_message_media(QQ.chat.id, QQ.id, InputMediaPhoto(MSG_img))
+                await query.message.edit_text(new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+                await update_SC(UID)
+            except Exception as e:
+                await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ANIME Button query Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
    
         else:
             await query.answer("The Person Who Searched This Anime Can Use These Buttons, Search Your Own: /anime", show_alert=True)
