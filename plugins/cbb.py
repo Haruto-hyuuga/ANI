@@ -87,7 +87,11 @@ async def cb_handler(client, query: CallbackQuery):
     elif data == "emoji_info_popup":
         await query.answer("Emoji Info:\n🖥️: Finished Series\n🆕: Currently Airing\n🔜: Not Yet Released\n❌: Cancelled\n🛑: Hiatus\n🕊️: Upcoming", show_alert=True)
     elif data == "Request_Pending_popup":
-        await query.answer("REQUEST FOR THIS ANIME IS ALREADY BEEN SENT BY OTHER USERS\n we'll add it as soon as possible 🕊️", show_alert=True)
+        await query.answer("REQUEST FOR THIS ANIME IS ALREADY BEEN SENT BY OTHER USERS\nwe'll add it as soon as possible 🕊️", show_alert=True)
+    elif data == "Do_Request_stk":
+        await query.answer("TO REQUEST OTHER ANIME OR REQUEST THIS IN SUB OR DUB\nUSE COMMAND: /request", show_alert=True)
+    elif data == "Do_report_error":
+        await query.answer("IF YOU FACE ANY ERROR OR ANY DEFECTED EPISODE, KINDLY REPORT BY COMMAND\n /report", show_alert=True)
     
 
     elif data == "gcAresultclose":
