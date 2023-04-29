@@ -214,8 +214,6 @@ from database.inline import BOT_DM_B
         
 @Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]) & ~filters.chat(FS_GROUP))
 async def nogcanimedlcmd(client, message):
-    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
-        
     if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
             id = message.chat.id
