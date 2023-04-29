@@ -20,13 +20,28 @@ USER_LOG_TXT = """
 🆔 <code>{}</code>  #id{}
 """
 async def Log_inl_but(id: str):
-    LB = InlineKeyboardMarkup(
-        [
+    try:
+        LB = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("USER LINK", user_id=id)
+                [
+                    InlineKeyboardButton("USER LINK", user_id=id)
+                ]
             ]
-        ]
-    )   
+        )   
+    except:
+        LB = InlineKeyboardMarkup(
+
+            [
+
+                [
+
+                    InlineKeyboardButton("USER LINK", url="https://t.me/c/1909557377/22")
+
+                ]
+
+            ]
+
+        )   
     return LB
 
 
