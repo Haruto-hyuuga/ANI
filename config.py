@@ -101,7 +101,7 @@ O_PVT_FS_TXT = """
 <b>Umm... Excuse me, senpai!</b>
 Just a friendly reminder that these commands are meant to be used in private chats with me to prevent any pesky spam in our lovely groups.
 """
-O_PVT_FS_PIC = ""
+O_PVT_FS_PIC = "https://telegra.ph/file/1bca5f24a5af913e591b9.jpg"
 
 
 
