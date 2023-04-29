@@ -95,11 +95,12 @@ PVT_FS_TXT = """
 To use these commands, please start me in private first, nya~! 
 Don't worry, I won't bite!
 """
-PVT_FS_PIC = "https://telegra.ph/file/38a10470c95a78708f008.jpg"
+PVT_FS_PIC = ""
 O_PVT_FS_TXT = """
-<b>Umm... Excuse me, senpai! Just a friendly reminder that these commands are meant to be used in private chats with me to prevent any pesky spam in our lovely groups.</b>
+<b>Umm... Excuse me, senpai!</b>
+Just a friendly reminder that these commands are meant to be used in private chats with me to prevent any pesky spam in our lovely groups.
 """
-O_PVT_FS_PIC = "https://telegra.ph/file/4bbfb4c68f55259c071d9.jpg"
+O_PVT_FS_PIC = ""
 
 
 
