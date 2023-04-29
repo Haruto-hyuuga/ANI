@@ -204,25 +204,8 @@ from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
 from database.inline import BOT_DM_B
         
 
-@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
-async def nosearchppvtsearchfs(client, message):
-    await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
-    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
-        try:
-            id = message.chat.id
-            N = message.chat.title
-            UN = message.chat.username
-            await new_gc_logger(client, id, N, UN)
-            await message.reply_photo(
-                photo=O_PVT_FS_PIC,
-                caption=O_PVT_FS_TXT,
-                reply_markup=BOT_DM_B
-            )
-        except Exception as e:
-            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-
-@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]))
+@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]) & ~filters.chat(FS_GROUP))
 async def nogcanimedlcmd(client, message):
     await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
         
@@ -240,6 +223,23 @@ async def nogcanimedlcmd(client, message):
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
+
+@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]) & ~filters.private)
+async def nosearchppvtsearchfs(client, message):
+    await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
+    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+            await message.reply_photo(
+                photo=O_PVT_FS_PIC,
+                caption=O_PVT_FS_TXT,
+                reply_markup=BOT_DM_B
+            )
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
