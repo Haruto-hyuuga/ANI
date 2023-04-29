@@ -95,7 +95,7 @@ async def start_command(client , message: Message):
             else:
                 caption = "" if not msg.caption else msg.caption.html
 
-            if DISABLE_CHANNEL_BUTTON:
+            if msg.reply_markup and isinstance(msg.reply_markup, InlineKeyboardMarkup):
                 reply_markup = msg.reply_markup
             else:
                 reply_markup = None
