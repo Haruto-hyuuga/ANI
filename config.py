@@ -141,20 +141,21 @@ ABOUT_TEXT = """
 <i>Use this command to get all chennals links</i>
 
 /stats 
-<i>You Can Check Bot's Anime Stats</i>
+<i>Check Your Stats/Activity on Bot</i>
 """
 
 REQUEST_TEXT = """
-<b>To Request Anime Series/Movies:</b>
-
+<u>𝗧𝗼 𝗥𝗲𝗾𝘂𝗲𝘀𝘁 𝗔𝗻𝗶𝗺𝗲 𝗦𝗲𝗿𝗶𝗲𝘀/𝗠𝗼𝘃𝗶𝗲𝘀:</u>
 |• <i>Use Command:</i> <code>/download or /search</code>
 |• <i>then click on Request Button on message</i>
-
+OR
 |• <i>Use Command:</i> <code>#request</code>
 |• <i>Replying To A message or Link After Command</i>
-|• <i>Use Link From:</i> anilist.co/search/anime
 
-|• <i>Or Contact Me Through @Maid_Robot</i>
+<u>𝗧𝗼 𝗿𝗲𝗽𝗼𝗿𝘁 𝗮𝗻𝘆 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 𝗯𝗼𝘁 𝗼𝗿 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗳𝗶𝗹𝗲𝘀</u>
+|• <i>Use Command:</i> <code>/report</code>
+|• <i>Reply to bot message</i>
+|• <i>write error after command</i>
 """
 
 
