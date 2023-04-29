@@ -133,9 +133,6 @@ ABOUT_TEXT = """
 /anime_info or /ainfo <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
 <i>Use this command to get detailed anime info trailer and many more</i>
 
-/request (𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚜𝚎𝚊𝚛𝚌𝚑𝚎𝚍 𝚖𝚎𝚜𝚜𝚊𝚐𝚎)
-<i>Use this command to Request anime to add in Bot</i>
-
 /channels
 <i>Use this command to get all chennals links</i>
 
@@ -148,8 +145,8 @@ REQUEST_TEXT = """
 |• <i>Use Command:</i> <code>/download or /search</code>
 |• <i>then click on Request Button on message</i>
 OR
-|• <i>Use Command:</i> <code>#request</code>
-|• <i>Replying To A message or Link After Command</i>
+|• <i>Use Command:</i> /request (𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚜𝚎𝚊𝚛𝚌𝚑𝚎𝚍 𝚊𝚗𝚒𝚖𝚎)
+|• <i>it will send request to add that anime</i>
 
 <u>𝗧𝗼 𝗿𝗲𝗽𝗼𝗿𝘁 𝗮𝗻𝘆 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 𝗯𝗼𝘁 𝗼𝗿 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗳𝗶𝗹𝗲𝘀</u>
 |• <i>Use Command:</i> <code>/report</code>
