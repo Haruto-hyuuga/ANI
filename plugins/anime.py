@@ -118,10 +118,7 @@ async def search_anime(client, message):
 
 
 
-
-
-# ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
-@Bot.on_message(get_cmd(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -152,9 +149,6 @@ async def animefulinfo(client, message):
                 [
                     InlineKeyboardButton("𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗", callback_data=f"ONLY_DL_{S_CB_DATA}"),
                 ],
-#                [
-#                    InlineKeyboardButton("𝗗𝗲𝘀𝗰𝗿𝗶𝗽𝘁𝗶𝗼𝗻", callback_data=f"Ani_Decs_{S_CB_DATA}"),
-#                ],
                 [
                     InlineKeyboardButton("𝗖𝗹𝗼𝘀𝗲", callback_data=f"FUclose_{UID}"),
                     InlineKeyboardButton("𝗗𝗶𝘀𝗰𝘂𝘀𝘀", url=GROUP_url),
@@ -172,15 +166,11 @@ async def animefulinfo(client, message):
             await message.reply_photo(title_img, caption=f"{first_message}\n{message_text}", reply_markup=ERROR_BUTTON)
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Full anime info CMD-PVT MSG-2 Error\ntitle image and infos\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-# add stats
     try:
         await update_SC(UID)
     except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-
-# ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ MAKE IT FILSTERS PRIVATE PUBLISH
 
 @Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def pvt_many_anime_list(client, message):
@@ -226,6 +216,11 @@ async def nosearchppvtsearchfs(client, message):
             N = message.chat.title
             UN = message.chat.username
             await new_gc_logger(client, id, N, UN)
+            await message.reply_photo(
+                photo=O_PVT_FS_PIC,
+                caption=O_PVT_FS_TXT,
+                reply_markup=BOT_DM_B
+            )
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
@@ -240,6 +235,11 @@ async def nogcanimedlcmd(client, message):
             N = message.chat.title
             UN = message.chat.username
             await new_gc_logger(client, id, N, UN)
+            await message.reply_photo(
+                photo=PVT_FS_PIC,
+                caption=PVT_FS_TXT,
+                reply_markup=BOT_DM_B
+            )
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
