@@ -59,3 +59,17 @@ async def get_dub_anime(anime_id : int):
     found = dub_anime.find_one({'_id': anime_id})
     dblink = found['_link']
     return dblink
+###################################################################################
+
+import random
+
+async def recom_ani_id():
+    try:
+        S = sub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        S_I = S['_id']
+        D = dub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        D_I = D['_id']
+        AniId = random.choice([S_I, D_I])
+    except Exception as e:
+        print(e)
+    return AniId
