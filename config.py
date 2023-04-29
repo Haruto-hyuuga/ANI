@@ -131,7 +131,7 @@ ABOUT_TEXT = """
 /list or /fullsearch <b>𝙰𝙽𝙸𝙼𝙴 𝙽𝙰𝙼𝙴</b>
 <i>search for all anime that matches your search query</i>
 
-/anime_info or /info <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
+/anime_info or /ainfo <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
 <i>Use this command to get detailed anime info trailer and many more</i>
 
 /request (𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚜𝚎𝚊𝚛𝚌𝚑𝚎𝚍 𝚖𝚎𝚜𝚜𝚊𝚐𝚎)
