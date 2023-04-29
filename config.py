@@ -95,7 +95,8 @@ PVT_FS_TXT = """
 To use these commands, please start me in private first, nya~! 
 Don't worry, I won't bite!
 """
-PVT_FS_PIC = ""
+PVT_FS_VID = "https://telegra.ph/file/a958958b6b4877daaee41.mp4"
+
 O_PVT_FS_TXT = """
 <b>Umm... Excuse me, senpai!</b>
 Just a friendly reminder that these commands are meant to be used in private chats with me to prevent any pesky spam in our lovely groups.
