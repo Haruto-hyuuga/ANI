@@ -208,7 +208,7 @@ async def my_gcsearch_anime(client, message):
 ###############################################################################################################################################################################
 ###############################################################################################################################################################################
 
-from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
+from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_VID
 from database.inline import BOT_DM_B
 
         
@@ -220,8 +220,8 @@ async def nogcanimedlcmd(client, message):
             N = message.chat.title
             UN = message.chat.username
             await new_gc_logger(client, id, N, UN)
-            await message.reply_photo(
-                photo=PVT_FS_PIC,
+            await message.reply_video(
+                video=PVT_FS_VID,
                 caption=PVT_FS_TXT,
                 reply_markup=BOT_DM_B
             )
@@ -332,3 +332,4 @@ async def nosearchppvtsearchfs(client, message):
             )
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
