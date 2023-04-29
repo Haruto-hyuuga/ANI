@@ -289,7 +289,7 @@ async def animefulinfo(client, message):
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.private)
+@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -317,11 +317,8 @@ async def pvt_many_anime_list(client, message):
 
 
 
-
-
 @Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
-    await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
     if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
             id = message.chat.id
@@ -335,4 +332,3 @@ async def nosearchppvtsearchfs(client, message):
             )
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
