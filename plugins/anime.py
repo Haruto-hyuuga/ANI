@@ -289,7 +289,7 @@ async def animefulinfo(client, message):
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
+@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.private)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
     args = message.text.split()
