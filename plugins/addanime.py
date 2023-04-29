@@ -53,21 +53,23 @@ async def fchannelSUBpost(client, message):
         try:
             M = await message.reply_photo(photo=MSG_img, caption=POST_CAPTION)
             await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_POST)
-            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
-            A = "Japanese"
-            S = "English"
-            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
+#            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+#            A = "Japanese"
+#            S = "English"
+#            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB CHANNEL POST\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
         banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+        A = "Japanese"
+        S = "English"
         try:
-            A = "Japanese"
-            S = "English"
+            
+            
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
+    #        await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
             
 
@@ -136,12 +138,14 @@ async def fchannelDuBpost(client, message):
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️DUB Post CMD Error\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID) 
 
         banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
+        A = "English, Japanese"
+        S = "Eng Sign & Songs, Full Sub"
         try:
-            A = "English, Japanese"
-            S = "Eng Sign & Songs, Full Sub"
+            
+
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-            await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
+    #        await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
             
 
