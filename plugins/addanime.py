@@ -74,6 +74,7 @@ async def fchannelSUBpost(client, message):
             
 
     else:
+        MSG_img = f"https://img.anili.st/media/{anime_id}" or "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
         POST_SAME = f"POST ALREDY EXIST IN SUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
         try:
             dblink = await get_sub_anime(anime_id)
@@ -150,6 +151,7 @@ async def fchannelDuBpost(client, message):
             
 
     else:
+        MSG_img = f"https://img.anili.st/media/{anime_id}" or "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
         POST_SAME = f"POST ALREDY EXIST IN DUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
         try:
             dblink = await get_sub_anime(anime_id)
