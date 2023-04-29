@@ -204,6 +204,47 @@ async def my_gcsearch_anime(client, message):
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
     
+from database.anime_db import recom_ani_id, recom_SUB_id, recom_DUB_id
+
+
+
+@Bot.on_message(get_cmd(["recommend"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+async def recommend_anime(client, message):
+    if len(message.command) > 1:
+        first_word = message.text.split(None, 1)[1].split()[0]
+        FWC = first_word.lower()
+        if FWC == "sub":
+            AniId = await recom_SUB_id()
+        if FWC == "dub":
+            AniId = await recom_DUB_id()
+    else:
+        AniId = await recom_ani_id()
+
+    anime_id = AniId
+    E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+            
+    message_text = f"""
+🇬🇧: <b><u>{E_title}</u></b>
+🇯🇵: <b><u>{J_title}</u></b>
+━━━━━━━━━━━━━━━━━━━━━━━━━
+ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
+ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
+ᴛʏᴘᴇ: <b>{Format}</b>
+ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
+ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
+"""
+    new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
+    
+    try:
+        if message.reply_to_message:
+            await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        if not message.reply_to_message:
+            await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    except Exception as e:
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️RECOMMEND CMD\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+            
+    
 ###############################################################################################################################################################################
 ###############################################################################################################################################################################
 ###############################################################################################################################################################################
@@ -212,7 +253,7 @@ from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_VID
 from database.inline import BOT_DM_B
 
         
-@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]) & ~filters.chat(FS_GROUP))
+@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request", "recommend"]) & ~filters.chat(FS_GROUP))
 async def nogcanimedlcmd(client, message):
     if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
         try:
