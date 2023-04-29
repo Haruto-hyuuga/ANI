@@ -365,6 +365,31 @@ async def arequest(client, message):
         await message.reply_text("Baka! mention link of anime you want to request\n〰️〰️〰️〰️OR〰️〰️〰️〰️\nWrite SUB/BUB after command while replying to a searched anime message")
  
 
+@Bot.on_message(get_cmd("report") & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+async def pvtreportt(client, message):
+    reply = message.reply_to_message
+    if reply:
+        if len(message.command) != 1:
+            try:
+                text = message.text.split(None, 1)[1]
+                
+                LOL = await reply.copy(REQUEST_GC, reply_to_message_id=ERR_TOPIC_ID)
+                await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REPORT \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=LOL.id)
+                await message.reply_text("<b>REPORT SENT</b>\nThank-You Very Much💕")
+            except Exception as e:
+                await message.reply_text("Something Went Wrong👀\nReport This To @MaidRobot")
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ Report CMD Error:\n\n {e}", reply_to_message_id=ERR_TOPIC_ID)
+        else:
+                await message.reply_text("Please Describe your issue regarding bot after command.\n\n/report Malfunction")
+    if len(message.command) != 1 and not reply:
+        text = message.text.split(None, 1)[1]
+        await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REPORT \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=ERR_TOPIC_ID)
+        await message.reply_text("<b>REPORT SENT</b>\nThank-You Very Much💕")
+         
+    else:
+        await message.reply_text("Baka! reply to error message or describe issue after command \nyou can mention reason while replying to a message too.")
+ 
+
 
 
 NO_ANI_MEM = """
