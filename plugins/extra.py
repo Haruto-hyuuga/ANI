@@ -46,7 +46,7 @@ async def auth_ani_acc(client, message):
                         caption=f"SUCCESSFULLY SET ANILIST ACCOUNT ✅\nAnime Watched: {Ani_C}\nEpisodes Watched: {Ani_EW}\nScore: {Ani_MS}"
                     )
             except Exception as e:
-                await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
+                await message.reply_text("Invalid Anilist User ID, Double Check Your Anilist id or search By username")
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
         else:
             await message.reply_text(f"You're Anilist Account Is Already Added With ID: {Ani_i}\n\n<b>To Delete And Add New Id Use Command: /unauth </b>\nTo Add New Id Delete First Id Then /auth Agin")
@@ -61,7 +61,7 @@ async def auth_ani_acc(client, message):
                 reply_markup=message_button
             )
         except Exception as e:
-            await message.reply_text("Something Went Wrong, Try Again Later If Problem Persist Contact Owner")
+            await message.reply_text("Can't Find Any Anilist Account For given Query")
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️while Adding User Anilist\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
