@@ -73,3 +73,25 @@ async def recom_ani_id():
     except Exception as e:
         print(e)
     return AniId
+
+async def recom_SUB_id():
+    try:
+        S1 = sub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        S1_I = S1['_id']
+        S2 = sub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        S2_I = S2['_id']
+        AniId = random.choice([S1_I, S2_I])
+    except Exception as e:
+        print(e)
+    return AniId
+
+async def recom_DUB_id():
+    try:
+        D1 = dub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        D1_I = D1['_id']
+        D2 = dub_anime.aggregate([{"$sample": {"size": 1}}]).next()
+        D2_I = D2['_id']
+        AniId = random.choice([D1_I, D2_I])
+    except Exception as e:
+        print(e)
+    return AniId
