@@ -91,11 +91,13 @@ async def R_Banner_Pic():
 
 
 PVT_FS_TXT = """
-To Use These Commands You Need To Start Me in Private First.
+~It looks like you haven't started me in private yet...
+To use these commands, please start me in private first, nya~! 
+Don't worry, I won't bite!
 """
 PVT_FS_PIC = "https://telegra.ph/file/38a10470c95a78708f008.jpg"
 O_PVT_FS_TXT = """
-These Commands Only Work In Private To Avoid Spam In Groups
+<b>Umm... Excuse me, senpai! Just a friendly reminder that these commands are meant to be used in private chats with me to prevent any pesky spam in our lovely groups.</b>
 """
 O_PVT_FS_PIC = "https://telegra.ph/file/4bbfb4c68f55259c071d9.jpg"
 
