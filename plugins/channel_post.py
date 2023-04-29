@@ -35,8 +35,21 @@ async def channel_post(client: Client, message: Message):
 
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
-
-
+    if message.sticker:
+        STKB = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("📬Request", callback_data="Do_Request_stk"),
+                    InlineKeyboardButton("Report⛑️", callback_data="Do_report_error")
+                ]
+            ]
+        )
+        try:
+            await message.edit_reply_markup(STKB)
+        except:
+            print(e)
+            pass
+        
 """
 
     if DISABLE_CHANNEL_BUTTON:
