@@ -9,6 +9,7 @@ from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
 from plugins.groupstuff import new_gc_logger
 
+
 @Bot.on_message(get_cmd(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
 async def anime_info(client, message):
     UID = message.from_user.id
@@ -80,9 +81,6 @@ async def anime_info(client, message):
         await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-
-
-
 @Bot.on_message(get_cmd(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
 async def search_anime(client, message):
     UID = message.from_user.id
@@ -116,6 +114,127 @@ async def search_anime(client, message):
     else:
         pass
 
+
+
+#########################################################################################################################################################
+#########################################################################################################################################################
+#########################################################################################################################################################
+
+@Bot.on_message(get_cmd(["download"]) & filters.chat(FS_GROUP))
+async def my_gc_anime_o(client, message):
+    UID = message.from_user.id
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
+        return
+    arg = args[1]
+    if arg.isdigit():
+        try:
+            anime_id = int(arg)
+        except (IndexError, ValueError):
+            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            return
+
+        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+            
+        message_text = f"""
+🇬🇧: <b><u>{E_title}</u></b>
+🇯🇵: <b><u>{J_title}</u></b>
+━━━━━━━━━━━━━━━━━━━━━━━━━
+ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
+ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
+ᴛʏᴘᴇ: <b>{Format}</b>
+ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
+ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
+
+"""
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
+    
+        if message.reply_to_message:
+            try:
+                await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            except Exception as e:
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+        if not message.reply_to_message:
+            try:
+                await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            except Exception as e:
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+    else:
+        anime_name = " ".join(args[1:])
+        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
+
+        if message.reply_to_message:
+            try:
+                await message.reply_to_message.reply_photo(photo=message_photo, caption=message_text, reply_markup=message_button)
+            except Exception as e:
+                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+        if not message.reply_to_message:
+            try:
+                await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
+            except Exception as e:
+                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+    
+
+@Bot.on_message(get_cmd(["search", "anime"]) & filters.chat(FS_GROUP))
+async def my_gcsearch_anime(client, message):
+    UID = message.from_user.id
+    args = message.text.split()
+    if len(args) < 2:
+        await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        return
+    anime_name = " ".join(args[1:])
+    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
+    try:
+        await message.reply_photo(
+            photo=message_photo,
+            caption=message_text,
+            reply_markup=message_button
+        )
+    except Exception as e:
+        await message.reply_text(
+            text=message_text,
+            reply_markup=message_button 
+        )
+        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            
+    
+###############################################################################################################################################################################
+###############################################################################################################################################################################
+###############################################################################################################################################################################
+
+from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
+from database.inline import BOT_DM_B
+
+        
+@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]) & ~filters.chat(FS_GROUP))
+async def nogcanimedlcmd(client, message):
+    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
+        
+    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+        try:
+            id = message.chat.id
+            N = message.chat.title
+            UN = message.chat.username
+            await new_gc_logger(client, id, N, UN)
+            await message.reply_photo(
+                photo=PVT_FS_PIC,
+                caption=PVT_FS_TXT,
+                reply_markup=BOT_DM_B
+            )
+        except Exception as e:
+            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+
+
+
+###############################################################################################################################################################################
+###############################################################################################################################################################################
+###############################################################################################################################################################################
 
 
 @Bot.on_message(get_cmd(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
@@ -200,31 +319,9 @@ async def pvt_many_anime_list(client, message):
 
 
 
-from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_PIC
-from database.inline import BOT_DM_B
-        
 
 
-@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request"]) & ~filters.chat(FS_GROUP))
-async def nogcanimedlcmd(client, message):
-    await message.reply_photo(photo=PVT_FS_PIC, caption=PVT_FS_TXT, reply_markup=BOT_DM_B)
-        
-    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
-        try:
-            id = message.chat.id
-            N = message.chat.title
-            UN = message.chat.username
-            await new_gc_logger(client, id, N, UN)
-            await message.reply_photo(
-                photo=PVT_FS_PIC,
-                caption=PVT_FS_TXT,
-                reply_markup=BOT_DM_B
-            )
-        except Exception as e:
-            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-
-@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]) & ~filters.private)
+@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
     await message.reply_photo(photo=O_PVT_FS_PIC, caption=O_PVT_FS_TXT, reply_markup=BOT_DM_B)
     if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
@@ -241,95 +338,3 @@ async def nosearchppvtsearchfs(client, message):
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-
-
-
-#########################################################################################################################################################
-#########################################################################################################################################################
-#########################################################################################################################################################
-
-@Bot.on_message(get_cmd(["download"]) & filters.chat(FS_GROUP))
-async def my_gc_anime_o(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
-        return
-    arg = args[1]
-    if arg.isdigit():
-        try:
-            anime_id = int(arg)
-        except (IndexError, ValueError):
-            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
-            return
-
-        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-            
-        message_text = f"""
-🇬🇧: <b><u>{E_title}</u></b>
-🇯🇵: <b><u>{J_title}</u></b>
-━━━━━━━━━━━━━━━━━━━━━━━━━
-ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
-ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
-ᴛʏᴘᴇ: <b>{Format}</b>
-ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
-ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
-
-"""
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-    
-        if message.reply_to_message:
-            try:
-                await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        if not message.reply_to_message:
-            try:
-                await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    else:
-        anime_name = " ".join(args[1:])
-        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
-
-        if message.reply_to_message:
-            try:
-                await message.reply_to_message.reply_photo(photo=message_photo, caption=message_text, reply_markup=message_button)
-            except Exception as e:
-                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        if not message.reply_to_message:
-            try:
-                await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
-            except Exception as e:
-                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    
-
-
-@Bot.on_message(get_cmd(["search", "anime"]) & filters.chat(FS_GROUP))
-async def my_gcsearch_anime(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
-        return
-    anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
-    try:
-        await message.reply_photo(
-            photo=message_photo,
-            caption=message_text,
-            reply_markup=message_button
-        )
-    except Exception as e:
-        await message.reply_text(
-            text=message_text,
-            reply_markup=message_button 
-        )
-        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    
