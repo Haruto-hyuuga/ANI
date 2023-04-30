@@ -20,28 +20,13 @@ USER_LOG_TXT = """
 🆔 <code>{}</code>  #id{}
 """
 async def Log_inl_but(id: str):
-    try:
-        LB = InlineKeyboardMarkup(
+    LB = InlineKeyboardMarkup(
+        [
             [
-                [
-                    InlineKeyboardButton("USER LINK", user_id=id)
-                ]
+                InlineKeyboardButton("USER LINK", user_id=id)
             ]
-        )   
-    except:
-        LB = InlineKeyboardMarkup(
-
-            [
-
-                [
-
-                    InlineKeyboardButton("USER LINK", url="https://t.me/c/1909557377/22")
-
-                ]
-
-            ]
-
-        )   
+        ]
+    )   
     return LB
 
 
@@ -125,8 +110,12 @@ async def start_command(client , message: Message):
             )
             if not await present_user(id):
                 await add_user(id)
-                LB = await Log_inl_but(id)
-                await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+                try:
+                    LB = await Log_inl_but(id)
+                    await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
+                except:
+                    await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id))
+                    pass 
             if not await present_user_stats(id):
                 await add_user_stats(id)
             return
@@ -152,7 +141,8 @@ async def not_joined(client: Client, message: Message):
             LB = await Log_inl_but(id)
             await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
         except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+            await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id))
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             pass
     update = message
     MC = await is_subscribed_SC(filter, client, update)
