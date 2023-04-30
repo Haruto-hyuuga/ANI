@@ -21,7 +21,7 @@ async def is_subscribed_SC(filter, client, update):
 
 async def F_SC_txt(MC):
     if MC == False:
-        C1T = "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB"
+        C1T
     else:
         C1T = "✅: <code>@ANIME_DOWNLOADS_SUB</code>"
     return C1T
