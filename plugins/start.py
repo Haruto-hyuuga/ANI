@@ -123,6 +123,7 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 
 #=====================================================================================##
 from req import fs_allc_start
+from config import FORCE_MSG
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
@@ -137,7 +138,7 @@ async def not_joined(client: Client, message: Message):
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             pass
 
-    buttons, FORCE_MSG = await fs_allc_start(filter, client, message)
+    buttons, FORCE_MSG = await fs_allc_start(filter, client, message, FORCE_MSG)
 
     try:
         buttons.append(
