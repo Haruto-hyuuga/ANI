@@ -19,13 +19,6 @@ async def is_subscribed_SC(filter, client, update):
     else:
         return True
 
-async def F_SC_txt(MC):
-    if MC == False:
-        C1T
-    else:
-        C1T = "✅: <code>@ANIME_DOWNLOADS_SUB</code>"
-    return C1T
-
 async def is_subscribed_DC(filter, client, update):
     user_id = update.from_user.id
     try:
@@ -37,13 +30,6 @@ async def is_subscribed_DC(filter, client, update):
         return False
     else:
         return True
-
-async def F_DC_txt(DC):
-    if DC == False:
-        C4T = "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_DUB"
-    else:
-        C4T = "✅: <code>@ANIME_DOWNLOADS_DUB</code>"
-    return C4T
 
 async def is_subscribed_BOT(filter, client, update):
     user_id = update.from_user.id
@@ -57,13 +43,6 @@ async def is_subscribed_BOT(filter, client, update):
     else:
         return True
 
-async def F_BC_txt(BC):
-    if BC == False:
-        C2T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeRobots"
-    else:
-        C2T = "✅: <code>@AnimeRobots</code>"
-    return C2T
-
 async def is_subscribed_GROUP(filter, client, update):
     user_id = update.from_user.id
     try:
@@ -75,13 +54,6 @@ async def is_subscribed_GROUP(filter, client, update):
         return False
     else:
         return True
-
-async def F_GC_txt(GC):
-    if GC == False:
-        C3T = "𝗝𝗢𝗜𝗡 ⚠️: @AnimeCommunityChat"
-    else:
-        C3T = "✅: <code>@AnimeCommunityChat</code>"
-    return C3T
 
 async def encode(string):
     string_bytes = string.encode("ascii")
