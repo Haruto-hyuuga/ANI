@@ -252,7 +252,7 @@ async def recommend_anime(client, message):
 ###############################################################################################################################################################################
 
 from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_VID
-from database.inline import BOT_DM_B
+from database.inline import BOT_DM_B, GO_BOTDM_B
 
         
 @Bot.on_message(get_cmd(["download", "anime", "search", "find", "request", "recommend"]) & ~filters.chat(FS_GROUP))
@@ -375,7 +375,7 @@ async def nosearchppvtsearchfs(client, message):
             await message.reply_photo(
                 photo=O_PVT_FS_PIC,
                 caption=O_PVT_FS_TXT,
-                reply_markup=BOT_DM_B
+                reply_markup=GO_BOTDM_B
             )
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
