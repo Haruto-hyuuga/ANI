@@ -16,16 +16,18 @@ async def anime_info(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
+        ErM = await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     arg = args[1]
     if arg.isdigit():
         try:
             anime_id = int(arg)
         except (IndexError, ValueError):
-            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            ErM = await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
             await asyncio.sleep(30)
+            await ErM.delete()
             return
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
@@ -43,36 +45,27 @@ async def anime_info(client, message):
 """
         new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
     
-        if message.reply_to_message:
-            try:
+        try:
+            if message.reply_to_message:
                 await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        if not message.reply_to_message:
-            try:
+            if not message.reply_to_message:
                 await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        except Exception as e:
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     else:
         anime_name = " ".join(args[1:])
         message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
 
-        if message.reply_to_message:
-            try:
+        try:
+            if message.reply_to_message:
                 await message.reply_to_message.reply_photo(photo=message_photo, caption=message_text, reply_markup=message_button)
-            except Exception as e:
-                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-                await asyncio.sleep(30)
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        if not message.reply_to_message:
-            try:
+            if not message.reply_to_message:
                 await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
-            except Exception as e:
-                await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
+        except Exception as e:
+                ErM = await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                 await asyncio.sleep(30)
+                await ErM.delete()
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     try:
         if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
@@ -91,8 +84,9 @@ async def search_anime(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        ErM = await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     anime_name = " ".join(args[1:])
     message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
@@ -131,16 +125,18 @@ async def my_gc_anime_o(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
+        ErM = await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     arg = args[1]
     if arg.isdigit():
         try:
             anime_id = int(arg)
         except (IndexError, ValueError):
-            await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            ErM = await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
             await asyncio.sleep(30)
+            await ErM.delete()
             return
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
@@ -158,17 +154,13 @@ async def my_gc_anime_o(client, message):
 """
         new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
     
-        if message.reply_to_message:
-            try:
+        try:
+            if message.reply_to_message:
                 await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg while if replying to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-        if not message.reply_to_message:
-            try:
+            if not message.reply_to_message:
                 await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            except Exception as e:
-                await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        except Exception as e:
+            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
     else:
         anime_name = " ".join(args[1:])
@@ -181,7 +173,6 @@ async def my_gc_anime_o(client, message):
                 await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
         except Exception as e:
             await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await asyncio.sleep(30)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     
 
@@ -190,8 +181,9 @@ async def my_gcsearch_anime(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
+        ErM = await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     anime_name = " ".join(args[1:])
     message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
@@ -293,14 +285,16 @@ async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        await message.reply_text("<b>PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        ErM = await message.reply_text("<b>PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     try:
         anime_id = int(args[1])
     except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
+        ErM = await message.reply_text(f"Index Error!   *_*\n Did you fuck up the number after command??")
         await asyncio.sleep(30)
+        await ErM.delete()
         return
     
     F_BOOL, first_message, message_text, cover_url, banner_url, title_img, trailer_url, site_url = await get_full_anime_info(anime_id)
