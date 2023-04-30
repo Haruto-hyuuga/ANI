@@ -386,7 +386,7 @@ async def pvtreportt(client, message):
         await client.send_message(chat_id=REQUEST_GC, text=f"👤{message.from_user.mention} ⚠️ #REPORT \n🆔:<code>{message.from_user.id}</code>\n💬: {text}", reply_to_message_id=ERR_TOPIC_ID)
         await message.reply_text("<b>REPORT SENT</b>\nThank-You Very Much💕")
          
-    else:
+    if not len(message.command) != 1 and not reply:
         await message.reply_text("Baka! reply to error message or describe issue after command \nyou can mention reason while replying to a message too.")
  
 
