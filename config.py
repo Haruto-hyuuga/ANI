@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 import random 
 
 # mainbot
-TG_BOT_TOKEN = "6116589740:AAEBgZppKy3k2HCQYsjKTLGjo9nmKuzhFvI"
+TG_BOT_TOKEN = "6116589740:AAEYvzwtIH1apOjFqFxQZHAe4u_D5nbq-Y8"
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
 BOTUSERNAME = "AnimeDL_Robot"
