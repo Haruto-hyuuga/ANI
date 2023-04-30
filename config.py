@@ -44,7 +44,7 @@ DUB_CHANNEL = -1001916486716
 Dub_C_url = "https://t.me/ANIME_DOWNLOADS_DUB"
 
 FS_BOT_CHANNEL = -1001867076149
-BOT_C_url = "https://t.me/AnimeRobots"
+BOT_C_url = "https://t.me/AnimeRobots/24"
 
 FS_GROUP = -1001525634215
 FS_GROUP_text = "Join Group"
