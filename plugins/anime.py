@@ -64,8 +64,6 @@ async def anime_info(client, message):
                 await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
         except Exception as e:
                 ErM = await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-                await asyncio.sleep(30)
-                await ErM.delete()
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     try:
         if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
