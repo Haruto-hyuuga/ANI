@@ -103,6 +103,14 @@ BATCH_DBC_B = InlineKeyboardMarkup(
     ]
 )
 
+GO_BOTDM_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("GO TO PRIVATE CHAT 💚", url=f"https://t.me/{BOTUSERNAME}")
+        ]
+    ]
+)
+
 BOT_DM_B = InlineKeyboardMarkup(
     [
         [
