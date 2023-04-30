@@ -137,7 +137,7 @@ def get_readable_time(seconds: int) -> str:
     return up_time
 
 
-FSCMD = ["start", "stats", "request", "search", "find", "download", "anime", "anime_info", "info"]
+FSCMD = ["start", "stats", "request", "search", "find", "download", "anime", "anime_info", "ainfo", "recommend", "auth", "list", "fullsearch"]
 AC_CMD = ["list", "fullsearch", "start", "stats", "request", "search", "find", "download", "anime", "anime_info", "ainfo", "anicast", "batch", "link", "adddub", "deldub", "delsub", "addsub", "channels", "subpost", "dubpost"]
 
 
