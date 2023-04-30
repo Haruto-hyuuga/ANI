@@ -798,10 +798,11 @@ def parse_com(com, key):
 
 
 from database.inline import AllFSCB
-from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
+from config import BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
 from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP
 
-async def fs_allc_start(filter, client, update):
+
+async def fs_allc_start(filter, client, update, FORCE_MSG):
     MC, DC, BC, GC = await asyncio.gather(
         is_subscribed_SC(filter, client, update),
         is_subscribed_DC(filter, client, update),
