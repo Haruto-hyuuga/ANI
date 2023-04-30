@@ -797,6 +797,49 @@ def parse_com(com, key):
 
 
 
+from database.inline import AllFSCB
+from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
+from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP
+
+
+F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
+
+
+async def fs_allc_start(filter, client, update):
+    MC = await is_subscribed_SC(filter, client, update)
+    DC = await is_subscribed_DC(filter, client, update)
+    BC = await is_subscribed_BOT(filter, client, update)
+    GC = await is_subscribed_GROUP(filter, client, update)
+    buttons = []
+    try:
+        if MC == False:
+            buttons.append(
+                [
+                    InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url = Sub_C_url),
+                ]
+            )
+        if DC == False:
+            buttons.append(
+                [
+                    InlineKeyboardButton("🎐 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🗺️", url = Dub_C_url),
+                ]
+            )
+        if BC == False:
+            buttons.append(
+                [
+                    InlineKeyboardButton("💠 𝗕𝗢𝗧 𝗨𝗣𝗗𝗔𝗧𝗘𝗦 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 💠", url = BOT_C_url)
+                ]
+            )
+        if GC == False:
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url = GROUP_url)
+                ]
+            )
+        except IndexError:
+            pass
+
 
 
 
