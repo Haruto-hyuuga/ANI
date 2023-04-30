@@ -9,7 +9,7 @@ from bot import Bot
 from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random, ERR_TOPIC_ID, REQUEST_GC, USER_LOG_CHANNEL
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC, FSCMD
 from database.database import add_user, del_user, full_userbase, present_user
-from database.inline import START_B, ERROR_BUTTON
+from database.inline import START_B, ERROR_BUTTON, AllFSCB
 from database.user_stats import add_user_stats, add_user_stats, update_DL, del_user_stats, present_user_stats
 
 USER_LOG_TXT = """
@@ -123,7 +123,7 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 
 #=====================================================================================##
 from req import fs_allc_start
-from config import FORCE_MSG
+from config import FORCE_MSG, ALLCC_MSG
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
@@ -163,23 +163,12 @@ async def not_joined(client: Client, message: Message):
 @Bot.on_message(filters.command('channels'))
 async def mychannelstats(client: Client, message: Message):
     id = message.from_user.id
-    update = message
-    MC = await is_subscribed_SC(filter, client, update)
-    DC = await is_subscribed_DC(filter, client, update)
-    BC = await is_subscribed_BOT(filter, client, update)
-    GC = await is_subscribed_GROUP(filter, client, update)
-    C1T = await F_SC_txt(MC)
-    C2T = await F_BC_txt(BC)
-    C3T = await F_GC_txt(GC)
-    C4T = await F_DC_txt(DC)
-    ALLCC_MSG = "𝙃𝙚𝙧𝙚'𝙨 𝙏𝙝𝙚 𝙇𝙞𝙨𝙩 𝙊𝙛 𝘼𝙡𝙡 𝘾𝙝𝙖𝙣𝙣𝙚𝙡𝙨:"
+    buttons, FORCE_MSG = await fs_allc_start(filter, client, message, ALLCC_MSG)
     try:
         FINAL_GIF = await Gif_Random()
-        await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+        await message.reply_animation(animation=FINAL_GIF, caption=FORCE_MSG,  reply_markup=AllFSCB)
     except Exception as e:
-        FINAL_GIF = await Gif_Random()
-        await message.reply_animation(animation=FINAL_GIF, caption = f"{ALLCC_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
-        await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
    
 @Bot.on_message(filters.command('anicast') & filters.user(ADMINS))
