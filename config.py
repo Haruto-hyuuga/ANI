@@ -130,6 +130,11 @@ ABOUT_TEXT = """
 /list or /fullsearch <b>𝙰𝙽𝙸𝙼𝙴 𝙽𝙰𝙼𝙴</b>
 <i>search for all anime that matches your search query</i>
 
+/recommend 
+<i>Use this command to get random anime recommendation, mention</i>
+<i>type</i><code>/recommend</code> sub or dub to filter results 
+
+
 /anime_info or /ainfo <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
 <i>Use this command to get detailed anime info trailer and many more</i>
 
