@@ -753,6 +753,22 @@ async def download_anime_buttons_db(anime_id, message_text, client, UID) -> None
     return new_message_text, buttons
         
         
+async def recommend_anime_button(anime_id: int) -> None:
+    buttons = []
+    if await present_sub_anime(anime_id):
+        try:
+            sblink = await get_sub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕", url = sblink)])
+        except Exception as e:
+            print(e)
+    if await present_dub_anime(anime_id):
+        try:
+            dblink = await get_dub_anime(anime_id)
+            buttons.append([InlineKeyboardButton("𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕", url = dblink)])
+        except Exception as e:
+            print(e)
+
+    return buttons
      
         
         
