@@ -33,10 +33,6 @@ async def Log_inl_but(id: str):
 @Bot.on_message(filters.command('start') & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def start_command(client , message: Message):
     id = message.from_user.id
-#    if not await present_user(id):
-#        await add_user(id)
-#        LB = await Log_inl_but(id)
-#        await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id), reply_markup=LB)
     text = message.text
     if len(text)>7:
         try:
@@ -93,12 +89,11 @@ async def start_command(client , message: Message):
                 await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
             except:
                 await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nWhile Sending Anime:-\nString= {base64_string} \n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-        return
         try:
             await update_DL(id)
         except Exception as e:
-            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+            await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️While Update_DL IN pvt start\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
+        return
     else:
         try:
   
@@ -118,16 +113,16 @@ async def start_command(client , message: Message):
                     pass 
             if not await present_user_stats(id):
                 await add_user_stats(id)
-            return
         except Exception as e:
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    
+        return
     
 #=====================================================================================##
 
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
+from req import fs_allc_start
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
@@ -142,7 +137,7 @@ async def not_joined(client: Client, message: Message):
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             pass
 
-    
+    buttons, FORCE_MSG = await fs_allc_start(filter, client, message)
 
     try:
         buttons.append(
@@ -155,18 +150,14 @@ async def not_joined(client: Client, message: Message):
     
     try:
         FINAL_GIF = await Gif_Random()
-        await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
+        await message.reply_animation(animation=FINAL_GIF, caption=FORCE_MSG, reply_markup = InlineKeyboardMarkup(buttons))
     except Exception as e:
-        FINAL_GIF = await Gif_Random()
-        await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG}\n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = AllFSCB)
+        await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact owner🛂", reply_markup=ERROR_BUTTON)
         await cleint.send_message(chat_id=REQUEST_GC, text=f"⚠️Start Force SUB CMD-PVT Error\nwhile sending final Msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-    try:
-        if not await present_user_stats(id):
-            await add_user_stats(id)
-    except:
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Couldn't add USER STATS\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-        
+    if not await present_user_stats(id):
+        await add_user_stats(id)
+    
 
 @Bot.on_message(filters.command('channels'))
 async def mychannelstats(client: Client, message: Message):
