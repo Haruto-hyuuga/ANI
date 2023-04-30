@@ -813,6 +813,7 @@ async def fs_allc_start(filter, client, update):
     buttons = []
     try:
         if MC == False:
+            FORCE_MSG += "𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB"
             buttons.append(
                 [
                     InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url = Sub_C_url),
@@ -831,14 +832,13 @@ async def fs_allc_start(filter, client, update):
                 ]
             )
         if GC == False:
-        try:
             buttons.append(
                 [
                     InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url = GROUP_url)
                 ]
             )
-        except IndexError:
-            pass
+    except:
+        pass
 
 
 
