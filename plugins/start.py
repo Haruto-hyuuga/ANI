@@ -128,9 +128,7 @@ async def start_command(client , message: Message):
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
-from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
-from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP, F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
-from database.inline import AllFSCB
+
 
 @Bot.on_message(filters.command('start') & filters.private)
 async def not_joined(client: Client, message: Message):
@@ -144,48 +142,9 @@ async def not_joined(client: Client, message: Message):
             await client.send_message(chat_id=USER_LOG_CHANNEL, text=USER_LOG_TXT.format(message.from_user.mention, message.from_user.username, id, id))
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             pass
-    update = message
-    MC = await is_subscribed_SC(filter, client, update)
-    DC = await is_subscribed_DC(filter, client, update)
-    BC = await is_subscribed_BOT(filter, client, update)
-    GC = await is_subscribed_GROUP(filter, client, update)
-    buttons = []
-    if MC == False:
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url = Sub_C_url),
-                ]
-            )
-        except IndexError:
-            pass
-    if DC == False:
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton("🎐 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🗺️", url = Dub_C_url),
-                ]
-            )
-        except IndexError:
-            pass
-    if BC == False:
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton("💠 𝗕𝗢𝗧 𝗨𝗣𝗗𝗔𝗧𝗘𝗦 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 💠", url = BOT_C_url)
-                ]
-            )
-        except IndexError:
-            pass
-    if GC == False:
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url = GROUP_url)
-                ]
-            )
-        except IndexError:
-            pass
+
+    
+
     try:
         buttons.append(
             [
@@ -194,10 +153,7 @@ async def not_joined(client: Client, message: Message):
         )
     except IndexError:
         pass
-    C1T = await F_SC_txt(MC)
-    C2T = await F_BC_txt(BC)
-    C3T = await F_GC_txt(GC)
-    C4T = await F_DC_txt(DC)
+    
     try:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption = f"{FORCE_MSG} \n\n{C1T}\n\n{C4T}\n\n{C2T}\n\n{C3T}", reply_markup = InlineKeyboardMarkup(buttons))
