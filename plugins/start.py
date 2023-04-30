@@ -122,10 +122,10 @@ async def start_command(client , message: Message):
 REPLY_ERROR = """<code>Use this command as a replay to any telegram message with out any spaces.</code>"""
 
 #=====================================================================================##
-from req import fs_allc_start
-from config import FORCE_MSG, ALLCC_MSG
+from req import get_cmd, fs_allc_start
 
-@Bot.on_message(filters.command('start') & filters.private)
+
+@Bot.on_message(get_cmd(FSCMD) & filters.private)
 async def not_joined(client: Client, message: Message):
     id = message.from_user.id
     if not await present_user(id):
@@ -138,7 +138,7 @@ async def not_joined(client: Client, message: Message):
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Start CMD-PVT Error\nwhile Adding User To DB\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             pass
 
-    buttons, FORCE_MSG = await fs_allc_start(filter, client, message, FORCE_MSG)
+    buttons, FORCE_MSG = await fs_allc_start(filter, client, message)
 
     try:
         buttons.append(
@@ -160,10 +160,10 @@ async def not_joined(client: Client, message: Message):
         await add_user_stats(id)
     
 
-@Bot.on_message(filters.command('channels'))
+@Bot.on_message(get_cmd('channels'))
 async def mychannelstats(client: Client, message: Message):
     id = message.from_user.id
-    buttons, FORCE_MSG = await fs_allc_start(filter, client, message, ALLCC_MSG)
+    buttons, FORCE_MSG = await fs_allc_start(filter, client, message)
     try:
         FINAL_GIF = await Gif_Random()
         await message.reply_animation(animation=FINAL_GIF, caption=FORCE_MSG,  reply_markup=AllFSCB)
@@ -171,7 +171,7 @@ async def mychannelstats(client: Client, message: Message):
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
    
-@Bot.on_message(filters.command('anicast') & filters.user(ADMINS))
+@Bot.on_message(get_cmd('anicast') & filters.user(ADMINS))
 async def send_text_pvt(client: Bot, message: Message):
     if message.reply_to_message:
         query = await full_userbase()
