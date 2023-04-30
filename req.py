@@ -1,6 +1,7 @@
 import httpx
 import random 
 import time
+import asyncio
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.inline import ERROR_BUTTON, ANIME_RESULT_B, NOani_BUTTON
 from database.anime_db import present_sub_anime, get_sub_anime, present_dub_anime, get_dub_anime
@@ -796,60 +797,46 @@ def parse_com(com, key):
 
 
 
-
 from database.inline import AllFSCB
 from config import FORCE_MSG, BOT_C_url, GROUP_url, Dub_C_url, Sub_C_url
 from helper_func import is_subscribed_SC, is_subscribed_DC, is_subscribed_BOT, is_subscribed_GROUP
 
-
-F_SC_txt, F_BC_txt, F_GC_txt, F_DC_txt
-
-
 async def fs_allc_start(filter, client, update):
-    MC = await is_subscribed_SC(filter, client, update)
-    DC = await is_subscribed_DC(filter, client, update)
-    BC = await is_subscribed_BOT(filter, client, update)
-    GC = await is_subscribed_GROUP(filter, client, update)
+    MC, DC, BC, GC = await asyncio.gather(
+        is_subscribed_SC(filter, client, update),
+        is_subscribed_DC(filter, client, update),
+        is_subscribed_BOT(filter, client, update),
+        is_subscribed_GROUP(filter, client, update),
+    )
     buttons = []
-    try:
-        if MC == False:
-            FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB\n"
-            buttons.append(
-                [
-                    InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url = Sub_C_url),
-                ]
-            )
-        if DC == False:
-            FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_DUB\n"
-            buttons.append(
-                [
-                    InlineKeyboardButton("🎐 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🗺️", url = Dub_C_url),
-                ]
-            )
-        if BC == False:
-            FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @AnimeRobots\n"
-            buttons.append(
-                [
-                    InlineKeyboardButton("💠 𝗕𝗢𝗧 𝗨𝗣𝗗𝗔𝗧𝗘𝗦 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 💠", url = BOT_C_url)
-                ]
-            )
-        if GC == False:
-            FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @AnimeCommunityChat\n"
-            buttons.append(
-                [
-                    InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url = GROUP_url)
-                ]
-            )
-        if MC == True:
-            FORCE_MSG += "\n✅: <code>@ANIME_DOWNLOADS_SUB</code>\n"
-        if DC == True:
-            FORCE_MSG += "\n✅: <code>@ANIME_DOWNLOADS_DUB</code>\n"
-        if BC == True:
-            FORCE_MSG += "\n✅: <code>@AnimeRobots</code>\n"
-        if GC == True:
-            FORCE_MSG += "\n✅: <code>@AnimeCommunityChat</code>\n"
-    except:
-        
+    FORCE_MSG = ""
+    if not MC:
+        FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_SUB\n"
+        buttons.append(
+            [InlineKeyboardButton("⛩️ 𝗝𝗮𝗽𝗮𝗻𝗲𝘀𝗲 𝗦𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🌸", url=Sub_C_url)]
+        )
+    if not DC:
+        FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @ANIME_DOWNLOADS_DUB\n"
+        buttons.append(
+            [InlineKeyboardButton("🎐 𝗘𝗻𝗴𝗹𝗶𝘀𝗵 𝗗𝗨𝗕 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 🗺️", url=Dub_C_url)]
+        )
+    if not BC:
+        FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @AnimeRobots\n"
+        buttons.append([InlineKeyboardButton("💠 𝗕𝗢𝗧 𝗨𝗣𝗗𝗔𝗧𝗘𝗦 𝗖𝗛𝗔𝗡𝗡𝗘𝗟 💠", url=BOT_C_url)])
+    if not GC:
+        FORCE_MSG += "\n𝗝𝗢𝗜𝗡 ⚠️: @AnimeCommunityChat\n"
+        buttons.append(
+            [InlineKeyboardButton("💬 𝗔𝗡𝗜𝗠𝗘 𝗚𝗥𝗢𝗨𝗣 𝗖𝗛𝗔𝗧 💬", url=GROUP_url)]
+        )
+    if MC:
+        FORCE_MSG += "\n✅: <code>@ANIME_DOWNLOADS_SUB</code>\n"
+    if DC:
+        FORCE_MSG += "\n✅: <code>@ANIME_DOWNLOADS_DUB</code>\n"
+    if BC:
+        FORCE_MSG += "\n✅: <code>@AnimeRobots</code>\n"
+    if GC:
+        FORCE_MSG += "\n✅: <code>@AnimeCommunityChat</code>\n"
+    return buttons, FORCE_MSG
 
 
 
