@@ -9,7 +9,7 @@ import asyncio
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
 from plugins.groupstuff import new_gc_logger
-
+from pyrogram.enums import ChatType
 
 @Bot.on_message(get_cmd(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
 async def anime_info(client, message):
@@ -66,7 +66,7 @@ async def anime_info(client, message):
                 ErM = await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
                 await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
     try:
-        if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+        if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
             id = message.chat.id
             N = message.chat.title
             UN = message.chat.username
@@ -101,7 +101,7 @@ async def search_anime(client, message):
         )
         await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
             
-    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+    if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
         try:
             id = message.chat.id
             N = message.chat.title
@@ -257,7 +257,7 @@ from database.inline import BOT_DM_B
         
 @Bot.on_message(get_cmd(["download", "anime", "search", "find", "request", "recommend"]) & ~filters.chat(FS_GROUP))
 async def nogcanimedlcmd(client, message):
-    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+    if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
         try:
             id = message.chat.id
             N = message.chat.title
@@ -366,7 +366,7 @@ async def pvt_many_anime_list(client, message):
 
 @Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
-    if message.chat.type in ["ChatType.SUPERGROUP", "ChatType.GROUP"]:
+    if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
         try:
             id = message.chat.id
             N = message.chat.title
