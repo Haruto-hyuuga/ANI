@@ -104,9 +104,6 @@ FORCE_MSG = """
 <b><u>Hey There fellow Anime Lover!</u></b>
 <b>To Use This Bot You Must Join My Channels and Group, Since This Is A Free Service But It Takes Heck Lot Of Work~</b>
 
-|• <i>Join Anime Channels To Get Links Of Series You'll Download.</i>
-|• <i>Join Bot Owner Channel To Get Updates On Bot Status.</i>
-|• <i>Join Group To Recommend Anime or Report Malfunction.</i>
 """
 
 START_MSG = """
@@ -154,7 +151,7 @@ OR
 |• <i>it will send request to add that anime</i>
 
 <u>𝗧𝗼 𝗿𝗲𝗽𝗼𝗿𝘁 𝗮𝗻𝘆 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 𝗯𝗼𝘁 𝗼𝗿 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗳𝗶𝗹𝗲𝘀</u>
-|• <i>Use Command:</i> <code>/report</code>
+|• <i>Use Command:</i> /report
 |• <i>Reply to bot message</i>
 |• <i>write error after command</i>
 """
