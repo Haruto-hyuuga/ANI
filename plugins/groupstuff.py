@@ -12,9 +12,9 @@ from req import get_cmd
 NCL_txt = """
 #NEW_GROUP  ⛩️🟥
 ━━━━━━━━━━━━━━━
-__Title:__ {}
-__Public URL:__ @{}
-__CHAT ID:__ `{}`
+Title: {}
+Public URL: @{}
+CHAT ID: <code>{}</code>
 {}
 """
 GROUP_TEXT = """
