@@ -205,11 +205,21 @@ async def my_gcsearch_anime(client, message):
             
     
 from database.anime_db import recom_ani_id, recom_SUB_id, recom_DUB_id
-
-
+from req import recommend_anime_button
+from pyrogram.types import InputMediaPhoto
+import asyncio
+Recom_gif
+Recom_waitTxT
 
 @Bot.on_message(get_cmd(["recommend"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def recommend_anime(client, message):
+    if message.reply_to_message:
+        RCMsg = await message.reply_to_message.reply_animation(Recom_gif, caption=Recom_waitTxT)
+        USERm = message.reply_to_message.from_user.mention
+    if not message.reply_to_message:
+        RCMsg = await message.reply_animation(Recom_gif, caption=Recom_waitTxT)
+        USERm = message.from_user.mention
+
     if len(message.command) > 1:
         first_word = message.text.split(None, 1)[1].split()[0]
         FWC = first_word.lower()
@@ -217,29 +227,27 @@ async def recommend_anime(client, message):
             AniId = await recom_SUB_id()
         if FWC == "dub":
             AniId = await recom_DUB_id()
-    else:
+    if len(message.command) <= 1:
         AniId = await recom_ani_id()
 
     anime_id = AniId
     E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-            
+    buttons = await recommend_anime_button(anime_id)
+
     message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
 🇯🇵: <b><u>{J_title}</u></b>
-━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
 ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
 ᴛʏᴘᴇ: <b>{Format}</b>
-ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
 ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
+ᴀɴɪᴍᴇ ʀᴇᴄᴏᴍᴍᴇɴᴅᴀᴛɪᴏɴ ꜰᴏʀ: {USERm}
 """
-    new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-    
     try:
-        if message.reply_to_message:
-            await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-        if not message.reply_to_message:
-            await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        await asyncio.sleep(5)
+        await client.edit_message_media(message.chat.id, RCMsg.id,  InputMediaPhoto(MSG_img))
+        await RCMsg.edit(text=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️RECOMMEND CMD\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
