@@ -208,16 +208,16 @@ from database.anime_db import recom_ani_id, recom_SUB_id, recom_DUB_id
 from req import recommend_anime_button
 from pyrogram.types import InputMediaPhoto
 import asyncio
-Recom_gif
-Recom_waitTxT
+Recom_vid = "https://telegra.ph/file/6e90fcea987231ed6ea3b.mp4"
+Recom_waitTxT = "✲ I'm searching for the perfect anime recommendations just for you! Please be patient while I look~"
 
 @Bot.on_message(get_cmd(["recommend"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def recommend_anime(client, message):
     if message.reply_to_message:
-        RCMsg = await message.reply_to_message.reply_animation(Recom_gif, caption=Recom_waitTxT)
+        RCMsg = await message.reply_to_message.reply_video(Recom_vid, caption=Recom_waitTxT)
         USERm = message.reply_to_message.from_user.mention
     if not message.reply_to_message:
-        RCMsg = await message.reply_animation(Recom_gif, caption=Recom_waitTxT)
+        RCMsg = await message.reply_video(Recom_vid, caption=Recom_waitTxT)
         USERm = message.from_user.mention
 
     if len(message.command) > 1:
@@ -245,7 +245,7 @@ async def recommend_anime(client, message):
 ᴀɴɪᴍᴇ ʀᴇᴄᴏᴍᴍᴇɴᴅᴀᴛɪᴏɴ ꜰᴏʀ: {USERm}
 """
     try:
-        await asyncio.sleep(5)
+        await asyncio.sleep(6)
         await client.edit_message_media(message.chat.id, RCMsg.id,  InputMediaPhoto(MSG_img))
         await RCMsg.edit(text=message_text, reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
