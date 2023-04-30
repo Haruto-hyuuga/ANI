@@ -46,7 +46,7 @@ Dub_C_url = "https://t.me/ANIME_DOWNLOADS_DUB"
 FS_BOT_CHANNEL = -1001867076149
 BOT_C_url = "https://t.me/AnimeRobots"
 
-FS_GROUP = -1001671956585
+FS_GROUP = -1001525634215
 FS_GROUP_text = "Join Group"
 GROUP_url = "https://t.me/AnimeCommunityChat"
 
@@ -87,8 +87,8 @@ async def R_Banner_Pic():
 
 PVT_FS_TXT = """
 ~It looks like you haven't started me in private yet...
-To use these commands, please start me in private first, nya~! 
-Don't worry, I won't bite!
+<i>To use these commands, please start me in private first, nya~! 
+Don't worry, I won't bite!</i>
 """
 PVT_FS_VID = "https://telegra.ph/file/a958958b6b4877daaee41.mp4"
 
