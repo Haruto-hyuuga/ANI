@@ -147,7 +147,7 @@ async def request_reply(client, message):
 decline_img = "https://telegra.ph/file/f622a97180154d69fff86.jpg"
 
 
-@Bot.on_message(get_cmd("reqno", "decline") & filters.user(ADMINS))
+@Bot.on_message(get_cmd(["reqno", "decline"]) & filters.user(ADMINS))
 async def request_decline(client, message):
     if message.reply_to_message:
         MSG = message.reply_to_message.text
