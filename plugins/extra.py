@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters, __version__
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL, BOT_C_url
+from config import ADMINS, OWNER, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL, BOT_C_url
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request, present_DUB_request, present_SUB_request
@@ -234,6 +234,49 @@ Dear {um},
 
 
 
+
+@Bot.on_message(filters.user(OWNER) & filters.command("add_admin"))
+async def add_admin_temp(client, message):
+    if message.reply_to_message:
+        user = message.reply_to_message.from_user
+
+    if len(message.command) != 1 and not message.reply_to_message:
+        try:
+            args = message.text.split()
+            arg = args[1]
+            user = await client.get_users(arg)
+        except Exception as e:
+            await message.reply(f"Can't get user\n\n{e}")
+            return
+
+    admin_id = user.id
+    if admin_id not in ADMINS:
+        ADMINS.append(admin_id)
+        await message.reply(f"Added {user.mention} as admin.")
+    else:
+        await message.reply(f"{user.mention} is already an admin.\n🆔: {user.id}")
+
+
+@Bot.on_message(filters.user(OWNER) & filters.command("remove_admin"))
+async def remove_admin_temp(client, message):
+    if message.reply_to_message:
+        user = message.reply_to_message.from_user
+
+    if len(message.command) != 1 and not message.reply_to_message:
+        try:
+            args = message.text.split()
+            arg = args[1]
+            user = await client.get_users(arg)
+        except Exception as e:
+            await message.reply(f"Can't get user\n\n{e}")
+            return
+
+    admin_id = user.id
+    if admin_id in ADMINS:
+        ADMINS.remove(admin_id)
+        await message.reply(f"Removed {user.mention} from admin list.")
+    else:
+        await message.reply(f"{user.mention} is not an admin.\n🆔: {user.id}")
 
 
 
