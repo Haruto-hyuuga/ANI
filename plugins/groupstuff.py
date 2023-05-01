@@ -76,8 +76,32 @@ async def welcomenewgc(client, message):
             await client.send_video(message.chat.id, video, caption=NEW_GROUP_TEXT.format(N), reply_markup=GC_START_B)
     
 
-
-
+Size_limit = 52428800
+ci_alert_pic = "https://telegra.ph/file/ebe07cdaaa00689e247fc.jpg"
+ci_alert_txt = """
+⚠️ {}<b> please refrain from sending anime episodes or any files directly in the group chat that may infringe on copyright.</b>
+Doing so could lead to copyright strike to group.
+👤: @{}  🆔: <code>{}</code> 
+"""
+@Bot.on_message(filters.document & filters.chat(FS_GROUP) & filters.video)
+async def delfinedocorvideo(client, message):
+    M = message.from_user.mention
+    I = message.from_user.id
+    U = message.from_user.username
+    if message.document:
+        if message.document.file_size >= Size_limit:
+            await message.delete()
+            await bot.send_photo(
+                photo=ci_alert_pic,
+                caption=ci_alert_txt(M, U, I)
+            )
+     if message.video:
+        if message.document.file_size >= Size_limit:
+            await message.delete()
+            await bot.send_photo(
+                photo=ci_alert_pic,
+                caption=ci_alert_txt(M, U, I)
+            )
 
 
 
