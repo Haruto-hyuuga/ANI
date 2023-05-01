@@ -257,7 +257,7 @@ async def add_admin_temp(client, message):
         await message.reply(f"{user.mention} is already an admin.\n🆔: {user.id}")
 
 
-@Bot.on_message(filters.user(OWNER) & filters.command("remove_admin"))
+@Bot.on_message(filters.user(OWNER) & filters.command("del_admin"))
 async def remove_admin_temp(client, message):
     if message.reply_to_message:
         user = message.reply_to_message.from_user
@@ -278,5 +278,15 @@ async def remove_admin_temp(client, message):
     else:
         await message.reply(f"{user.mention} is not an admin.\n🆔: {user.id}")
 
-
+@Bot.on_message(filters.user(ADMINS) & filters.command("list_admins"))
+async def list_admins_temp(client, message):
+    if len(ADMINS) > 0:
+        admin_list = []
+        for admin_id in ADMINS:
+            user = await client.get_users(admin_id)
+            admin_list.append(f"👤: {user.mention} 🆔: <code>{admin_id}</code>")
+        admins = "\n".join(admin_list)
+        await message.reply(f"The list of admins are:\n\n{admins}")
+    else:
+        await message.reply("There are no admins in the list.")
 
