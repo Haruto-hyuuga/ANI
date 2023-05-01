@@ -123,7 +123,7 @@ async def delete_dubreq_list(client, message):
         
 
     
-@Bot.on_message(get_cmd("reqply") & filters.user(ADMINS))
+@Bot.on_message(get_cmd("reply") & filters.user(ADMINS))
 async def request_reply(client, message):
     if message.reply_to_message:
         MSG = message.reply_to_message
