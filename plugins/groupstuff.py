@@ -82,7 +82,7 @@ async def welcomenewgc(client, message):
 
 
 
-@Bot.on_message(get_cmd('gcbroadcast') & filters.user(ADMINS))
+@Bot.on_message(get_cmd('anicastgc') & filters.user(ADMINS))
 async def gcbroadcastmsg(client, message):
     if message.reply_to_message:
         query = await full_chatbase()
