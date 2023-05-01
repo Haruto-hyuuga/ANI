@@ -6,31 +6,40 @@ from helper_func import encode, get_message_id
 from database.inline import BATCH_DBC_B
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('batch'))
+async@Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('batch'))
 async def batch(client: Client, message: Message):
     if message.from_user.is_bot:
-        return 
+        return
+    
+    async def cancel():
+        await message.reply_text('🚫 Batch forwarding cancelled.', quote=True)
+        raise CancelHandler()
+
+    # Add a command handler for /cancel
+    Bot.register_cancel_handler(cancel)
+
     while True:
         try:
-            first_message = await client.ask(text = "Forward  <b>FIRST MESSAGE</b> or Send Post Link from DB Channel", reply_markup=BATCH_DBC_B, chat_id = message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)), timeout=60)
+            first_message = await client.ask(text="Forward <b>FIRST MESSAGE</b> or Send Post Link from DB Channel\n\nTo Stop Use: /cancel", reply_markup=BATCH_DBC_B, chat_id=message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)), timeout=60)
         except:
             return
         f_msg_id = await get_message_id(client, first_message)
         if f_msg_id:
             break
         else:
-            await first_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote = True)
+            await first_message.reply("❌ Error\nNOT FROM DB CHANNEL\n\nTo Stop Use: /cancel", quote=True)
             continue
 
     while True:
         try:
-            second_message = await client.ask(text = "Forward  <b>LAST MESSAGE</b> or Send Post link from DB Channel", reply_markup=BATCH_DBC_B, chat_id = message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)), timeout=60)
+            second_message = await client.ask(text="Forward <b>LAST MESSAGE</b> or Send Post link from DB Channel\n\nTo Stop Use: /cancel", reply_markup=BATCH_DBC_B, chat_id=message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)), timeout=60)
         except:
             return
         s_msg_id = await get_message_id(client, second_message)
         if s_msg_id:
             break
         else:
-            await second_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote = True)
+            await second_message.reply("❌ Error\nNOT FROM DB CHANNEL\n\nTo Stop Use: /cancel", quote=True)
             continue
 
 
