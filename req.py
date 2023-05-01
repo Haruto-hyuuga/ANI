@@ -926,7 +926,7 @@ async def get_anime_ids_list(anime_name: str):
 
         message_text += f"<b><u>{i+1}</u>{status_emoji}</b>: <b>{title}</b>\n<i>➥<code> {anime_id}</code>\n\n"
         
-    return message_text, message_button, message_photo
+    return message_text
 
         
         
