@@ -1,6 +1,6 @@
 from bot import Bot
 from pyrogram import Client, filters, __version__
-from pyrogram.types import Message
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
@@ -169,7 +169,54 @@ async def request_decline(client, message):
         await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
         
 
+@Bot.on_message(get_cmd(["reqyes", "accept"]))
+async def request_accept(client, message):
+    if message.reply_to_message:
+        MSG = message.reply_to_message.text
+        try:
+            user = await client.get_users(arg)
+            um = user.mention
+            un = user.username
+            UID = user.id
+        except Exception as e:
+            await message.reply(f"Error While Getting User\n\n{e}")
+            return 
+        if len(args) < 2:
+            await message.reply_text("Mention Anime Id")
+            return
+        arg = args[1]
+        if arg.isdigit():
+            try:
+                anime_id = int(arg)
+            except (IndexError, ValueError):
+                ErM = await message.reply_text(f"{message.from_user.mention}-san Did you fuck Anime Id After Command\nProvide A valid Anime Id")
+                return
 
+        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
+        buttons = await recommend_anime_button(anime_id)
+        try:
+            buttons.append(
+                [
+                    InlineKeyboardButton(text = '♻️ 𝘾𝙇𝙄𝘾𝙆 𝙏𝙊 𝙍𝙀-𝙊𝙋𝙀𝙉 𝙎𝘼𝙈𝙀 𝘼𝙉𝙄𝙈𝙀 𝙇𝙄𝙉𝙆 ♻️', url = f"https://t.me/{client.username}?start={message.command[1]}")
+                ]
+            )
+        except IndexError:
+            pass        
+        message_text = f"""
+Dear {um},
+<b>Your Request For Anime:</b> 
+🇬🇧:{E_title} 
+🇯🇵:{J_title}
+ᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}
+ᴛʏᴘᴇ: {Format}
+ɢᴇɴʀᴇꜱ:{Igenres}
+<b>has been completed, Thanks For Using Our Bot Don't Forget To Give Review 🌟.</b>
+"""
+        
+        try:
+            await client.send_photo(UID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+    except Exception as e:
+        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️RECOMMEND CMD\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
 
