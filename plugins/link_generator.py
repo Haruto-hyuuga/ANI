@@ -7,6 +7,8 @@ from database.inline import BATCH_DBC_B
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('batch'))
 async def batch(client: Client, message: Message):
+    if message.from_user.is_bot:
+        return 
     while True:
         try:
             first_message = await client.ask(text = "Forward  <b>FIRST MESSAGE</b> or Send Post Link from DB Channel", reply_markup=BATCH_DBC_B, chat_id = message.from_user.id, filters=(filters.forwarded | (filters.text & ~filters.forwarded)), timeout=60)
