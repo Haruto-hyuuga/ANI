@@ -91,14 +91,14 @@ async def delfinedocorvideo(client, message):
     if message.document:
         if message.document.file_size >= Size_limit:
             await message.delete()
-            await bot.send_photo(
+            await client.send_photo(
                 photo=ci_alert_pic,
                 caption=ci_alert_txt(user_mention, username, user_id)
             )
     if message.video:
         if message.video.file_size >= Size_limit:
             await message.delete()
-            await bot.send_photo(
+            await client.send_photo(
                 photo=ci_alert_pic,
                 caption=ci_alert_txt(user_mention, username, user_id)
             )
