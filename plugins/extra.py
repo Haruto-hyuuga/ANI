@@ -168,21 +168,23 @@ async def request_decline(client, message):
     else:
         await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
         
+from req import recommend_anime_button, channel_post_anime_info
 
 @Bot.on_message(get_cmd(["reqyes", "accept"]))
 async def request_accept(client, message):
     if message.reply_to_message:
         MSG = message.reply_to_message.text
         try:
-            user = await client.get_users(arg)
+            user = await client.get_users(MSG)
             um = user.mention
             un = user.username
             UID = user.id
         except Exception as e:
             await message.reply(f"Error While Getting User\n\n{e}")
             return 
+        args = message.text.split()
         if len(args) < 2:
-            await message.reply_text("Mention Anime Id")
+            await message.reply_text("Mention Anime Id after command")
             return
         arg = args[1]
         if arg.isdigit():
