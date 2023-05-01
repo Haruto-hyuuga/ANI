@@ -6,7 +6,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random, ERR_TOPIC_ID, REQUEST_GC, USER_LOG_CHANNEL
+from config import ADMINS, OWNER, START_MSG, PROTECT_CONTENT, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, Vid_Random, Gif_Random, ERR_TOPIC_ID, REQUEST_GC, USER_LOG_CHANNEL
 from helper_func import encode, decode, get_messages, sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC, FSCMD
 from database.database import add_user, del_user, full_userbase, present_user
 from database.inline import START_B, ERROR_BUTTON, AllFSCB
@@ -171,7 +171,7 @@ async def mychannelstats(client: Client, message: Message):
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
    
-@Bot.on_message(get_cmd('anicastpvt') & filters.user(ADMINS))
+@Bot.on_message(get_cmd('anicastpvt') & filters.user(OWNER))
 async def send_text_pvt(client: Bot, message: Message):
     if message.reply_to_message:
         query = await full_userbase()
