@@ -219,7 +219,7 @@ Dear {um},
             await client.send_photo(UID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons)) 
         except Exception as e:
-            await message.reply(f"While Sending Message\n\n{e})
+            await message.reply(f"While Sending Message\n\n{e}")
         try:
             if await present_DUB_request():
                 await del_DUB_request(anime_id)
@@ -228,7 +228,7 @@ Dear {um},
                 await del_SUB_request(anime)
                 await message.reply_text("🗑️ Deleted Sub Request")
         except Exception as e:
-            await message.reply(f"While Deleting Anime Id from Request Database\n\n{e})
+            await message.reply(f"While Deleting Anime Id from Request Database\n\n{e}")
 
 
 
