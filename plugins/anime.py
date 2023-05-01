@@ -25,7 +25,7 @@ async def anime_info(client, message):
         try:
             anime_id = int(arg)
         except (IndexError, ValueError):
-            ErM = await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            ErM = await message.reply_text(f"{message.from_user.mention}-san Did you fuck Anime Id After Command\nProvide A valid Anime Id! Or Name")
             await asyncio.sleep(30)
             await ErM.delete()
             return
@@ -132,7 +132,7 @@ async def my_gc_anime_o(client, message):
         try:
             anime_id = int(arg)
         except (IndexError, ValueError):
-            ErM = await message.reply_text(f"{message.from_user.mention}-san Please Don't Did you fuck With Anime Id.\nProvide A valid Anime Id")
+            ErM = await message.reply_text(f"{message.from_user.mention}-san Did you fuck Anime Id after Command\nProvide A valid Anime Id or Name")
             await asyncio.sleep(30)
             await ErM.delete()
             return
@@ -283,7 +283,7 @@ async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
     if len(args) < 2:
-        ErM = await message.reply_text("<b>PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
+        ErM = await message.reply_text("<b>PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /list or /fullsearch to get anime id")
         await asyncio.sleep(30)
         await ErM.delete()
         return
