@@ -4,7 +4,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL, BOT_C_url
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
-from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request
+from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request, present_DUB_request, present_SUB_request
 from req import search_user_name, search_user_id, get_cmd
 
 GC_LOG_TXT = """
@@ -216,12 +216,19 @@ Dear {um},
 """
         
         try:
-            await del_DUB_request(anime_id)
-            await message.reply_text("🗑️✅")
             await client.send_photo(UID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons)) 
         except Exception as e:
             await message.reply(f"While Sending Message\n\n{e})
+        try:
+            if await present_DUB_request():
+                await del_DUB_request(anime_id)
+                await message.reply_text("🗑️ Deleted Dub Request")
+            if await present_SUB_request():
+                await del_SUB_request(anime)
+                await message.reply_text("🗑️ Deleted Sub Request")
+        except Exception as e:
+            await message.reply(f"While Deleting Anime Id from Request Database\n\n{e})
 
 
 
