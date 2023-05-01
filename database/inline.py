@@ -161,6 +161,15 @@ async def user_close(UID: int) -> InlineKeyboardMarkup:
     )
     return USER_CLOSE
 
+CLOSE_BUTTON = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data="close"),
+        ]
+    ]
+)
+
+
 NOani_BUTTON = InlineKeyboardMarkup(
     [
         [
