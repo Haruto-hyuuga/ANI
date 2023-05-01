@@ -170,7 +170,7 @@ async def request_decline(client, message):
         
 from req import recommend_anime_button, channel_post_anime_info
 
-@Bot.on_message(get_cmd(["reqyes", "accept"]))
+@Bot.on_message(get_cmd(["reqyes", "accept"]) & filters.user(ADMINS))
 async def request_accept(client, message):
     if message.reply_to_message:
         MSG = message.reply_to_message.text
