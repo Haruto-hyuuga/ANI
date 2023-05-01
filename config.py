@@ -164,13 +164,13 @@ ALL_CHANNEL_TEXT = """
 ⛩️𝑪𝒉𝒂𝒏𝒏𝒆𝒍 𝟏: @ANIME_DOWNLOADS_SUB
 ᴀᴜᴅɪᴏ: <b>Japanese 🇯🇵</b>
 ꜱᴜʙᴛɪᴛʟᴇꜱ: <b>English</b>
-ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>480p | 720p | 1080p</b>
+ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>720p | 1080p</b>
 
 
 🗺️𝑪𝒉𝒂𝒏𝒏𝒆𝒍 𝟐: @ANIME_DOWNLOADS_DUB 
-ᴀᴜᴅɪᴏ: <b>Japanese + English</b> 🇯🇵🇬🇧
+ᴀᴜᴅɪᴏ: <b>English</b> 🇬🇧
 ꜱᴜʙᴛɪᴛʟᴇꜱ: <b>English + Sign&Songs</b>
-ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>480p | 720p | 1080p</b>
+ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>720p | 1080p</b>
 """
 
 CREDIT_TEXT = """
