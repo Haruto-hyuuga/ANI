@@ -53,10 +53,6 @@ async def fchannelSUBpost(client, message):
         try:
             M = await message.reply_photo(photo=MSG_img, caption=POST_CAPTION)
             await M.reply_text("Confirm Sending Post <b>To SUB Channel: @ANIME_DOWNLOADS_SUB</b>", reply_markup=CONFIRM_POST)
-#            banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
-#            A = "Japanese"
-#            S = "English"
-#            await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
             await message.reply_text(e)
             await client.send_message(chat_id=REQUEST_GC, text=f"⚠️SUB CHANNEL POST\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
@@ -65,11 +61,8 @@ async def fchannelSUBpost(client, message):
         A = "Japanese"
         S = "English"
         try:
-            
-            
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-    #        await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
             
 
@@ -146,10 +139,7 @@ async def fchannelDuBpost(client, message):
 
             await client.send_photo(message.chat.id, photo=banner_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP) 
         except Exception as e:
-    #        await message.reply_text(f"An Error Occurred⚠️\n{e}\n\n⌛ Sending Another Image")
             await client.send_photo(message.chat.id, photo=cover_pic, caption=msg_caption.format(A, S), reply_markup=CONFIRM_DBBP)
-            
-
     else:
         MSG_img = f"https://img.anili.st/media/{anime_id}" or "https://telegra.ph/file/54cc2b780cb7a4f25c5dd.jpg"
         POST_SAME = f"POST ALREDY EXIST IN DUB\nConfirm By Searhing <code>Anime{anime_id}</code> IN ANI-ADD-LOG\nAlso Check Post Link"
