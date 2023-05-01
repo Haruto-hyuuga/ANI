@@ -221,10 +221,10 @@ Dear {um},
         except Exception as e:
             await message.reply(f"While Sending Message\n\n{e}")
         try:
-            if await present_DUB_request():
+            if await present_DUB_request(anime_id):
                 await del_DUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Dub Request")
-            if await present_SUB_request():
+            if await present_SUB_request(anime_id):
                 await del_SUB_request(anime)
                 await message.reply_text("🗑️ Deleted Sub Request")
         except Exception as e:
