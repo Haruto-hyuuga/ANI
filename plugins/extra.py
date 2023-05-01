@@ -229,10 +229,8 @@ Dear {um},
                 await message.reply_text("🗑️ Deleted Sub Request")
         except Exception as e:
             await message.reply(f"While Deleting Anime Id from Request Database\n\n{e}")
-
-
-
-
+    else:
+        await message.reply("Reply to User or User Id, of a person you want to send\n\n And Anime Id after command")
 
 
 @Bot.on_message(filters.user(OWNER) & filters.command("add_admin"))
@@ -248,7 +246,6 @@ async def add_admin_temp(client, message):
         except Exception as e:
             await message.reply(f"Can't get user\n\n{e}")
             return
-
     admin_id = user.id
     if admin_id not in ADMINS:
         ADMINS.append(admin_id)
@@ -261,7 +258,6 @@ async def add_admin_temp(client, message):
 async def remove_admin_temp(client, message):
     if message.reply_to_message:
         user = message.reply_to_message.from_user
-
     if len(message.command) != 1 and not message.reply_to_message:
         try:
             args = message.text.split()
@@ -280,13 +276,14 @@ async def remove_admin_temp(client, message):
 
 @Bot.on_message(filters.user(ADMINS) & filters.command("list_admins"))
 async def list_admins_temp(client, message):
+    WMA = await message.reply("⚡")
     if len(ADMINS) > 0:
         admin_list = []
         for admin_id in ADMINS:
             user = await client.get_users(admin_id)
-            admin_list.append(f"👤: {user.mention} 🆔: <code>{admin_id}</code>")
-        admins = "\n".join(admin_list)
-        await message.reply(f"The list of admins are:\n\n{admins}")
+            admin_list.append(f"👤: {user.mention} \n🆔: <code>{admin_id}</code>")
+        admins = "\n\n".join(admin_list)
+        await WMA.edit(f"<b>LIST OF ADMINS IN BOT:</b>\n\n{admins}")
     else:
         await message.reply("There are no admins in the list.")
 
