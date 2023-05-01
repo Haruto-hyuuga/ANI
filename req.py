@@ -869,7 +869,64 @@ async def fs_allc_start(filter, client, update, ):
     return buttons, FORCE_MSG
 
 
+async def get_anime_ids_list(anime_name: str):
+    query = '''
+        query ($search: String) {
+            Page {
+                media(search: $search, type: ANIME) {
+                    id
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+                    status
+                    bannerImage
+                }
+            }
+        }
+    '''
+    variables = {"search": anime_name}
+    url = "https://graphql.anilist.co"
+    response = httpx.post(url, json={"query": query, "variables": variables})
 
+   
+    if response.status_code != 200:
+        message_text = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
+        return message_text
+
+    
+    data = response.json()["data"]
+    anime_list = data["Page"]["media"]
+    if not anime_list:
+        message_text = f"<b>NO ANIME FOUND FOR PROVIDED QUERY </b>'{anime_name}'\n\nTry Searching More Accurate Anime Title or Search On Our Channels"
+        return message_text
+
+
+    message_text = f"<u>𝙏𝙤𝙥 𝙨𝙚𝙖𝙧𝙘𝙝 𝙧𝙚𝙨𝙪𝙡𝙩𝙨 𝙛𝙤𝙧 '{anime_name}'</u>:\n\n"
+    for i, anime in enumerate(anime_list[:15]):
+        title = anime["title"]["english"] or anime["title"]["romaji"]
+        anime_id = anime["id"]
+        status = anime["status"] or "🏷️"
+
+        if status == "FINISHED":
+            status_emoji = "🖥️"
+        elif status == "RELEASING":
+            status_emoji = "🆕"
+        elif status == "NOT_YET_RELEASED":
+            status_emoji = "🔜"
+        elif status == "CANCELLED":
+            status_emoji = "❌"
+        elif status == "HIATUS":
+            status_emoji = "🛑"
+        elif status == "UPCOMING":
+            status_emoji = "🎞️"
+        else:
+            status_emoji = "🏷️"
+
+        message_text += f"<b><u>{i+1}</u>{status_emoji}</b>: <b>{title}</b>\n<i>➥<code> {anime_id}</code>\n\n"
+        
+    return message_text, message_button, message_photo
 
         
         
