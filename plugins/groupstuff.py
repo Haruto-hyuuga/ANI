@@ -3,7 +3,7 @@ from pyrogram import Client, filters, errors
 from pyrogram.types import Message
 
 import asyncio
-from config import ADMINS, BOT_ID, REQUEST_GC, ERR_TOPIC_ID, Vid_Random, OWNER
+from config import ADMINS, BOT_ID, REQUEST_GC, ERR_TOPIC_ID, Vid_Random, OWNER, FS_GROUP
 from config import USER_LOG_CHANNEL as LOGG
 from database.database import present_chat, add_chat, full_chatbase, del_chat
 from pyrogram.errors import FloodWait, Unauthorized, ChatWriteForbidden, UserNotParticipant
