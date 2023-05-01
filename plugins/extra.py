@@ -88,7 +88,7 @@ async def pending_req_list(client, message):
     TSR = len(Squery)
     msg = f"Total SUB Requests: {TSR}\n〰️〰️〰️〰️⌛〰️〰️〰️〰️\n\n"
     for i, user in enumerate(Squery):
-        msg += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
+        msg += f"{i+1}> ℹ️: <code>/anime {user}</code>  🗑️: <code>/delsreq {user}</code>\n"
     await message.reply_text(msg)
 
 
@@ -96,7 +96,7 @@ async def pending_req_list(client, message):
     TDR = len(Dquery)
     msg2 = f"Total DUB Requests: {TDR}\n〰️〰️〰️〰️⌛〰️〰️〰️〰️\n\n"
     for i, user in enumerate(Dquery):
-        msg2 += f"{i+1}> ℹ️: <code>/info {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
+        msg2 += f"{i+1}> ℹ️: <code>/anime {user}</code>  🗑️: <code>/deldreq {user}</code>\n"
     await message.reply_text(msg2)
 
 
