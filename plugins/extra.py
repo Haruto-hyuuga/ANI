@@ -2,7 +2,7 @@ from bot import Bot
 from pyrogram import Client, filters, __version__
 from pyrogram.types import Message
 from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL
-from database.inline import AllFSCB
+from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request
 from req import search_user_name, search_user_id, get_cmd
@@ -137,6 +137,30 @@ async def request_reply(client, message):
                 UID = user.id
                 await MSG.copy(UID)
                 await message.reply_to_message.reply_text(f"Successfully Sent✅\n\n👤: {mem}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
+            except Exception as e:
+                await message.reply(e)
+        else:
+            await message.reply("Mention user id or username after command")
+    else:
+        await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
+        
+decline_img = "https://telegra.ph/file/f622a97180154d69fff86.jpg"
+
+
+@Bot.on_message(get_cmd("reqno", "decline") & filters.user(ADMINS))
+async def request_decline(client, message):
+    if message.reply_to_message:
+        MSG = message.reply_to_message.text
+        if len(message.command) != 1:
+            args = message.text.split()
+            try:
+                arg = args[1]
+                user = await client.get_users(arg)
+                mrm = user.mention
+                uru = user.username
+                UID = user.id
+                await client.send_photo(UID, photo=decline_img, caption=MSG, reply_markup=CLOSE_BUTTON)
+                await message.reply_photo(photo=decline_img, caption=f"{MSG}\n\nSuccessfully Sent✅\n\n👤: {mem}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
             except Exception as e:
                 await message.reply(e)
         else:
