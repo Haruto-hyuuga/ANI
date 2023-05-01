@@ -123,6 +123,27 @@ async def delete_dubreq_list(client, message):
         
 
     
+@Bot.on_message(get_cmd("reqply") & filters.user(ADMINS))
+async def request_reply(client, message):
+    if message.reply_to_message:
+        MSG = message.reply_to_message
+        if len(message.command) != 1:
+            args = message.text.split()
+            try:
+                arg = args[1]
+                user = await client.get_users(arg)
+                mrm = user.mention
+                uru = user.username
+                UID = user.id
+                await MSG.copy(UID)
+                await message.reply_to_message.reply_text(f"Successfully Sent✅\n\n👤: {mem}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
+            except Exception as e:
+                await message.reply(e)
+        else:
+            await message.reply("Mention user id or username after command")
+    else:
+        await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
+        
 
 
 
