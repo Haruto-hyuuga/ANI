@@ -1,7 +1,7 @@
 from bot import Bot
 from pyrogram import Client, filters, __version__
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL
+from config import ADMINS, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG_CHANNEL, BOT_C_url
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request
@@ -136,7 +136,7 @@ async def request_reply(client, message):
                 uru = user.username
                 UID = user.id
                 await MSG.copy(UID)
-                await message.reply_to_message.reply_text(f"Successfully Sent✅\n\n👤: {mem}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
+                await message.reply_to_message.reply_text(f"Successfully Sent✅\n\n👤: {mrm}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
             except Exception as e:
                 await message.reply(e)
         else:
@@ -160,7 +160,7 @@ async def request_decline(client, message):
                 uru = user.username
                 UID = user.id
                 await client.send_photo(UID, photo=decline_img, caption=MSG, reply_markup=CLOSE_BUTTON)
-                await message.reply_photo(photo=decline_img, caption=f"{MSG}\n\nSuccessfully Sent✅\n\n👤: {mem}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
+                await message.reply_photo(photo=decline_img, caption=f"{MSG}\n\nSuccessfully Sent✅\n\n👤: {mrm}\n🆔: <code>{UID}</code>\n🔗: @{uru}")
             except Exception as e:
                 await message.reply(e)
         else:
@@ -197,7 +197,7 @@ async def request_accept(client, message):
         try:
             buttons.append(
                 [
-                    InlineKeyboardButton(text = '♻️ 𝘾𝙇𝙄𝘾𝙆 𝙏𝙊 𝙍𝙀-𝙊𝙋𝙀𝙉 𝙎𝘼𝙈𝙀 𝘼𝙉𝙄𝙈𝙀 𝙇𝙄𝙉𝙆 ♻️', url = f"https://t.me/{client.username}?start={message.command[1]}")
+                    InlineKeyboardButton(text = '🌟 GIVE YOUR REVIEW ABOUT BOT ❓', url=BOT_C_url)
                 ]
             )
         except IndexError:
@@ -214,10 +214,12 @@ Dear {um},
 """
         
         try:
+            await del_DUB_request(anime_id)
+            await message.reply_text("🗑️✅")
             await client.send_photo(UID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-    except Exception as e:
-        await client.send_message(chat_id=REQUEST_GC, text=f"⚠️RECOMMEND CMD\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
+            await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons)) 
+        except Exception as e:
+            await message.reply(f"While Sending Message\n\n{e})
 
 
 
