@@ -171,7 +171,7 @@ async def mychannelstats(client: Client, message: Message):
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️ channels CMD-PVT Error\n\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
    
-@Bot.on_message(get_cmd('anicast') & filters.user(ADMINS))
+@Bot.on_message(get_cmd('anicastpvt') & filters.user(ADMINS))
 async def send_text_pvt(client: Bot, message: Message):
     if message.reply_to_message:
         query = await full_userbase()
