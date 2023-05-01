@@ -83,25 +83,26 @@ ci_alert_txt = """
 Doing so could lead to copyright strike to group.
 👤: @{}  🆔: <code>{}</code> 
 """
-@Bot.on_message(filters.document & filters.chat(FS_GROUP) & filters.video)
+@Bot.on_message(filters.document | filters.video & filters.chat(FS_GROUP))
 async def delfinedocorvideo(client, message):
-    M = message.from_user.mention
-    I = message.from_user.id
-    U = message.from_user.username
+    user_mention = message.from_user.mention
+    user_id = message.from_user.id
+    username = message.from_user.username
     if message.document:
         if message.document.file_size >= Size_limit:
             await message.delete()
             await bot.send_photo(
                 photo=ci_alert_pic,
-                caption=ci_alert_txt(M, U, I)
+                caption=ci_alert_txt(user_mention, username, user_id)
             )
-     if message.video:
-        if message.document.file_size >= Size_limit:
+    if message.video:
+        if message.video.file_size >= Size_limit:
             await message.delete()
             await bot.send_photo(
                 photo=ci_alert_pic,
-                caption=ci_alert_txt(M, U, I)
+                caption=ci_alert_txt(user_mention, username, user_id)
             )
+
 
 
 
