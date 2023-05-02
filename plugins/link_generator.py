@@ -19,7 +19,7 @@ async def batch(client: Client, message: Message):
         if f_msg_id:
             break
         else:
-            await first_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote=True)
+#            await first_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote=True)
             continue
 
     while True:
@@ -31,7 +31,7 @@ async def batch(client: Client, message: Message):
         if s_msg_id:
             break
         else:
-            await second_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote=True)
+#            await second_message.reply("❌ Error\nNOT FROM DB CHANNEL", quote=True)
             continue
 
 
