@@ -85,6 +85,8 @@ Doing so could lead to copyright strike to group.
 """
 @Bot.on_message(filters.document | filters.video & filters.chat(FS_GROUP))
 async def delfinedocorvideo(client, message):
+    if not message.chat.id == FS_GROUP:
+        return
     user_mention = message.from_user.mention
     user_id = message.from_user.id
     username = message.from_user.username
