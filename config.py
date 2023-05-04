@@ -108,8 +108,9 @@ FORCE_MSG = """
 
 START_MSG = """
 Welcome {} ♡!
+<b>Let's embark on an exciting journey together and discover all the amazing stories and characters anime has to offer!</b>
 
-<b>Use Buttons Below To Explore All My Features And Commands And  Thier Usage.</b>
+<i>Use buttons below to explore all my features and commands and  thier usage.</i>
 """
 
 
