@@ -6,12 +6,12 @@ from config import BOTUSERNAME, OWNER
 START_B = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦", callback_data="About_Bot"),
-            InlineKeyboardButton("𝗖𝗛𝗔𝗡𝗡𝗘𝗟𝘀", callback_data="DL_Channels")
+            InlineKeyboardButton("𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦 🔮", callback_data="About_Bot"),
+            InlineKeyboardButton("𝗖𝗛𝗔𝗡𝗡𝗘𝗟𝘀 🌐", callback_data="DL_Channels")
         ],
         [
-            InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘", callback_data="A_requests"),
-            InlineKeyboardButton("𝗖𝗥𝗘𝗗𝗜𝗧𝘀", callback_data="Credits_a")
+            InlineKeyboardButton("𝗗𝗶𝘀𝗰𝗹𝗮𝗶𝗺𝗲𝗿 ⚠️", callback_data="Disclaimerf"), 
+            InlineKeyboardButton("𝗔𝗯𝗼𝘂𝘁 ℹ️", callback_data="Credits_a")
         ],
         [
             InlineKeyboardButton("𝗔𝗗𝗗 𝗕𝗢𝗧 𝗧𝗢 𝗬𝗢𝗨𝗥 𝗚𝗥𝗢𝗨𝗣", url=f"https://t.me/{BOTUSERNAME}?startgroup=true"),
@@ -21,6 +21,10 @@ START_B = InlineKeyboardMarkup(
 
 ABOUT_BUTTONS = InlineKeyboardMarkup(
     [
+        [
+
+            InlineKeyboardButton("𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗔𝗡𝗜𝗠𝗘", callback_data="A_requests"),
+        ],
         [
             InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME"),
             InlineKeyboardButton("𝗚𝗜𝗩𝗘 𝗥𝗘𝗩𝗜𝗘𝗪 ⭐", url=BOT_C_url)
