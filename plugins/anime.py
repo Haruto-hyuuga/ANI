@@ -35,7 +35,7 @@ async def anime_info(client, message):
         message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
 🇯🇵: <b><u>{J_title}</u></b>
-━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
 ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
 ᴛʏᴘᴇ: <b>{Format}</b>
@@ -142,7 +142,7 @@ async def my_gc_anime_o(client, message):
         message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
 🇯🇵: <b><u>{J_title}</u></b>
-━━━━━━━━━━━━━━━━━━━━━━━━━
+
 ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
 ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
 ᴛʏᴘᴇ: <b>{Format}</b>
