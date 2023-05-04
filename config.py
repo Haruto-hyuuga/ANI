@@ -185,10 +185,10 @@ DISCLAIMER_TXT = """
 
 
 CREDIT_TEXT = """
-𝑻𝒉𝒊𝒔 𝑩𝒐𝒕 𝑾𝒊𝒍𝒍 𝑴𝒂𝒌𝒆 𝒊𝒕 𝑬𝒂𝒔𝒚 𝑻𝒐 𝑺𝒆𝒂𝒓𝒄𝒉 𝒂𝒏𝒊𝒎𝒆 𝒂𝒏𝒅 𝑮𝒆𝒕 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝑳𝒊𝒏𝒌𝒔.
-<b>ᴍᴀᴅᴇ ʙʏ @MaidShiro
+𝑻𝒉𝒊𝒔 𝑩𝑶𝑻 𝒘𝒊𝒍𝒍 𝒎𝒂𝒌𝒆 𝒊𝒕 𝒆𝒂𝒔𝒚 𝒕𝒐 𝑫𝒊𝒔𝒄𝒐𝒗𝒆𝒓, 𝑹𝒆𝒒𝒖𝒆𝒔𝒕 𝒂𝒏𝒅 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝒚𝒐𝒖𝒓 𝒇𝒂𝒗𝒐𝒓𝒊𝒕𝒆 𝒂𝒏𝒊𝒎𝒆 𝒆𝒇𝒇𝒐𝒓𝒕𝒍𝒆𝒔𝒔𝒍𝒚.
+ᴠᴇʀꜱɪᴏɴ: CC 2.0
 
-<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL ♥️⚡</b>
+<b>DON'T FORGET TO READ LIST OF CONTRIBUTORS WHO MADE THIS BOT SUCCESSFUL</b>
 """
 
 
