@@ -5,7 +5,7 @@ from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, 
 from pyrogram.errors import FloodWait
 from database.inline import*
 from database.user_stats import update_RQ_SUB, update_RQ_DUB, update_SC, update_Anid
-from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID
+from config import START_MSG, ABOUT_TEXT, REQUEST_TEXT, ALL_CHANNEL_TEXT, REQUEST_GC, CREDIT_TEXT, REQ_TOPIC_ID, ERR_TOPIC_ID, DISCLAIMER_TXT
 from config import SUB_CHANNEL, DUB_CHANNEL, Sub_C_url, Dub_C_url, CHANNEL_ID, ADMINS, GROUP_url
 from req import channel_post_anime_info, download_anime_buttons_db, search_user_id, get_full_anime_info, get_Log_anime_i, only_description
 from database.req_Db import add_SUB_request, add_DUB_request
@@ -24,6 +24,11 @@ async def cb_handler(client, query: CallbackQuery):
         await query.message.edit_text(
             text = ABOUT_TEXT,
             reply_markup = ABOUT_BUTTONS
+        )
+    elif data == "Disclaimerf":
+        await query.message.edit_text(
+            text = ABOUT_TEXT,
+            reply_markup = DISCLAIMER_B
         )
     elif data == "DL_Channels":
         await query.message.edit_text(
@@ -92,8 +97,15 @@ async def cb_handler(client, query: CallbackQuery):
         await query.answer("TO REQUEST OTHER ANIME OR REQUEST THIS IN SUB OR DUB\nUSE COMMAND: /request", show_alert=True)
     elif data == "Do_report_error":
         await query.answer("IF YOU FACE ANY ERROR OR ANY DEFECTED EPISODE, KINDLY REPORT BY COMMAND\n /report", show_alert=True)
-    
-
+    elif data == "DisagreeDiscla":
+        await query.answer("HaHa, No!  You Must Agree To Terms & Conditios", show_alert=False)
+    elif data == "AgreeDiscla":
+        await query.answer("Thank you for accepting our terms and conditions!\nWe appreciate your cooperation and hope you enjoy the anime content we have to offer", show_alert=True)
+        await query.message.edit_text(
+            text = START_MSG.format(query.from_user.mention),
+            reply_markup = START_B
+        )
+        
     elif data == "gcAresultclose":
         await query.message.edit_text(text=f"𝑪𝒍𝒐𝒔𝒆𝒅 𝑩𝒚 {query.from_user.mention}")
     elif data == "DB_C_POST":
