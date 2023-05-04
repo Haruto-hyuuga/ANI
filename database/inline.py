@@ -94,12 +94,16 @@ ANIME_RESULT_B = InlineKeyboardMarkup(
 )
 CREDIT_B = InlineKeyboardMarkup(
     [
+#        [
+#            InlineKeyboardButton("", user_id=OWNER),
+#            InlineKeyboardButton("ʙᴏᴛ ꜱᴛᴀᴛᴜꜱ", )
+#        ],
         [
-            InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", user_id=OWNER),
-            InlineKeyboardButton("ʙᴏᴛ ꜱᴛᴀᴛᴜꜱ", url=BOT_C_url)
+            InlineKeyboardButton("♥️ 𝑪𝑹𝑬𝑫𝑰𝑻𝑺 & 𝑪𝑶𝑵𝑻𝑹𝑰𝑩𝑼𝑻𝑶𝑹𝑺 ♥️", url=contributor_graph)
         ],
         [
-            InlineKeyboardButton("♥️ 𝑪𝑯𝑨𝑵𝑵𝑬𝑳 𝑪𝑶𝑵𝑻𝑹𝑰𝑩𝑼𝑻𝑶𝑹𝑺 ♥️", url=contributor_graph)
+            InlineKeyboardButton("ɢɪᴠᴇ ʀᴇᴠɪᴇᴡ 🌟", url=BOT_C_url),
+            InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", user_id=1497264683)
         ],
         [
             InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
