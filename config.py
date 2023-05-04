@@ -129,8 +129,7 @@ ABOUT_TEXT = """
 
 /recommend 
 <i>Use this command to get random anime recommendation, mention</i>
-<i>type</i><code>/recommend</code> sub or dub to filter results 
-
+<i>type:</i> <code>/recommend dub/sub</code> to filter results
 
 /anime_info or /ainfo <b>𝙰𝙽𝙸𝙼𝙴 𝙸𝙳</b>
 <i>Use this command to get detailed anime info trailer and many more</i>
@@ -172,6 +171,13 @@ ALL_CHANNEL_TEXT = """
 ꜱᴜʙᴛɪᴛʟᴇꜱ: <b>English + Sign&Songs</b>
 ʀᴇꜱᴏʟᴜᴛɪᴏɴ: <b>720p | 1080p</b>
 """
+
+DISCLAIMER_TXT = """
+<u>𝗗𝗜𝗦𝗖𝗟𝗔𝗜𝗠𝗘𝗥 ⚠️</u>
+
+
+"""
+
 
 CREDIT_TEXT = """
 𝑻𝒉𝒊𝒔 𝑩𝒐𝒕 𝑾𝒊𝒍𝒍 𝑴𝒂𝒌𝒆 𝒊𝒕 𝑬𝒂𝒔𝒚 𝑻𝒐 𝑺𝒆𝒂𝒓𝒄𝒉 𝒂𝒏𝒊𝒎𝒆 𝒂𝒏𝒅 𝑮𝒆𝒕 𝑫𝒐𝒘𝒏𝒍𝒐𝒂𝒅 𝑳𝒊𝒏𝒌𝒔.
