@@ -50,11 +50,18 @@ CHANNELS_BUTTON = InlineKeyboardMarkup(
 REQUEST_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
+            InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="About_Bot")
         ]
     ]
 )
-
+DISCLAIMER_B = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton("𝗗𝗲𝗰𝗹𝗶𝗻𝗲", callback_data="DisagreeDiscla"),
+            InlineKeyboardButton("𝗜 𝗔𝗴𝗿𝗲𝗲 ✔️", callback_data="AgreeDiscla"),
+        ]
+    ]
+)
 ERROR_BUTTON = InlineKeyboardMarkup(
     [
         [
