@@ -175,7 +175,11 @@ ALL_CHANNEL_TEXT = """
 DISCLAIMER_TXT = """
 <u>𝗗𝗜𝗦𝗖𝗟𝗔𝗜𝗠𝗘𝗥 ⚠️</u>
 
+<b>Our bot and channels are not affiliated with any anime studios, licensors, or distributors. We do not own any of the content that we provide, and we do not host any files on our servers. All content is provided through third-party sources and is intended for personal use only.</b>
 
+<b>We do not condone piracy or illegal distribution of copyrighted materials. As a user of our bot and channels, it is your responsibility to ensure that your use of the content complies with all applicable laws and regulations. Additionally, please note that we do not provide Hentai content through this bot, refrain from requesting those.</b> 
+
+<b>By using our bot and channels,{} you agree to these terms and conditions. </b>
 """
 
 
