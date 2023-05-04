@@ -27,7 +27,7 @@ async def cb_handler(client, query: CallbackQuery):
         )
     elif data == "Disclaimerf":
         await query.message.edit_text(
-            text = ABOUT_TEXT,
+            text = DISCLAIMER_TXT.format(query.from_user.mention),
             reply_markup = DISCLAIMER_B
         )
     elif data == "DL_Channels":
