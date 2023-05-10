@@ -118,8 +118,8 @@ async def fchannelDuBpost(client, message):
 ├<b>ꜱᴛᴀᴛᴜꜱ:</b> {status}
 ├<b>ᴘʀᴇᴍɪᴇʀᴇᴅ:</b> {season}
 ┣━━━━━━━━━━━━━━━━━━━━━━━
-├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> English, Japanese 
-├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> Full English, Sign & Songs
+├<b>ᴀᴜᴅɪᴏ ᴛʀᴀᴄᴋ:</b> English + Japanese 
+├<b>ꜱᴜʙᴛɪᴛʟᴇ:</b> English SUB, Sign & Songs
 ┗━━━━━━━━━━━━━━━━━━━━━━━
 """
         CONFIRM_POST = InlineKeyboardMarkup([[InlineKeyboardButton("🗑️ 𝗖𝗟𝗢𝗦𝗘", callback_data=f"FUclose_{UID}"),InlineKeyboardButton("𝗖𝗢𝗡𝗙𝗜𝗥𝗠 ✅", callback_data=f"DUBconfirmpostD_{anime_id}")]])
@@ -133,7 +133,7 @@ async def fchannelDuBpost(client, message):
 
         banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
         A = "English + Japanese"
-        S = "Eng [complete subtitles] + Sign & Songs"
+        S = "Eng [complete subtitles]"
         try:
             
 
