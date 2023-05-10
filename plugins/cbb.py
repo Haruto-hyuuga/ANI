@@ -49,6 +49,7 @@ async def cb_handler(client, query: CallbackQuery):
         QDS = query.data.split("_")[-1]
         anime_id = int(QDS)
         UID = query.from_user.id
+        CID = query.message.chat.id
         try: 
             message = query.message
             picc = message.photo.file_id
@@ -57,7 +58,7 @@ async def cb_handler(client, query: CallbackQuery):
                 text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
-            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR SUB CHANNEL", reply_to_message_id=LOL.id)
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/reqyes {anime_id}_{UID}_{CID}</code>\nFOR SUB CHANNEL", reply_to_message_id=LOL.id)
            
             await add_SUB_request(anime_id)
             await update_RQ_SUB(UID)
@@ -68,6 +69,7 @@ async def cb_handler(client, query: CallbackQuery):
         QDS = query.data.split("_")[-1]
         anime_id = int(QDS)
         UID = query.from_user.id
+        CID = query.message.chat.id
         try:
             message = query.message
             picc = message.photo.file_id
@@ -76,7 +78,7 @@ async def cb_handler(client, query: CallbackQuery):
                 text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
-            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/anime {anime_id}</code> FOR DUB CHANNEL", reply_to_message_id=LOL.id)
+            await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/reqyes {anime_id}_{UID}_{CID}</code>\nFOR DUB CHANNEL", reply_to_message_id=LOL.id)
 
             await add_DUB_request(anime_id)
             await update_RQ_DUB(UID)
