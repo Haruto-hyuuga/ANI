@@ -57,6 +57,8 @@ async def cb_handler(client, query: CallbackQuery):
             await message.edit_text(
                 text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
+            await query.answer("PLEASE START BOT IN DM TO GET NOTIFIED ABOUT YOUR REQUEST.", show_alert=True)
+                              
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/reqyes {anime_id}_{UID}_{CID}</code>\nFOR SUB CHANNEL", reply_to_message_id=LOL.id)
            
@@ -77,6 +79,9 @@ async def cb_handler(client, query: CallbackQuery):
             await message.edit_text(
                 text=f"{Caption}\n\n📬<b>REQUEST REGISTERED ✅</n>"
             )
+            await query.answer("PLEASE START BOT IN DM TO GET NOTIFIED ABOUT YOUR REQUEST.", show_alert=True)
+
+                              
             LOL = await client.send_photo(chat_id=REQUEST_GC, photo=picc, caption=Caption, reply_to_message_id=REQ_TOPIC_ID)
             await client.send_message(chat_id=REQUEST_GC, text=f"👤{query.from_user.mention} \n<code>{UID}</code>\n\n⚠️<code>/reqyes {anime_id}_{UID}_{CID}</code>\nFOR DUB CHANNEL", reply_to_message_id=LOL.id)
 
