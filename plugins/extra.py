@@ -172,27 +172,18 @@ from req import recommend_anime_button, channel_post_anime_info
 
 @Bot.on_message(get_cmd(["reqyes", "accept"]) & filters.user(ADMINS))
 async def request_accept(client, message):
-    if message.reply_to_message:
-        MSG = message.reply_to_message.text
+    if len(message.command) != 1:
+        command_args = message.text.split(" ")[1]
+        anime_id, UID, CID = command_args.split("_")
         try:
-            user = await client.get_users(MSG)
+            user = await client.get_users(UID)
             um = user.mention
             un = user.username
             UID = user.id
         except Exception as e:
             await message.reply(f"Error While Getting User\n\n{e}")
             return 
-        args = message.text.split()
-        if len(args) < 2:
-            await message.reply_text("Mention Anime Id after command")
-            return
-        arg = args[1]
-        if arg.isdigit():
-            try:
-                anime_id = int(arg)
-            except (IndexError, ValueError):
-                ErM = await message.reply_text(f"{message.from_user.mention}-san Did you fuck Anime Id After Command\nProvide A valid Anime Id")
-                return
+        
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
         buttons = await recommend_anime_button(anime_id)
@@ -205,18 +196,18 @@ async def request_accept(client, message):
         except IndexError:
             pass        
         message_text = f"""
-Dear {um},
-<b>Your Request For Anime:</b> 
+Dear {um}, 👤 @{un}
+<b>Your Request For Anime has been completed:</b> 
 🇬🇧:{E_title} 
 🇯🇵:{J_title}
 ᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}
 ᴛʏᴘᴇ: {Format}
 ɢᴇɴʀᴇꜱ:{Igenres}
-<b>has been completed, Thanks For Using Our Bot Don't Forget To Give Review 🌟.</b>
+<b>Thanks For Using Our Bot Don't Forget To Give Review 🌟.</b>
 """
         
         try:
-            await client.send_photo(UID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+            await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons)) 
         except Exception as e:
             await message.reply(f"While Sending Message\n\n{e}")
@@ -225,12 +216,14 @@ Dear {um},
                 await del_DUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Dub Request")
             if await present_SUB_request(anime_id):
-                await del_SUB_request(anime)
+                await del_SUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Sub Request")
         except Exception as e:
             await message.reply(f"While Deleting Anime Id from Request Database\n\n{e}")
     else:
-        await message.reply("Reply to User or User Id, of a person you want to send\n\n And Anime Id after command")
+        await message.reply("Foramt: /reqyes {anime_id}_{user_id}_{Chat_id} \nif reply to messagemessage text, it will be added in sending post tooo.")
+
+
 
 
 @Bot.on_message(filters.user(OWNER) & filters.command("add_admin"))
