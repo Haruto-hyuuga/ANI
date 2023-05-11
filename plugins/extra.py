@@ -282,5 +282,5 @@ async def list_admins_temp(client, message):
 
 @Bot.on_message(get_cmd("broadcast") & filters.user(ADMINS))
 async def lolbtacrcastmsgp(client, message):
-    await message.reply("👤Privat Broadcast:-\n <code>/anicastpvt</code>\n\n🌐Groups Broadcast:-\n <code>/anicastgc</code>")
+    await message.reply_text("👤Privat Broadcast:-\n <code>/anicastpvt</code>\n\n🌐Groups Broadcast:-\n <code>/anicastgc</code>")
 
