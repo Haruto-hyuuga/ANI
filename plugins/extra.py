@@ -280,3 +280,7 @@ async def list_admins_temp(client, message):
     else:
         await message.reply("There are no admins in the list.")
 
+@Bot.on_message(get_cmd("broadcast") & filters.user(ADMINS))
+async def lolbtacrcastmsgp(client, message):
+    await message.reply("👤Privat Broadcast:-\n <code>/anicastpvt</code>\n\n🌐Groups Broadcast:-\n <code>/anicastgc</code>")
+
