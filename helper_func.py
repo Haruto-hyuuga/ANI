@@ -45,15 +45,16 @@ async def is_subscribed_BOT(filter, client, update):
 
 async def is_subscribed_GROUP(filter, client, update):
     user_id = update.from_user.id
-    try:
-        member = await client.get_chat_member(chat_id = FS_GROUP, user_id = user_id)
-    except UserNotParticipant:
-        return False
-    
-    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
-        return False
-    else:
-        return True
+    return True
+#    try:
+#        member = await client.get_chat_member(chat_id = FS_GROUP, user_id = user_id)
+#    except UserNotParticipant:
+#        return False
+#    
+#    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+#        return False
+#    else:
+#        return True
 
 async def encode(string):
     string_bytes = string.encode("ascii")
