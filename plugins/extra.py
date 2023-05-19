@@ -187,14 +187,7 @@ async def request_accept(client, message):
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
         buttons = await recommend_anime_button(anime_id)
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton(text = '🌟 GIVE YOUR REVIEW ABOUT BOT ❓', url=BOT_C_url)
-                ]
-            )
-        except IndexError:
-            pass        
+        
         message_text = f"""
 Dear {um}, 👤 @{un}
 <b>Your Request For Anime has been completed:</b> 
