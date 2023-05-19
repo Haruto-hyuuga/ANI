@@ -5,7 +5,7 @@ from config import ADMINS, OWNER, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request, present_DUB_request, present_SUB_request
-from req import search_user_name, search_user_id, get_cmd, recommend_anime_button
+from req import search_user_name, search_user_id, get_cmd
 
 GC_LOG_TXT = """
 🔴 #New_GROUP
@@ -186,7 +186,7 @@ async def request_accept(client, message):
             return
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-        buttons = await recommend_anime_button(anime_id)
+ #       buttons = await recommend_anime_button(anime_id)
         
         message_text = f"""
 Dear {um},
@@ -200,6 +200,7 @@ Genres: {Igenres}
 """
 
         try:
+            buttons = await recommend_anime_button(anime_id)
             await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons))
             if await present_DUB_request(anime_id):
