@@ -5,7 +5,7 @@ from config import ADMINS, OWNER, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request, present_DUB_request, present_SUB_request
-from req import search_user_name, search_user_id, get_cmd
+from req import search_user_name, search_user_id, get_cmd, recommend_anime_button
 
 GC_LOG_TXT = """
 🔴 #New_GROUP
@@ -209,9 +209,11 @@ Genres: {Igenres}
             if await present_DUB_request(anime_id):
                 await del_DUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Dub Request")
-            if await present_SUB_request(anime_id):
+            elif await present_SUB_request(anime_id):
                 await del_SUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Sub Request")
+            else:
+                pass
         except Exception as e:
             await message.reply(f"Error while deleting anime ID from request database\n\n{e}")
     else:
