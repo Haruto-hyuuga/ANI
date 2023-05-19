@@ -392,11 +392,11 @@ async def get_anime_id_15(client, message):
         await ErM.delete()
         return
     anime_name = " ".join(args[1:])
-    message_text = await get_anime_ids_list(anime_name)
     try:
+        message_text = await get_anime_ids_list(anime_name)
+    
         FM = await message.reply_text(message_text)
-        await asyncio.sleep(120)
-        await FM.delete()
     except Exception as e:
         await message.reply(e)
+
     
