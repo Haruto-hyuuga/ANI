@@ -175,35 +175,36 @@ async def request_accept(client, message):
     if len(message.command) != 1:
         command_args = message.text.split(" ")[1]
         anime_id, UID, CID = command_args.split("_")
+        
         try:
-            user = await client.get_users(UID)
+            user = await client.get_users(int(UID))
             um = user.mention
             un = user.username
             UID = user.id
         except Exception as e:
-            await message.reply(f"Error While Getting User\n\n{e}")
-            return 
-        
+            await message.reply(f"Error while getting user\n\n{e}")
+            return
 
         E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
         buttons = await recommend_anime_button(anime_id)
         
         message_text = f"""
-Dear {um}, 👤 @{un}
-<b>Your Request For Anime has been completed:</b> 
-🇬🇧:{E_title} 
-🇯🇵:{J_title}
-ᴇᴘɪꜱᴏᴅᴇꜱ: {episodes}
-ᴛʏᴘᴇ: {Format}
-ɢᴇɴʀᴇꜱ:{Igenres}
-<b>Thanks For Using Our Bot Don't Forget To Give Review 🌟.</b>
+Dear {um},
+<b>Your request for the anime has been completed:</b> 
+🇬🇧: {E_title} 
+🇯🇵: {J_title}
+Episodes: {episodes}
+Type: {Format}
+Genres: {Igenres}
+💬 @{un} <a href="https://t.me/AnimeRobots/24">Thanks for using our bot. Don't forget to give a 3 Stars 🌟 Review.</a>
 """
-        
+
         try:
             await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons)) 
+            await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons))
         except Exception as e:
-            await message.reply(f"While Sending Message\n\n{e}")
+            await message.reply(f"Error while sending message\n\n{e}")
+        
         try:
             if await present_DUB_request(anime_id):
                 await del_DUB_request(anime_id)
@@ -212,10 +213,9 @@ Dear {um}, 👤 @{un}
                 await del_SUB_request(anime_id)
                 await message.reply_text("🗑️ Deleted Sub Request")
         except Exception as e:
-            await message.reply(f"While Deleting Anime Id from Request Database\n\n{e}")
+            await message.reply(f"Error while deleting anime ID from request database\n\n{e}")
     else:
-        await message.reply("Foramt: /reqyes {anime_id}_{user_id}_{Chat_id} \nif reply to messagemessage text, it will be added in sending post tooo.")
-
+        await message.reply("Format: /reqyes {anime_id}_{user_id}_{chat_id}\nIf replying to a message, the message text will be added in the sending post too.")
 
 
 
