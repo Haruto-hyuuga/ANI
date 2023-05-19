@@ -908,7 +908,14 @@ async def get_anime_ids_list(anime_name: str):
         title = anime["title"]["english"] or anime["title"]["romaji"]
         anime_id = anime["id"]
         status = anime["status"] or "🏷️"
-
+        if await present_dub_anime(anime_id):
+            DE = "D:✅"
+        else:
+            DE = "D:❌"
+        if await present_sub_anime(anime_id):
+            SE = "S:✅"
+        else:
+            SE = "S:❌"
         if status == "FINISHED":
             status_emoji = "🖥️"
         elif status == "RELEASING":
@@ -924,7 +931,7 @@ async def get_anime_ids_list(anime_name: str):
         else:
             status_emoji = "🏷️"
 
-        message_text += f"<b><u>{i+1}</u>{status_emoji}</b>: <b>{title}</b>\n<i>➥<code> {anime_id}</code>\n\n"
+        message_text += f"<b><u>{i+1}</u>{status_emoji}</b>: <b>{title}</b>\n<i>➥<code> {anime_id}</code>    {DE} 〰️ {SE}\n\n"
         
     return message_text
 
