@@ -226,7 +226,7 @@ async def recommend_anime(client, message):
 
     anime_id = AniId
     E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-    buttons = await recommend_anime_button(anime_id)
+    FBUTTON = await recommend_anime_button(anime_id)
 
     message_text = f"""
 🇬🇧: <b><u>{E_title}</u></b>
@@ -241,7 +241,7 @@ async def recommend_anime(client, message):
     try:
         await asyncio.sleep(6)
         await client.edit_message_media(message.chat.id, RCMsg.id,  InputMediaPhoto(MSG_img))
-        await RCMsg.edit(text=message_text, reply_markup=InlineKeyboardMarkup(buttons))
+        await RCMsg.edit(text=message_text, reply_markup=FBUTTON)
     except Exception as e:
         await client.send_message(chat_id=REQUEST_GC, text=f"⚠️RECOMMEND CMD\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
