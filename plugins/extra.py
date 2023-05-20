@@ -200,8 +200,8 @@ Genres: {Igenres}
 """
 
         try:
-            buttons = await recommend_anime_button(anime_id)
-            await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup([buttons]))
+            FBUTTON = await recommend_anime_button(anime_id)
+            await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=FBUTTON)
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons))
             if await present_DUB_request(anime_id):
                 await del_DUB_request(anime_id)
