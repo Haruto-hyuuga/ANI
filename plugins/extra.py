@@ -168,7 +168,7 @@ async def request_decline(client, message):
     else:
         await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
         
-from req import recommend_anime_button, channel_post_anime_info
+from req import download_anime_buttons_db, channel_post_anime_info
 
 @Bot.on_message(get_cmd(["reqyes", "accept"]) & filters.user(ADMINS))
 async def request_accept(client, message):
@@ -195,13 +195,14 @@ Dear {um},
 🇯🇵: {J_title}
 Episodes: {episodes}
 Type: {Format}
-Genres: {Igenres}
 💬 @{un} <a href="https://t.me/AnimeRobots/24">Thanks for using our bot. Don't forget to give a 3 Stars 🌟 Review.</a>
 """
 
+
+        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
         try:
-            FBUTTON = await recommend_anime_button(anime_id)
-            await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=FBUTTON)
+            
+            await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
             await client.send_photo(message.chat.id, photo=MSG_img, caption=f"{message_text}\n\nSuccessfully Sent✅\n\n👤: {um}\n🆔: <code>{UID}</code>\n🔗: @{un}", reply_markup=InlineKeyboardMarkup(buttons))
             if await present_DUB_request(anime_id):
                 await del_DUB_request(anime_id)
