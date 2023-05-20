@@ -771,7 +771,7 @@ async def recommend_anime_button(anime_id: int) -> None:
         except Exception as e:
             print(e)
     
-    buttons.append([InlineKeyboardButton("Don't forget to give a 3 Stars 🌟 Review", url="https://t.me/AnimeRobots/24")])
+  #  buttons.append([InlineKeyboardButton("Don't forget to give a 3 Stars 🌟 Review", url="https://t.me/AnimeRobots/24")])
     
     FBUTTON = InlineKeyboardMarkup(buttons)
     return FBUTTON
