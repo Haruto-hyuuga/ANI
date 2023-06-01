@@ -175,7 +175,7 @@ async def request_accept(client, message):
     if len(message.command) != 1:
         command_args = message.text.split(" ")[1]
         animeid, UID, CID = command_args.split("_")
-        anime_id = int(anime_id)
+        anime_id = int(animeid)
         try:
             user = await client.get_users(int(UID))
             um = user.mention
