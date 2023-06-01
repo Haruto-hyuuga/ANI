@@ -5,7 +5,7 @@ from config import ADMINS, OWNER, Gif_Random, REQUEST_GC, ERR_TOPIC_ID, USER_LOG
 from database.inline import AllFSCB, CLOSE_BUTTON
 from database.user_stats import get_user_Ani_Id, update_Anid
 from database.req_Db import full_requestDB_DUB, full_requestDB_SUB, del_DUB_request, del_SUB_request, present_DUB_request, present_SUB_request
-from req import search_user_name, search_user_id, get_cmd
+from req import search_user_name, search_user_id, get_cmd, recommend_anime_button, channel_post_anime_info
 
 GC_LOG_TXT = """
 🔴 #New_GROUP
@@ -168,7 +168,7 @@ async def request_decline(client, message):
     else:
         await message.reply("Reply To A message you want to sent, and mention user you want to send after command")
         
-from req import download_anime_buttons_db, channel_post_anime_info
+
 
 @Bot.on_message(get_cmd(["reqyes", "accept"]) & filters.user(ADMINS))
 async def request_accept(client, message):
@@ -199,7 +199,7 @@ Type: {Format}
 """
 
 
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
+        buttons = await recommend_anime_button(anime_id)
         try:
             
             await client.send_photo(CID, photo=MSG_img, caption=message_text, reply_markup=InlineKeyboardMarkup(buttons))
