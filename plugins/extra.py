@@ -174,8 +174,8 @@ from req import download_anime_buttons_db, channel_post_anime_info
 async def request_accept(client, message):
     if len(message.command) != 1:
         command_args = message.text.split(" ")[1]
-        anime_id, UID, CID = command_args.split("_")
-        
+        animeid, UID, CID = command_args.split("_")
+        anime_id = int(anime_id)
         try:
             user = await client.get_users(int(UID))
             um = user.mention
