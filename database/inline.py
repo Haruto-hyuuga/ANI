@@ -103,7 +103,7 @@ CREDIT_B = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton("ɢɪᴠᴇ ʀᴇᴠɪᴇᴡ 🌟", url=BOT_C_url),
-            InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", user_id=1497264683)
+            InlineKeyboardButton("ꜱᴜᴘᴘᴏʀᴛ ⛑️🔧", url="http://t.me/Maid_Robot")
         ],
         [
             InlineKeyboardButton("𝗕𝗔𝗖𝗞", callback_data="BACK_HOME")
