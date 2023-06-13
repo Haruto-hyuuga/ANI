@@ -13,7 +13,7 @@ from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, REQUE
 class Bot(Client):
     def __init__(self):
         super().__init__(
-            name="Bot",
+            name="BotAnimedlar",
             api_hash=API_HASH,
             api_id=APP_ID,
             plugins={
@@ -49,7 +49,6 @@ class Bot(Client):
         await web.TCPSite(app, bind_address, PORT).start()
 
     async def stop(self, *args):
-        await self.send_message(REQUEST_GC, text = "BOT STOPPED 🪫", reply_to_message_id=Bot_Start_Topic)
         await super().stop()
         self.LOGGER(__name__).info("Bot stopped.")
         
