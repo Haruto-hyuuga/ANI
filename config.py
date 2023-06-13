@@ -201,8 +201,8 @@ ALLCMD_FS_TXT = """
 """
 
 
-PORT = os.environ.get("PORT", "8080")
-TG_BOT_WORKERS = 100
+PORT = 8080
+TG_BOT_WORKERS = 25
 
 
 ADMINS = []
