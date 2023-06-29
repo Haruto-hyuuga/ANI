@@ -125,7 +125,7 @@ REPLY_ERROR = """<code>Use this command as a replay to any telegram message with
 from req import get_cmd, fs_allc_start
 
 
-@Bot.on_message(get_cmd(FSCMD) & filters.private)
+@Bot.on_message(filters.private & ~sub_PUB_Dc & ~sub_PUB_Sc & ~sub_GC & ~sub_BOT_c)
 async def not_joined(client: Client, message: Message):
     id = message.from_user.id
     if not await present_user(id):
