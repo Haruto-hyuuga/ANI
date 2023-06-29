@@ -92,7 +92,7 @@ ANI_ADMIN = """
 """
 
 
-@Bot.on_message(get_cmd('stats') & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd('stats'))
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(chat_id=message.chat.id, text="⌛")
     M = message.from_user.mention
