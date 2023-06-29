@@ -476,63 +476,6 @@ async def channel_post_anime_info(anime_id: int):
     return E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season
         
         
-async def only_banner_image(anime_id: int):
-    query = '''
-    query ($id: Int) {
-        Media (id: $id, type: ANIME) {
-            id
-            title {
-                romaji
-                english
-                native
-            }
-            bannerImage
-            coverImage {
-                extraLarge
-            }
-            studios(isMain: true) {
-                edges {
-                    node {
-                        name
-                    }
-                }
-            }
-            trailer {
-                id
-                site
-                thumbnail
-            }
-        }
-    }
-    '''
-    variables = {"id": anime_id}
-    url = "https://graphql.anilist.co"
-    response = httpx.post(url, json={"query": query, "variables": variables})
-
-    if response.status_code != 200:
-        msg_caption = "<b>FAILED TO GET ANIME INFO</b>\nTry Again, if problem persists contact me trough: @Maid_Robot"
-        banner_pic = cover_pic = ERROR_IMAGE
-        return
-
-    data = response.json()["data"]
-    anime = data["Media"]
-    if not anime:
-        msg_caption = f"No anime found with the ID '{anime_id}'.\n Did you fuck up the number after command?"
-        banner_pic = cover_pic = NOani_IMAGE
-        return
-
-    cover_pic = anime["coverImage"]["extraLarge"]
-    banner_pic = anime["bannerImage"]
-    msg_caption = """
-┏━━━━━━━━━━━━━━━━━━━━━━━
-┣ʀᴇꜱᴏʟᴜᴛɪᴏɴ:
-┣ᴀᴜᴅɪᴏ: {}
-┣ꜱᴜʙᴛɪᴛʟᴇ: {}
-┗━━━━━━━━━━━━━━━━━━━━━━━
-"""
-    return banner_pic, cover_pic, msg_caption
-
-
 
 async def get_full_anime_info(anime_id: int):
     query = '''
