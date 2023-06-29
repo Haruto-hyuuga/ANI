@@ -11,7 +11,7 @@ from req import get_full_anime_info, channel_post_anime_info, search_find_anime_
 from plugins.groupstuff import new_gc_logger
 from pyrogram.enums import ChatType
 
-@Bot.on_message(get_cmd(["download", "anime"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
+@Bot.on_message(get_cmd(["download", "anime"]))
 async def anime_info(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -77,7 +77,7 @@ async def anime_info(client, message):
         await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(get_cmd(["search", "find"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & ~filters.chat(FS_GROUP))
+@Bot.on_message(get_cmd(["search", "find"]))
 async def search_anime(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -118,94 +118,13 @@ async def search_anime(client, message):
 #########################################################################################################################################################
 #########################################################################################################################################################
 
-@Bot.on_message(get_cmd(["download"]) & filters.chat(FS_GROUP))
-async def my_gc_anime_o(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        ErM = await message.reply_text("Bruh you stoopid? <b>Mention Name of Anime after Command or Anime Id</b>\n<i>You can Also Try using Command:</i> /find ")
-        await asyncio.sleep(30)
-        await ErM.delete()
-        return
-    arg = args[1]
-    if arg.isdigit():
-        try:
-            anime_id = int(arg)
-        except (IndexError, ValueError):
-            ErM = await message.reply_text(f"{message.from_user.mention}-san Did you fuck Anime Id after Command\nProvide A valid Anime Id or Name")
-            await asyncio.sleep(30)
-            await ErM.delete()
-            return
-
-        E_title, J_title, MSG_img, Format, episodes, status, average_score, Igenres, studio, duration, season = await channel_post_anime_info(anime_id)
-            
-        message_text = f"""
-🇬🇧: <b><u>{E_title}</u></b>
-🇯🇵: <b><u>{J_title}</u></b>
-
-ᴇᴘɪꜱᴏᴅᴇꜱ: <b>{episodes}</b>
-ᴅᴜʀᴀᴛɪᴏɴ: <b>{duration}</b>
-ᴛʏᴘᴇ: <b>{Format}</b>
-ꜱᴛᴀᴛᴜꜱ: <b>{status}</b>
-ɢᴇɴʀᴇꜱ: <i>{Igenres}</i>
-
-"""
-        new_message_text, buttons = await download_anime_buttons_db(anime_id, message_text, client, UID)
-    
-        try:
-            if message.reply_to_message:
-                await message.reply_to_message.reply_photo(MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-            if not message.reply_to_message:
-                await client.send_photo(chat_id=message.chat.id, photo=MSG_img, caption=new_message_text, reply_markup=InlineKeyboardMarkup(buttons))
-        except Exception as e:
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️download/anime ID search\nFinal Msg Not Reply to msg\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-    else:
-        anime_name = " ".join(args[1:])
-        message_text, message_button, message_photo = await search_anime_list_by_Name(anime_name, UID)
-
-        try:
-            if message.reply_to_message:
-                await message.reply_to_message.reply_photo(photo=message_photo, caption=message_text, reply_markup=message_button)
-            if not message.reply_to_message:
-                await client.send_photo(chat_id=message.chat.id, photo=message_photo, caption=message_text, reply_markup=message_button)
-        except Exception as e:
-            await message.reply_text("An Error Occurred, Try Again\nIf Problem persist Contact me 🛂", reply_markup=ERROR_BUTTON)
-            await client.send_message(chat_id=REQUEST_GC, text=f"⚠️Anime/Download NAME search\nwhile sending final message\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-    
-
-@Bot.on_message(get_cmd(["search", "anime"]) & filters.chat(FS_GROUP))
-async def my_gcsearch_anime(client, message):
-    UID = message.from_user.id
-    args = message.text.split()
-    if len(args) < 2:
-        ErM = await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /search Naruto")
-        await asyncio.sleep(30)
-        await ErM.delete()
-        return
-    anime_name = " ".join(args[1:])
-    message_text, message_button, message_photo = await full_info_anime_list_by_Name(anime_name, UID)
-    try:
-        await message.reply_photo(
-            photo=message_photo,
-            caption=message_text,
-            reply_markup=message_button
-        )
-    except Exception as e:
-        await message.reply_text(
-            text=message_text,
-            reply_markup=message_button 
-        )
-        await client.send_message(chat_id=REQUEST_GC, text=f"CMD-PVT ⚠️\nSearch List Error\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-            
-    
 from database.anime_db import recom_ani_id, recom_SUB_id, recom_DUB_id
 from req import recommend_anime_button
 from pyrogram.types import InputMediaPhoto
 Recom_vid = "https://telegra.ph/file/6e90fcea987231ed6ea3b.mp4"
 Recom_waitTxT = "✲ I'm searching for the perfect anime recommendations just for you! Please be patient while I look~"
 
-@Bot.on_message(get_cmd(["recommend"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["recommend"]))
 async def recommend_anime(client, message):
     if message.reply_to_message:
         RCMsg = await message.reply_to_message.reply_video(Recom_vid, caption=Recom_waitTxT)
@@ -251,34 +170,7 @@ async def recommend_anime(client, message):
 ###############################################################################################################################################################################
 ###############################################################################################################################################################################
 
-from config import O_PVT_FS_PIC, O_PVT_FS_TXT, PVT_FS_TXT, PVT_FS_VID
-from database.inline import BOT_DM_B, GO_BOTDM_B
-
-        
-@Bot.on_message(get_cmd(["download", "anime", "search", "find", "request", "recommend"]) & ~filters.chat(FS_GROUP))
-async def nogcanimedlcmd(client, message):
-    if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
-        try:
-            id = message.chat.id
-            N = message.chat.title
-            UN = message.chat.username
-            await new_gc_logger(client, id, N, UN)
-            await message.reply_video(
-                video=PVT_FS_VID,
-                caption=PVT_FS_TXT,
-                reply_markup=BOT_DM_B
-            )
-        except Exception as e:
-            await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
-
-
-
-###############################################################################################################################################################################
-###############################################################################################################################################################################
-###############################################################################################################################################################################
-
-
-@Bot.on_message(get_cmd(["anime_info", "ainfo"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+@Bot.on_message(get_cmd(["anime_info", "ainfo"]) & filters.private)
 async def animefulinfo(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -336,7 +228,7 @@ async def animefulinfo(client, message):
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
-@Bot.on_message(get_cmd(["list", "fullsearch"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c & filters.private)
+@Bot.on_message(get_cmd(["list", "fullsearch"]) & filters.private)
 async def pvt_many_anime_list(client, message):
     UID = message.from_user.id
     args = message.text.split()
@@ -356,13 +248,16 @@ async def pvt_many_anime_list(client, message):
             text=message_text,
             reply_markup=message_button 
         )
-# add stats
+# adding stats
     try:
         await update_SC(UID)
     except Exception as e:
         await client.send_message(REQUEST_GC, text=f"Couldn't add SEARCH stats\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
 
+ 
+from config import O_PVT_FS_PIC, O_PVT_FS_TXT
+from database.inline import GO_BOTDM_B
 
 @Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]))
 async def nosearchppvtsearchfs(client, message):
@@ -383,7 +278,7 @@ async def nosearchppvtsearchfs(client, message):
 ############################################################################################################
 ############################################################################################################
 from req import get_anime_ids_list
-@Bot.on_message(get_cmd(["anid", "anime_id"]) & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
+@Bot.on_message(get_cmd(["anid", "anime_id"]))
 async def get_anime_id_15(client, message):
     args = message.text.split()
     if len(args) < 2:
