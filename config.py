@@ -3,8 +3,9 @@ import logging
 from logging.handlers import RotatingFileHandler
 import random 
 
+TG_BOT_TOKEN = "6286463449:AAGThxmuOUis9HN_IYMCvZdcwjKeOOw3U7o"
 # mainbot
-TG_BOT_TOKEN = "6116589740:AAEYvzwtIH1apOjFqFxQZHAe4u_D5nbq-Y8"
+#TG_BOT_TOKEN = "6116589740:AAEYvzwtIH1apOjFqFxQZHAe4u_D5nbq-Y8"
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
 BOTUSERNAME = "AnimeDL_Robot"
@@ -13,7 +14,7 @@ BOT_ID = 6116589740
 
 
 #DATABASE CHANNEL
-CHANNEL_ID = -1001965499699
+CHANNEL_ID = -1001803639446
 #APROVAL NODE URL OF DB CHANNEL
 DB_C_Pvturl = "https://t.me/+gwY34XgAgHgyNzI1"
 
