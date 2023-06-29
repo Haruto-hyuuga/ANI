@@ -6,7 +6,6 @@ from database.user_stats import update_SC
 from config import FS_GROUP, ALLCMD_FS_TXT, ALLCMD_FS_PIC, ERR_TOPIC_ID, REQUEST_GC, GROUP_url
 from req import get_cmd
 import asyncio
-from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
 from plugins.Groupstuff import new_gc_logger
 from pyrogram.enums import ChatType
