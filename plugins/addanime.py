@@ -33,45 +33,6 @@ async def first_ep_banner(client, message):
         await message.reply_text(f"ERROR ⚠️:\n⌛ Sending Other Image....\n\n{e}")
         await message.reply_photo(photo=cover_pic, caption=msg_caption)
 
-
-@Bot.on_message(get_cmd("deldub") & filters.user(ADMINS))
-async def deldub(client, message):
-    if len(message.command) != 1:
-        text = message.text.split(None, 1)[1]
-        anime_id = int(text) 
-        if await present_dub_anime(anime_id):
-            try:
-                dblink = await get_dub_anime(anime_id)
-                await del_dub_anime(anime_id)
-                await message.reply_text(f"<b>DELETED!</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
-            except Exception as e:
-                await message.reply_text(f"An Error Occured//-\n\n{e}")
-        else:
-            await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
-    else:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
-
-
-                    
-@Bot.on_message(get_cmd("delsub") & filters.user(ADMINS))
-async def delsub(client, message):
-    if len(message.command) != 1:
-        text = message.text.split(None, 1)[1]
-        anime_id = int(text) 
-        if await present_sub_anime(anime_id):
-            try:
-                dblink = await get_sub_anime(anime_id)
-                await del_sub_anime(anime_id)
-                await message.reply_text(f"<b>DELETED!</b>\n\nID: <b>{anime_id}</b>\n<b>POST LINK:</b> {dblink}")
-            except Exception as e:
-                await message.reply_text(f"An Error Occured//-\n\n{e}")
-        else:
-            await message.reply_text(f"No Such Anime Was Inserted In DataBase With ID: {anime_id}")
-    else:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /anime or /search")
-
-
-
 @Bot.on_message(get_cmd("request") & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def arequest(client, message):
     reply = message.reply_to_message
