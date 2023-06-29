@@ -8,7 +8,7 @@ from req import get_cmd
 import asyncio
 from helper_func import sub_PUB_Sc, sub_PUB_Dc, sub_BOT_c, sub_GC
 from req import get_full_anime_info, channel_post_anime_info, search_find_anime_list, search_anime_list_by_Name, full_info_anime_list_by_Name, download_anime_buttons_db
-from plugins.groupstuff import new_gc_logger
+from plugins.Groupstuff import new_gc_logger
 from pyrogram.enums import ChatType
 
 @Bot.on_message(get_cmd(["download", "anime"]))
