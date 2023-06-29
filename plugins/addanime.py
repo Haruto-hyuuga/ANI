@@ -14,25 +14,6 @@ from pyrogram.errors import BadRequest
 from req import get_Log_anime_i, channel_post_anime_info, only_banner_image, search_user_id
     
 
-
-@Bot.on_message(get_cmd("banner") & filters.user(ADMINS))
-async def first_ep_banner(client, message):
-    args = message.text.split()
-    if len(args) < 2:
-        await message.reply_text("<b>BISH PROVIDE ANIME ID AFTER COMMAND</b>\nTo Get Anime Id \nUse Command: /find or /search")
-        return
-    try:
-        anime_id = int(args[1])
-    except (IndexError, ValueError):
-        await message.reply_text(f"Index Error!   *_*\n Did you fuck up with number after command??")
-        return
-    banner_pic, cover_pic, msg_caption = await only_banner_image(anime_id)
-    try:
-        await message.reply_photo(photo=banner_pic, caption=msg_caption) 
-    except Exception as e:
-        await message.reply_text(f"ERROR ⚠️:\n⌛ Sending Other Image....\n\n{e}")
-        await message.reply_photo(photo=cover_pic, caption=msg_caption)
-
 @Bot.on_message(get_cmd("request") & filters.private & sub_PUB_Dc & sub_PUB_Sc & sub_GC & sub_BOT_c)
 async def arequest(client, message):
     reply = message.reply_to_message
