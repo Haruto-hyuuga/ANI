@@ -259,7 +259,7 @@ async def pvt_many_anime_list(client, message):
 from config import O_PVT_FS_PIC, O_PVT_FS_TXT
 from database.inline import GO_BOTDM_B
 
-@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]) filters.group)
+@Bot.on_message(get_cmd(["list", "fullsearch", "anime_info", "ainfo"]) & filters.group)
 async def nosearchppvtsearchfs(client, message):
     if message.chat.type in [ChatType.SUPERGROUP, ChatType.GROUP]:
         try:
