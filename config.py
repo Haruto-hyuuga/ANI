@@ -3,7 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import random 
 
-TG_BOT_TOKEN = "6286463449:AAGThxmuOUis9HN_IYMCvZdcwjKeOOw3U7o"
+TG_BOT_TOKEN = "5926461026:AAHSx_Ulo6MxqQEANUDUbTWTlLjSzHtogk0"
 # mainbot
 #TG_BOT_TOKEN = "6116589740:AAEYvzwtIH1apOjFqFxQZHAe4u_D5nbq-Y8"
 APP_ID = 12585681
