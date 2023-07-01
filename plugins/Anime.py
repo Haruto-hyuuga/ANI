@@ -274,23 +274,6 @@ async def nosearchppvtsearchfs(client, message):
         except Exception as e:
             await client.send_message(REQUEST_GC, text=f"⚠️NEW GC LOG\n\n{e}", reply_to_message_id=ERR_TOPIC_ID)
 
-############################################################################################################
-############################################################################################################
-from req import get_anime_ids_list
-@Bot.on_message(get_cmd(["anid", "anime_id"]))
-async def get_anime_id_15(client, message):
-    args = message.text.split()
-    if len(args) < 2:
-        ErM = await message.reply_text("<b>Provide Name Of Anime You Want To Search!<b/>\n|> /list Naruto")
-        await asyncio.sleep(30)
-        await ErM.delete()
-        return
-    anime_name = " ".join(args[1:])
-    try:
-        message_text = await get_anime_ids_list(anime_name)
-    
-        FM = await message.reply_text(message_text)
-    except Exception as e:
-        await message.reply(e)
+
 
     
