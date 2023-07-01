@@ -15,7 +15,7 @@ BOT_ID = 6286463449
 BOTUSERNAME = "AnimeDownLoader_Robot"
 TG_BOT_TOKEN = "6286463449:AAGThxmuOUis9HN_IYMCvZdcwjKeOOw3U7o"
 USER_LOG_CHANNEL = -1001925844286
-DB_URI = ""
+DB_URI = "mongodb+srv://tivato1695:1uhFj9UbQMgHGm3O@cluster0.o0kxhwr.mongodb.net/?retryWrites=true&w=majority"
 
 
 APP_ID = 12585681
