@@ -3,27 +3,27 @@ import logging
 from logging.handlers import RotatingFileHandler
 import random 
 
-#TG_BOT_TOKEN = "5926461026:AAHSx_Ulo6MxqQEANUDUbTWTlLjSzHtogk0"
-# mainbot
-#TG_BOT_TOKEN = "6116589740:AAEYvzwtIH1apOjFqFxQZHAe4u_D5nbq-Y8"
+#BOT 1
+#BOT_ID = 6116589740
+#BOTUSERNAME = "AnimeDL_Robot"
+#TG_BOT_TOKEN = "6116589740:AAEZ4AARouWW0nFsN7YfffeqOIU3sCwrxW4"
+#USER_LOG_CHANNEL = -1001909557377
+#DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
+
+#BOT 2
+BOT_ID = 6286463449
+BOTUSERNAME = "AnimeDownLoader_Robot"
+TG_BOT_TOKEN = "6286463449:AAGThxmuOUis9HN_IYMCvZdcwjKeOOw3U7o"
+USER_LOG_CHANNEL = -1001925844286
+DB_URI = ""
+
+
 APP_ID = 12585681
 API_HASH = "7741e8a55a0b5174548c52a374ab94b8"
-BOTUSERNAME = "AnimeDL_Robot"
-BOT_ID = 6116589740
-TG_BOT_TOKEN = "6116589740:AAEZ4AARouWW0nFsN7YfffeqOIU3sCwrxW4"
-
-
 #DATABASE CHANNEL
 CHANNEL_ID = -1001803639446
-#APROVAL NODE URL OF DB CHANNEL
+#APROVAL URL OF DB CHANNEL
 DB_C_Pvturl = "https://t.me/+gwY34XgAgHgyNzI1"
-
-
-CREATOR_GC = -1001888438236
-USER_LOG_CHANNEL = -1001909557377
-
-ANI_LOG_CHANNEL = -1001936847806
-ANI_LOG_URL = "https://t.me/+z7kpZxUxIrpmNThh"
 
 REQUEST_GC = -1001903277336
 Bot_Start_Topic = 28
@@ -32,7 +32,6 @@ REQ_TOPIC_ID = 49
 USER_TOPIC_ID = 152
 
 
-DB_URI = "mongodb+srv://vagil76793:cO7oFNJzbCksNKkK@cluster0.cvj8wvf.mongodb.net/?retryWrites=true&w=majority"
 SUB_ANIME_DB = "mongodb+srv://lejah82077:7hDBz80lC4sKb7EN@cluster0.jo83ynu.mongodb.net/?retryWrites=true&w=majority"
 DUB_ANIME_DB = "mongodb+srv://tasesey566:r7bEdOZnnE2lgL7H@cluster0.i17yfwi.mongodb.net/?retryWrites=true&w=majority"
 USER_STATS_DB = "mongodb+srv://koneson986:IeFLbCQq60A5Hsmo@cluster0.68ublv1.mongodb.net/?retryWrites=true&w=majority"
